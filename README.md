@@ -27,4 +27,13 @@ $ amplify env pull
 Set up auto-linting and prettier to be run on file save or in real-time in your IDE:
 [VSCode](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode).
 
-Ven is soooooo soooooper cool
+### deploy
+
+#### dev
+```bash
+$ yarn build && aws s3 sync build/ s3://<your s3> && aws cloudfront create-invalidation --distribution-id <your distribution id> --paths /\*
+```
+
+
+
+
