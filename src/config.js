@@ -7,14 +7,14 @@ const dev = {
   QR_HOST_URL: process.env.REACT_APP_DEV_QR_HOST_URL, // replace with your testnet host ex. https://kovan-mcdao.odyssy.io'
   SDK_ENV: process.env.REACT_APP_DEV_SDK_ENV, // replace network for sdk if not Kovan
   s3: {
-    REGION: 'us-east-1',
-    BUCKET: 'mc-dao-app-v3-dev-metadatabucket-1ctea4adtwbn8',
+    REGION: process.env.REACT_APP_DEV_S3_REGION,
+    BUCKET: process.env.REACT_APP_DEV_S3_BUCKET,
   },
   cognito: {
-    REGION: 'us-east-1',
-    USER_POOL_ID: 'us-east-1_urbgTJlEt',
-    APP_CLIENT_ID: '25o36j2p0n687h9u81vnpbht3b',
-    IDENTITY_POOL_ID: 'us-east-1:bdc6726f-0193-463c-a003-521d6fbbbdc9',
+    REGION: process.env.REACT_APP_DEV_COGNITO_REGION,
+    USER_POOL_ID: process.env.REACT_APP_DEV_COGNITO_USER_POOL_ID,
+    APP_CLIENT_ID: process.env.REACT_APP_DEV_COGNITO_APP_CLIENT_ID,
+    IDENTITY_POOL_ID: process.env.REACT_APP_DEV_COGNITO_IDENTITY_POOL_ID,
   },
 };
 
@@ -27,14 +27,14 @@ const prod = {
   QR_HOST_URL: process.env.REACT_APP_QR_HOST_URL, // replace with your host
   SDK_ENV: process.env.REACT_APP_SDK_ENV,
   s3: {
-    REGION: 'us-east-1',
-    BUCKET: 'mc-dao-app-v3-prod-metadatabucket-1myuwdvfyna9r',
+    REGION: process.env.REACT_APP_S3_REGION,
+    BUCKET: process.env.REACT_APP_S3_BUCKET,
   },
   cognito: {
-    REGION: 'us-east-1',
-    USER_POOL_ID: 'us-east-1_UR1za6mRG',
-    APP_CLIENT_ID: '227f6eifg563vdtgskdtlpptv2',
-    IDENTITY_POOL_ID: 'us-east-1:878fbd76-6a42-4d30-9a91-6ea9fa1e4dfb',
+    REGION: process.env.REACT_APP_COGNITO_REGION,
+    USER_POOL_ID: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+    APP_CLIENT_ID: process.env.REACT_APP_COGNITO_APP_CLIENT_ID,
+    IDENTITY_POOL_ID: process.env.REACT_APP_COGNITO_IDENTITY_POOL_ID,
   },
 };
 
