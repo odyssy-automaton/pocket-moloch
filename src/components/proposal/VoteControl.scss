@@ -1,0 +1,74 @@
+@import '../../variables';
+
+.VoteControl {
+    position: fixed;
+    bottom: 0;
+    height: 105px;
+    width: calc(100% - 0px);
+    margin-left: -25px;
+    border-top: 1px solid #eee;
+    background-color: white;
+    z-index: 1;
+    .Contents {
+        position: relative; 
+        width: 100%;
+        height: 100%;
+    }
+    .Voter {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        .StackedVote {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 42px;
+            width: calc(100% - 150px);
+            .YesLabel, .NoLabel {
+                width: 65px;
+                padding: 0px;
+            }
+        }
+    }
+}
+
+.Vote {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #000;
+    border-radius: 50%;
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent;
+    color: black;
+    position: absolute;
+    img { width: 36px; margin-top: 4px;  }
+    &:nth-child(1) {
+        bottom: 15px;
+        left: 15px;
+    }
+    &:nth-child(3) {
+        bottom: 15px;
+        right: 15px;
+    }
+    &.Yes {
+        border-color: $purple;
+        &:hover {
+            border-color: $purple;
+            background-color: $purple;
+        }
+        &.Voted {
+            background-color: $purple;
+        }
+    }
+    &.No {
+        border-color: $secondary;
+        &:hover {
+            border-color: $secondary;
+            background-color: $secondary;
+        }
+        &.Voted {
+            background-color: $secondary;
+        }
+    }
+}

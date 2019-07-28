@@ -1,0 +1,23 @@
+.MemberVotes {
+    padding-bottom: 50px;
+    .Item {
+        padding: 15px 0px;
+        display: flex;
+        align-items: center;
+        .VoteCount {
+            width: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            text-align: center;
+            img { margin: 0 auto; }
+            p {
+                margin: 0 auto;
+                font-size: 0.85em;
+                color: #333;
+                text-align: center;
+            }
+        }
+    }
+}

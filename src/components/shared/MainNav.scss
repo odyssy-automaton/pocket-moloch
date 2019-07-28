@@ -1,0 +1,30 @@
+@import '../../variables';
+
+.MainNav {
+    position: fixed;
+    bottom: 0;
+    height: 90px;
+    width: 100%;
+    a {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all .15s ease-in-out;
+        font-weight: 900;
+        color: black;
+        fill: black;
+        &:hover { color: $purple; fill: $purple; }
+        svg {
+            width: 24px;
+            height: auto;
+            margin: 0 auto;
+        }
+    }
+    &.Global {
+        background-color: white;
+        border-top: 2px solid rgba(0,0,0,0.05);
+    }
+}

@@ -1,0 +1,328 @@
+@import './variables';
+
+.App {
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body { background-color: #F8F8FC; }
+
+// Typography
+
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $base-font;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 900;
+}
+
+.Data {
+  font-family: $data-font;
+  font-weight: 400;
+  word-break: break-all;
+  margin: 0;
+}
+
+.Bold {
+  font-weight: 900;
+}
+
+// Links and Buttons
+a {
+  color: $purple;
+  fill: $purple;
+  text-decoration: none;
+  transition: all .15s linear;
+  vertical-align: middle;
+  svg {
+    display: inline-block;
+    margin: 0;
+    padding: 0px;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px; 
+    margin-top: -3px;
+    &.IconLeft {
+      margin-right: 5px;
+    }
+    &.IconRight {
+      margin-left: 5px;
+    }
+  }
+  &:hover {
+    color: $purpler;
+    fill: $purpler;
+  }
+}
+
+button,
+.Button {
+  // Reset
+  appearance: none;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  // Style
+  transition: all 0.15s ease-in-out;
+  background-color: $tertiary;
+  color: white;
+  border-radius: 50px;
+  padding: 15px 30px;
+  max-width: 100%;
+  display: block;
+  margin: 25px 0px;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 900;
+  &:hover {
+    background-color: $greener;
+    color: white;
+    fill: white;
+  }
+  &.Back {
+    margin: 0;
+    margin-top: 20px;
+    margin-left: 0px;
+    background-color: transparent;
+    color: black !important;
+    svg {fill: black !important;}
+    border-radius: 0px;
+    padding: 0px;
+    width: auto;
+    &:hover {
+      margin-left: -5px;
+    }
+  }
+  svg {
+    display: inline-block;
+    margin: 0;
+    padding: 0px;
+    vertical-align: middle;
+    fill: white;
+    &.IconLeft {
+      margin-right: 5px;
+    }
+    &.IconRight {
+      margin-left: 5px;
+    }
+  }
+  &--Red {
+    background-color: $secondary;
+    &:hover { background-color: $red; }
+  }
+  &--Purple {
+    background-color: $purple;
+    &:hover { background-color: $purpler; }
+  }
+}
+
+// Proposal Utils
+
+.ProposalCard,
+.MemberCard {
+  padding: 25px;
+  border-top: 2px solid #eee;
+}
+.ProposalDetail {
+  padding: 25px;
+  padding-bottom: 120px;
+}
+
+.MemberDetail {
+  padding: 25px;
+  padding-bottom: 120px;
+}
+
+.Offer {
+  display: flex;
+  justify-content: flex-start;
+  align-content: flex-start;
+  div:first-child {
+    margin-right: 25px;
+  }
+  h5 {
+    margin: 0px;
+  }
+  h2 {
+    margin: 0px;
+  }
+}
+
+.MemberVotes {
+  .Item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #efefef;
+  }
+}
+
+// Components
+
+.MainNav {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+}
+
+.Timer {
+  display: flex;
+  align-content: center;
+  svg {
+    margin: 0;
+    margin-top: -4px;
+    margin-right: 5px;
+  }
+  p {margin: 0;}
+}
+
+// Utils
+
+.AddDevice {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: white;
+  text-align: center;
+  button { margin: 0 auto; }
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.View {
+  padding-bottom: 117px;
+}
+
+.Pad {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.Row {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.Label {
+  margin: 0;
+  margin-bottom: 5px;
+  color: rgb(182, 182, 182);
+}
+
+.AltOption {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 25px 0px;
+}
+
+.Video {
+  max-width: 100%;
+  div:first-child {
+    max-width: 100%;
+  }
+}
+
+.FlexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.Truncate { 
+  width: 65px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 5px;
+}
+
+.EthLogo {
+  width: 36px;
+}
+
+// Forms
+.Form {
+  padding: $base-padding;
+  input, textarea { background-color: transparent; appearance: none; }
+  .Error {
+    color: red;
+    font-size: 13px;
+    position: relative;
+    bottom: 20px;
+    left: 0px;
+  }
+}
+
+.Field {
+  position: relative;
+  margin-top: 25px;
+  label {
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: lighten($purple, 10%);
+    background-color: transparent;
+    z-index: 10;
+    transition: transform 150ms ease-out, font-size 150ms ease-out;
+    z-index: -1;
+    
+  }
+  &.HasValue {
+    label {
+      transform: translateY(-125%);
+      font-size: .75em;
+    }
+  }
+}
+
+input,
+textarea {
+  // Reset
+  outline: none;
+  appearance: none;
+  border: none;
+  background-color: white;
+  color: black;
+  // Style
+  border-bottom: 1px solid black;
+  width: 100%;
+  max-width: 100%;
+  font-size: 21px;
+  margin-bottom: 25px;
+  padding: 5px 0px;
+}

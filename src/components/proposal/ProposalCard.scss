@@ -1,0 +1,22 @@
+.ProposalCard {
+  background-color: white;
+    .CardVote {
+      margin: 25px auto;
+      .FullBar {
+        margin-top: 50px;
+        width: calc(100%)!important;
+      }
+      .YesLabel {
+        right: 0px !important;
+        top: -25px !important;
+        text-align: right;
+        width: auto !important;
+      }
+      .NoLabel {
+        left: 0px !important;
+        top: -25px !important;
+        text-align: left;
+        width: auto !important;
+      }
+    }
+  }
