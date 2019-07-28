@@ -1,4 +1,4 @@
-# mc-dao
+# Fork of pocket-moloch for mc-dao
 
 ## Development
 
