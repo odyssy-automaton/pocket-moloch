@@ -1,43 +1,25 @@
 const dev = {
-  GRAPH_NODE_URI:
-    'https://api.thegraph.com/subgraphs/name/odyssy-automaton/metacarteldaokovan', // replace with subgraph for your moloch
-  INFURA_URI: 'https://kovan.infura.io/v3/<your infura key>', // replace with your infura key
-  CONTRACT_ADDRESS: '<your moloch test net address>', // replace with your moloch testnet address
-  WETH_CONTRACT_ADDRESS: '0xd0a1e359811322d97991e03f863a0c30c2cf029c', // kovan weth address (change if on different network)
-  DAI_CONTRACT_ADDRESS: '0xc4375b7de8af5a38a93548eb8453a498222c4ff2', // kovan dai address (change if on different network)
-  QR_HOST_URL: '<your host>', // replace with your testnet host ex. https://kovan-mcdao.odyssy.io'
-  SDK_ENV: 'Kovan', // replace network for sdk if not Kovan
-  s3: {
-    REGION: 'us-east-1',
-    BUCKET: '<your s3 bucket information>', // replace your s3 bucket information
-  },
-  cognito: {
-    REGION: 'us-east-1',
-    USER_POOL_ID: 'us-east-1_<pool id>', // replace your pool id
-    APP_CLIENT_ID: '<your cognito information>',
-    IDENTITY_POOL_ID: '<your cognito information>', // replace with your cognito information
-  },
+  GRAPH_NODE_URI: process.env.REACT_APP_DEV_GRAPH_NODE_URI, // replace with subgraph for your moloch
+  INFURA_URI: process.env.REACT_APP_DEV_INFURA_URI, // replace with your infura key
+  CONTRACT_ADDRESS: process.env.REACT_APP_DEV_CONTRACT_ADDRESS, // replace with your moloch testnet address
+  WETH_CONTRACT_ADDRESS: process.env.REACT_APP_DEV_WETH_CONTRACT_ADDRESS, // kovan weth address (change if on different network)
+  DAI_CONTRACT_ADDRESS: process.env.REACT_APP_DEV_DAI_CONTRACT_ADDRESS, // kovan dai address (change if on different network)
+  QR_HOST_URL: process.env.REACT_APP_DEV_QR_HOST_URL, // replace with your testnet host ex. https://kovan-mcdao.odyssy.io'
+  SDK_ENV: process.env.REACT_APP_DEV_SDK_ENV, // replace network for sdk if not Kovan
+  s3: process.env.REACT_APP_DEV_S3,
+  cognito: process.env.REACT_APP_DEV_COGNITO,
 };
 
 const prod = {
-  GRAPH_NODE_URI:
-    'https://api.thegraph.com/subgraphs/name/jamesyoung/metacarteldao', // replace with subgraph for your moloch
-  INFURA_URI: 'https://mainnet.infura.io/v3/<your infura key>', // replace with your infura key
-  CONTRACT_ADDRESS: '0x0372f3696fa7dc99801f435fd6737e57818239f2', // replace with your moloch address
-  WETH_CONTRACT_ADDRESS: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  DAI_CONTRACT_ADDRESS: '0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359',
-  QR_HOST_URL: '<your host>', // replace with your host
-  SDK_ENV: 'Main',
-  s3: {
-    REGION: 'us-east-1',
-    BUCKET: '<your s3 bucket information>', // replace your s3 bucket information
-  },
-  cognito: {
-    REGION: 'us-east-1',
-    USER_POOL_ID: 'us-east-1_<pool id>', // replace your pool id
-    APP_CLIENT_ID: '227f6eifg563vdtgskdtlpptv2',
-    IDENTITY_POOL_ID: '<your cognito information>', // replace with your cognito information
-  },
+  GRAPH_NODE_URI: process.env.REACT_APP_GRAPH_NODE_URI, // replace with subgraph for your moloch
+  INFURA_URI: process.env.REACT_APP_INFURA_URI, // replace with your infura key
+  CONTRACT_ADDRESS: process.env.REACT_APP_CONTRACT_ADDRESS, // replace with your moloch address
+  WETH_CONTRACT_ADDRESS: process.env.REACT_APP_WETH_CONTRACT_ADDRESS,
+  DAI_CONTRACT_ADDRESS: process.env.REACT_APP_DAI_CONTRACT_ADDRESS,
+  QR_HOST_URL: process.env.REACT_APP_QR_HOST_URL, // replace with your host
+  SDK_ENV: process.env.REACT_APP_SDK_ENV,
+  s3: process.env.REACT_APP_S3,
+  cognito: process.env.REACT_APP_COGNITO,
 };
 
 const config = process.env.REACT_APP_STAGE === 'prod' ? prod : dev;
