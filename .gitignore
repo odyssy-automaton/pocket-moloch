@@ -25,3 +25,6 @@ yarn-error.log*
 #serverless
 .serverless
 ops.md
+
+#
+.env
