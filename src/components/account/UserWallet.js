@@ -15,6 +15,8 @@ import Loading from '../shared/Loading';
 import './UserWallet.scss';
 import UserBalance from './UserBalances';
 import UserTransactions from './UserTransactions';
+import WithdrawWethForm from './WithdrawWethForm';
+import WithdrawEthForm from './WithdrawEthForm';
 import Deploy from './Deploy';
 import WrapEth from './WrapEth';
 import ApproveWeth from './ApproveWeth';
@@ -36,7 +38,6 @@ const UserWallet = () => {
           <UserBalance />
           <div className="Actions Pad">
             <h3>Actions</h3>
-            <ConnectAccount />
             <button
               className="Button--Purple"
               onClick={() => toggle('depositForm')}
@@ -61,6 +62,34 @@ const UserWallet = () => {
             </Modal>
 
             <Deploy />
+            
+            {currentWallet.state === 'Deployed' && (
+            <button
+            className="Button--Purple"
+            onClick={() => toggle('sendEth')}
+            >Send ETH</button>
+            )}
+            <Modal
+              isShowing={isShowing.sendEth}
+              hide={() => toggle('sendEth')}
+            >
+              <WithdrawEthForm />
+            </Modal>
+
+            {currentWallet.state === 'Deployed' && (
+            <button
+            className="Button--Purple"
+            onClick={() => toggle('sendWeth')}
+            >Send wETH</button>
+            )}
+            <Modal
+              isShowing={isShowing.sendWeth}
+              hide={() => toggle('sendWeth')}
+            >
+              <WithdrawWethForm />
+            </Modal>
+            
+            <ConnectAccount />
 
             {currentWallet.state === 'Deployed' && (
               <button onClick={() => toggle('wrapForm')}>Wrap ETH</button>

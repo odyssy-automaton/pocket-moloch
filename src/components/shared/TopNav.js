@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/Store';
 import BcToast from './BcToast';
 
-import Brand from '../../assets/meta_chill.png';
+import Brand from '../../assets/japanese-ogre.png';
 import './TopNav.scss';
 
 const TopNav = (props) => {
@@ -25,7 +25,7 @@ const TopNav = (props) => {
       <p>back</p>
       ):(
       <Link className="Brand" to="/">
-        <img src={Brand} alt="MetaCartel DAO" />
+        <img src={Brand} alt="Pocket Moloch" />
       </Link>
       )}
       

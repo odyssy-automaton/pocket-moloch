@@ -124,7 +124,7 @@ const Store = ({ children }) => {
       // these are set to zero every interval, maybe needed when user logs out
       let ethWei = 0;
       let eth = 0;
-      let state = 'not connected';
+      let state = 'Not Connected';
 
       // state.account will be undefined if not connected
       // should be loading durring this?
