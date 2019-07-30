@@ -1,4 +1,5 @@
-# mc-dao
+# Pocket Moloch
+Bare bones, mobile-first set up for Moloch frontend with Abridged Wallet SDK.
 
 ## Development
 
