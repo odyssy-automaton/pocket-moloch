@@ -1,9 +1,13 @@
+@import '../../variables';
+
 .MemberVotes {
     padding-bottom: 50px;
     .Item {
         padding: 15px 0px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid $app-dark;
         .VoteCount {
             width: 80px;
             display: flex;
@@ -14,8 +18,9 @@
             img { margin: 0 auto; }
             p {
                 margin: 0 auto;
+                margin-top: 5px;
                 font-size: 0.85em;
-                color: #333;
+                color: lighten($base-font-color, 50%);
                 text-align: center;
             }
         }

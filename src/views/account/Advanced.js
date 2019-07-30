@@ -25,7 +25,7 @@ const Advanced = () => {
       {currentWallet.state === 'Deployed' && (
         <>
           <button
-            className="Button--Purple"
+            className="Button--Primary"
             onClick={() => toggle('exportKeyStore')}
           >Export Keystore</button>
           <Modal
@@ -35,7 +35,7 @@ const Advanced = () => {
             <ExportKeyStore />
           </Modal>
           <button
-            className="Button--Purple"
+            className="Button--Primary"
             onClick={() => toggle('sendAccountTransaction')}
           >Send Account Transaction</button>
           <Modal
@@ -45,7 +45,7 @@ const Advanced = () => {
             <SendAccountTransaction />
           </Modal>
           <button
-            className="Button--Purple"
+            className="Button--Primary"
             onClick={() => toggle('wethWithdrawForm')}
           >Withdraw wETH</button>
           <Modal
@@ -55,7 +55,7 @@ const Advanced = () => {
             <WithdrawWethForm />
           </Modal>
           <button
-            className="Button--Purple"
+            className="Button--Primary"
             onClick={() => toggle('ethWithdrawForm')}
           >Withdraw ETH</button>
           <Modal

@@ -16,10 +16,10 @@
     position: absolute;
     right: 0px;
     top: 15px;
-    border: 2px solid #000;
+    border: 2px solid $base-font-color;
     border-radius: 15px;
     padding: 5px 15px;
-    background-color: $app-background;
+    background-color: $app-light;
     transition: all .15s linear;
     z-index: 1;
     font-weight: 900;
@@ -31,7 +31,7 @@
       text-decoration: none;
       transition: all .15s ease-in-out;
       background-color: transparent;
-      color: #000;
+      color: $base-font-color;
       width: 90px;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -42,12 +42,12 @@
         position: absolute;
         right: 7px;
         top: 3px;
-        fill: black;
+        fill: $base-font-color;
       }
       &:hover {
-        color: $purpler;
+        color: $primary-hover;
         svg { 
-          fill: $purpler;
+          fill: $primary-hover;
         }
       }
     }

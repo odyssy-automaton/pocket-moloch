@@ -39,7 +39,7 @@ const UserWallet = () => {
           <div className="Actions Pad">
             <h3>Actions</h3>
             <button
-              className="Button--Purple"
+              className="Button--Primary"
               onClick={() => toggle('depositForm')}
             >
               Deposit
@@ -62,32 +62,6 @@ const UserWallet = () => {
             </Modal>
 
             <Deploy />
-            
-            {currentWallet.state === 'Deployed' && (
-            <button
-            className="Button--Purple"
-            onClick={() => toggle('sendEth')}
-            >Send ETH</button>
-            )}
-            <Modal
-              isShowing={isShowing.sendEth}
-              hide={() => toggle('sendEth')}
-            >
-              <WithdrawEthForm />
-            </Modal>
-
-            {currentWallet.state === 'Deployed' && (
-            <button
-            className="Button--Purple"
-            onClick={() => toggle('sendWeth')}
-            >Send wETH</button>
-            )}
-            <Modal
-              isShowing={isShowing.sendWeth}
-              hide={() => toggle('sendWeth')}
-            >
-              <WithdrawWethForm />
-            </Modal>
             
             <ConnectAccount />
 
@@ -112,9 +86,36 @@ const UserWallet = () => {
             >
               <ApproveWeth />
             </Modal>
+
+            {currentWallet.state === 'Deployed' && (
+            <button
+            className="Button--Primary"
+            onClick={() => toggle('sendEth')}
+            >Send ETH</button>
+            )}
+            <Modal
+              isShowing={isShowing.sendEth}
+              hide={() => toggle('sendEth')}
+            >
+              <WithdrawEthForm />
+            </Modal>
+
+            {currentWallet.state === 'Deployed' && (
+            <button
+            className="Button--Primary"
+            onClick={() => toggle('sendWeth')}
+            >Send wETH</button>
+            )}
+            <Modal
+              isShowing={isShowing.sendWeth}
+              hide={() => toggle('sendWeth')}
+            >
+              <WithdrawWethForm />
+            </Modal>
+            
             {currentWallet.state === 'Deployed' && (
               <button
-                className="Button--Red"
+                className="Button--Tertiary"
                 onClick={() => toggle('rageForm')}
               >
                 Rage Quit (╯°□°）╯︵ ┻━┻

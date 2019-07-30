@@ -16,7 +16,7 @@
         position: absolute;       
         background-color: transparent;
         svg {
-            fill: $tertiary;
+            fill: $secondary;
             width: 36px;
             height: 36px;
         }
@@ -24,7 +24,7 @@
         padding: 0px;
         &:hover {
             background: none;
-            svg {fill: $greener; }
+            svg {fill: $secondary-hover; }
         }
     }
     .Dropdown__Open {
@@ -48,7 +48,7 @@
         justify-content: space-between;
         padding: 15px 15px;
         flex-direction: row;
-        background-color: white;
+        background-color: $app-light;
         .Description {
             display: flex;
             align-content: center;
@@ -83,17 +83,17 @@
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        background-color: $tertiary;
+        background-color: $secondary;
         transition: all .15s linear;
     }
     &:hover &__Inner { 
-        background-color: $greener; 
+        background-color: $secondary-hover; 
     }
 }
 
 .Dropdown__Footer {
     width: calc(100% - 30px);
-    background: $app-background;
+    background: $app-light;
     padding: 15px 15px;
     border-bottom: 1px solid #efefef;
 }

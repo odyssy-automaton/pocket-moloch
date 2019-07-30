@@ -6,8 +6,8 @@
     height: 105px;
     width: calc(100% - 0px);
     margin-left: -25px;
-    border-top: 1px solid #eee;
-    background-color: $app-background;
+    border-top: 1px solid $app-dark;
+    background-color: $app-light;
     z-index: 1;
     .Contents {
         position: relative; 
@@ -18,17 +18,6 @@
         width: 100%;
         height: 100%;
         position: relative;
-        .StackedVote {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 42px;
-            width: calc(100% - 150px);
-            .YesLabel, .NoLabel {
-                width: 65px;
-                padding: 0px;
-            }
-        }
     }
 }
 
@@ -62,13 +51,13 @@
         }
     }
     &.No {
-        border-color: $secondary;
+        border-color: $tertiary;
         &:hover {
-            border-color: $secondary;
-            background-color: $secondary;
+            border-color: $tertiary;
+            background-color: $tertiary;
         }
         &.Voted {
-            background-color: $secondary;
+            background-color: $tertiary;
         }
     }
 }
