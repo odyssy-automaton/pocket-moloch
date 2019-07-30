@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/Store';
 import BcToast from './BcToast';
 
-import Brand from '../../assets/japanese-ogre.png';
+import Brand from '../../assets/meta_chill.png';
 import './TopNav.scss';
 
 const TopNav = (props) => {
