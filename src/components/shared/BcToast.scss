@@ -48,7 +48,7 @@
         justify-content: space-between;
         padding: 15px 15px;
         flex-direction: row;
-        background-color: white;
+        background-color: $app-light;
         .Description {
             display: flex;
             align-content: center;
@@ -93,7 +93,7 @@
 
 .Dropdown__Footer {
     width: calc(100% - 30px);
-    background: white;
+    background: $app-light;
     padding: 15px 15px;
     border-bottom: 1px solid #efefef;
 }

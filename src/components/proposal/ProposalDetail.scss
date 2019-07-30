@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .ProposalDetail {
     .Offer {
       margin-top: 25px;
@@ -7,7 +9,7 @@
       left: 50%;
       transform: translateX(-50%);
       background-color: transparent;
-      color: black;
+      color: $base-font-color;
       z-index: 99;
       width: calc(100% - 150px);
       top: 15px;
@@ -16,7 +18,7 @@
       text-align: center;
       transition: all .15s linear;
       svg {
-        fill: black;
+        fill: $base-font-color;
         width: 36px;
         height: auto;
       }
@@ -43,7 +45,7 @@
         left: 0;
         min-height: 100vh;
         height: auto;
-        background-color: white;
+        background-color: $app-light;
         overflow: scroll;
         .DrawerToggle {
           transform: translateX(-50%) rotate(180deg);

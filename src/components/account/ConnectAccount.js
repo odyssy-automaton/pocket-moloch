@@ -75,7 +75,7 @@ const ConnectAccount = () => {
       ) : (
         <>
           <button onClick={() => toggle('connectQrReader')}>
-            Approve a new device
+            Approve a New Device
           </button>
           <Modal
             isShowing={isShowing.connectQrReader}
@@ -100,7 +100,7 @@ const ConnectAccount = () => {
 
       <Modal isShowing={isShowing.getQrCode} hide={() => toggle('getQrCode')}>
         <div className="FlexCenter">
-          <h3>Add this device</h3>
+          <h3>Add this Device</h3>
           <p>
             Sign into a device/browser that has access to this acccount. Then,
             scan the QR code below to grant this device access. If you do not

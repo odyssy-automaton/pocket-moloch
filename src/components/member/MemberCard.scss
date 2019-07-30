@@ -1,7 +1,7 @@
 @import '../../variables';
 
 .MemberLink {
-    color: #000;
+    color: $base-font-color;
     .MemberCard {
         @media (min-width: $phone) {
             border-radius: 10px;

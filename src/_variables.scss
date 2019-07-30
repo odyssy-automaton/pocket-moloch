@@ -3,10 +3,14 @@
 
 $base-font: 'Roboto', sans-serif;
 $data-font: 'Share Tech Mono', sans-serif;
+$base-font-color: black;
 $base-padding: 15px;
 $brand: 'meta_chill.png';
 
 // Color Palette
+$app-background: #F8F8FC;
+$app-light: lighten($app-background, 10%);
+$app-dark: darken($app-background, 10%);
 $primary: rgba(203,46,206,1);
 $secondary: rgba(47,233,167,1);
 $tertiary: rgba(239,73,123,1);

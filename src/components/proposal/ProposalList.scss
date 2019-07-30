@@ -8,15 +8,14 @@
         flex-wrap: wrap;
         .ProposalCard {
             width: 320px;
-            border: 1px solid #eee;
+            border: 2px solid $app-dark;
             margin-bottom: 25px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-            
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);            
         }
     }
     .ProposalCard {
         margin-top: 25px;
-        border-bottom: 2px solid #eee;
+        border-bottom: 2px solid $app-dark;
     }
 }
