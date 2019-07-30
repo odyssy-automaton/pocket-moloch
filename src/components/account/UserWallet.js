@@ -39,7 +39,7 @@ const UserWallet = () => {
           <div className="Actions Pad">
             <h3>Actions</h3>
             <button
-              className="Button--Purple"
+              className="Button--Primary"
               onClick={() => toggle('depositForm')}
             >
               Deposit
@@ -65,7 +65,7 @@ const UserWallet = () => {
             
             {currentWallet.state === 'Deployed' && (
             <button
-            className="Button--Purple"
+            className="Button--Primary"
             onClick={() => toggle('sendEth')}
             >Send ETH</button>
             )}
@@ -78,7 +78,7 @@ const UserWallet = () => {
 
             {currentWallet.state === 'Deployed' && (
             <button
-            className="Button--Purple"
+            className="Button--Primary"
             onClick={() => toggle('sendWeth')}
             >Send wETH</button>
             )}
@@ -114,7 +114,7 @@ const UserWallet = () => {
             </Modal>
             {currentWallet.state === 'Deployed' && (
               <button
-                className="Button--Red"
+                className="Button--Tertiary"
                 onClick={() => toggle('rageForm')}
               >
                 Rage Quit (╯°□°）╯︵ ┻━┻

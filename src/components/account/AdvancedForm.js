@@ -23,7 +23,7 @@ const AdvancedForm = () => {
       {currentWallet.state === 'Deployed' && (
         <>
           <button
-            className="Button--Purple"
+            className="Button--Primary"
             onClick={() => toggle('exportKeyStore')}
           >Export Keystore</button>
           <Modal
@@ -33,7 +33,7 @@ const AdvancedForm = () => {
             <ExportKeyStore />
           </Modal>
           <button
-            className="Button--Purple"
+            className="Button--Primary"
             onClick={() => toggle('sendAccountTransaction')}
           >Send Account Transaction</button>
           <Modal

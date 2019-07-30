@@ -7,14 +7,14 @@ $base-padding: 15px;
 $brand: 'japanese-ogre.png';
 
 // Color Palette
-$primary: rgba(189,134,254,1);
-$secondary: rgba(239,73,123,1);
-$tertiary: rgba(47,233,167,1);
-$yellow: rgba(255,219,88,1);
-$purple: rgba(203,46,206,1);
-$purpler: rgba(145,16,148,1);
-$greener: rgba(31,198,108,1);
-$red: rgba(239,73,95,1);
+$primary: rgba(203,46,206,1);
+$secondary: rgba(47,233,167,1);
+$tertiary: rgba(239,73,123,1);
+$primary-hover: darken($primary, 10%);
+$secondary-hover: darken($secondary, 10%);
+$tertiary-hover: darken($tertiary, 10%);
+$danger: rgba(239,73,95,1);
+$bright: rgba(189,134,254,1);
 
 //Media Queries
 $grid: 1200px;
@@ -62,7 +62,7 @@ $phone: 640px;
     left: 50%;
     transform: translateX(-50%);
     position: fixed;
-    background-color: $purple;
+    background-color: $primary;
     color: white;
     width: 100%;
     height: 60px;

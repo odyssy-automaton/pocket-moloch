@@ -22,7 +22,7 @@
         transition: all .15s linear;
     }
     .MemberLink:hover .MemberCard {
-        background-color: $purple;
+        background-color: $primary;
         color: white;
         @media (min-width: $phone)
         { scale: 1.05; }

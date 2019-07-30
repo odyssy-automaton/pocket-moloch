@@ -16,7 +16,7 @@
         position: absolute;       
         background-color: transparent;
         svg {
-            fill: $tertiary;
+            fill: $secondary;
             width: 36px;
             height: 36px;
         }
@@ -24,7 +24,7 @@
         padding: 0px;
         &:hover {
             background: none;
-            svg {fill: $greener; }
+            svg {fill: $secondary-hover; }
         }
     }
     .Dropdown__Open {
@@ -83,11 +83,11 @@
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        background-color: $tertiary;
+        background-color: $secondary;
         transition: all .15s linear;
     }
     &:hover &__Inner { 
-        background-color: $greener; 
+        background-color: $secondary-hover; 
     }
 }
 

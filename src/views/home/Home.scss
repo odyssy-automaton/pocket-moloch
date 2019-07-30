@@ -35,7 +35,7 @@
     .Bank, .Shares, .ShareValue {
         cursor: pointer;
         h2, h3 { font-weight: 300; transition: all .15s linear; }
-        &:hover h5 { color: $purple; }
+        &:hover h5 { color: $primary; }
         &.Selected {
             h2, h3 { font-weight: 400; }
         }
