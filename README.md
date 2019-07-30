@@ -36,5 +36,5 @@ $ yarn build && aws s3 sync build/ s3://<your s3> && aws cloudfront create-inval
 ```
 
 
-### TODO: add documetation on serverless init
+### TODO: add documentation on serverless init
 
