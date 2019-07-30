@@ -1,5 +1,7 @@
+@import '../../variables';
+
 .Header {
-    background-color: white;
+    background-color: $app-light;
     height: 60px;
     display: flex;
     flex-direction: row;

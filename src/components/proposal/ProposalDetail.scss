@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .ProposalDetail {
     .Offer {
       margin-top: 25px;
@@ -43,7 +45,7 @@
         left: 0;
         min-height: 100vh;
         height: auto;
-        background-color: white;
+        background-color: $app-light;
         overflow: scroll;
         .DrawerToggle {
           transform: translateX(-50%) rotate(180deg);

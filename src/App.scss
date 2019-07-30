@@ -12,7 +12,7 @@
 }
 */
 
-body { background-color: #F8F8FC; }
+body { background-color: $app-background; }
 
 // Typography
 
@@ -202,7 +202,7 @@ button,
 .AddDevice {
   max-width: 600px;
   margin: 50px auto;
-  background-color: white;
+  background-color: $app-light;
   text-align: center;
   button { margin: 0 auto; }
   padding: 25px;
@@ -307,7 +307,7 @@ textarea {
   outline: none;
   appearance: none;
   border: none;
-  background-color: white;
+  background-color: $app-light;
   color: black;
   // Style
   border-bottom: 1px solid black;

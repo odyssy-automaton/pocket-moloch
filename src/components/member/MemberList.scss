@@ -16,14 +16,14 @@
         }
     }
     .MemberCard {
-        background-color: white;
+        background-color: $app-light;
         margin-top: 25px;
         border-bottom: 2px solid #eee;
         transition: all .15s linear;
     }
     .MemberLink:hover .MemberCard {
         background-color: $primary;
-        color: white;
+        color: $app-light;
         @media (min-width: $phone)
         { scale: 1.05; }
     }
