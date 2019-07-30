@@ -1,7 +1,7 @@
 @import '../../variables';
 
 .Header {
-    background-color: $app-background;
+    background-color: $app-light;
     height: 60px;
     display: flex;
     flex-direction: row;
@@ -9,7 +9,7 @@
     justify-content: flex-start;
     font-size: 1em;
     color: black;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid $app-dark;
     width: calc(100% - 30px);
     padding: 0px 15px;
 }

@@ -30,6 +30,7 @@
                 color: $secondary;
                 fill: $secondary;
             }
+            p { color: white; }
             svg { display: inline-block; fill: $secondary; width: 18px; height: 18px; margin-left: 5px; }
         }
         .Status {
@@ -70,7 +71,7 @@
         justify-content: space-between;
         padding: 15px 15px;
         flex-direction: column;
-        background-color: $app-background;
+        background-color: $app-light;
         @media (min-width: $tablet) {
             flex-direction: column;
         }
@@ -93,7 +94,7 @@
         justify-content: space-between;
         padding: 15px 15px;
         flex-direction: row;
-        background-color: $app-background;
+        background-color: $app-light;
         .Description {
             display: flex;
             align-content: center;
@@ -117,7 +118,7 @@
             svg { width: 36px; height: 36px; }
         }
         p:not(.Description__Title) { font-size: 0.85em; margin: 0; color: #aaa }
-        border-bottom: 1px solid #efefef;
+        border-bottom: 1px solid $app-dark;
     }
 }
 
