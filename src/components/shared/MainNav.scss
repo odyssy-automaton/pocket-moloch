@@ -14,9 +14,9 @@
         text-decoration: none;
         transition: all .15s ease-in-out;
         font-weight: 900;
-        color: black;
-        fill: black;
-        &:hover { color: $primary; fill: $primary; }
+        color: $base-font-color;
+        fill: $base-font-color;
+        &:hover { color: $primary-hover; fill: $primary-hover; }
         svg {
             width: 24px;
             height: auto;
@@ -25,6 +25,6 @@
     }
     &.Global {
         background-color: $app-light;
-        border-top: 2px solid rgba(0,0,0,0.05);
+        border-top: 2px solid $app-dark;
     }
 }

@@ -9,7 +9,7 @@
       left: 50%;
       transform: translateX(-50%);
       background-color: transparent;
-      color: black;
+      color: $base-font-color;
       z-index: 99;
       width: calc(100% - 150px);
       top: 15px;
@@ -18,7 +18,7 @@
       text-align: center;
       transition: all .15s linear;
       svg {
-        fill: black;
+        fill: $base-font-color;
         width: 36px;
         height: auto;
       }

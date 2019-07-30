@@ -12,7 +12,10 @@
 }
 */
 
-body { background-color: $app-background; }
+body { 
+  background-color: $app-background;
+  color: $base-font-color;
+}
 
 // Typography
 
@@ -170,14 +173,6 @@ button,
   }
 }
 
-.MemberVotes {
-  .Item {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #efefef;
-  }
-}
-
 // Components
 
 .MainNav {
@@ -193,8 +188,9 @@ button,
     margin: 0;
     margin-top: -4px;
     margin-right: 5px;
+    fill: $base-font-color;
   }
-  p {margin: 0;}
+  p { margin: 0; }
 }
 
 // Utils

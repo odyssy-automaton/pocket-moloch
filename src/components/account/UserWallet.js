@@ -63,6 +63,30 @@ const UserWallet = () => {
 
             <Deploy />
             
+            <ConnectAccount />
+
+            {currentWallet.state === 'Deployed' && (
+              <button onClick={() => toggle('wrapForm')}>Wrap ETH</button>
+            )}
+
+            <Modal
+              isShowing={isShowing.wrapForm}
+              hide={() => toggle('wrapForm')}
+            >
+              <WrapEth />
+            </Modal>
+            {currentWallet.state === 'Deployed' && (
+              <button onClick={() => toggle('allowanceForm')}>
+                Approve wETH
+              </button>
+            )}
+            <Modal
+              isShowing={isShowing.allowanceForm}
+              hide={() => toggle('allowanceForm')}
+            >
+              <ApproveWeth />
+            </Modal>
+
             {currentWallet.state === 'Deployed' && (
             <button
             className="Button--Primary"
@@ -89,29 +113,6 @@ const UserWallet = () => {
               <WithdrawWethForm />
             </Modal>
             
-            <ConnectAccount />
-
-            {currentWallet.state === 'Deployed' && (
-              <button onClick={() => toggle('wrapForm')}>Wrap ETH</button>
-            )}
-
-            <Modal
-              isShowing={isShowing.wrapForm}
-              hide={() => toggle('wrapForm')}
-            >
-              <WrapEth />
-            </Modal>
-            {currentWallet.state === 'Deployed' && (
-              <button onClick={() => toggle('allowanceForm')}>
-                Approve wETH
-              </button>
-            )}
-            <Modal
-              isShowing={isShowing.allowanceForm}
-              hide={() => toggle('allowanceForm')}
-            >
-              <ApproveWeth />
-            </Modal>
             {currentWallet.state === 'Deployed' && (
               <button
                 className="Button--Tertiary"
