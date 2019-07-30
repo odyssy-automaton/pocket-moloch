@@ -3,7 +3,7 @@
     position: relative;
 }
 .Wallet {
-    border: 1px solid #efefef;
+    border: 1px solid $app-dark;
     border-radius: 10px;
     position: relative;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
@@ -11,7 +11,7 @@
     .Header {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        border-bottom: 1px solid #efefef;
+        border-bottom: 1px solid $app-dark;
         display: flex;
         flex-direction: row;
         align-content: center;
@@ -76,10 +76,10 @@
             flex-direction: column;
         }
         p {margin: 0; padding: 0px; }
-        border-bottom: 1px solid #efefef;
+        border-bottom: 1px solid $app-dark;
         p:nth-child(1){
             font-size: 0.85em; 
-            color: #333;
+            color: darken($base-font-color, 50%);
         }
         p:nth-child(2){
            font-size: 1.5em; 

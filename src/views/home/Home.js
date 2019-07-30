@@ -152,7 +152,7 @@ const Home = ({ client }) => {
                   className={'Bank' + (chartView === 'bank' ? ' Selected' : '')}
                 >
                 <h5>
-                  Bank
+                  Freedom Bank
                 </h5>
                 <h2>Ξ {data.guildBankValue}</h2>
               </div>

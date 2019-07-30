@@ -15,11 +15,11 @@ import Loading from '../shared/Loading';
 import './UserWallet.scss';
 import UserBalance from './UserBalances';
 import UserTransactions from './UserTransactions';
-import WithdrawWethForm from './WithdrawWethForm';
+import WithdrawDaiForm from './WithdrawDaiForm';
 import WithdrawEthForm from './WithdrawEthForm';
 import Deploy from './Deploy';
 import WrapEth from './WrapEth';
-import ApproveWeth from './ApproveWeth';
+import ApproveDai from './ApproveDai';
 import RageQuit from './RageQuit';
 import DepositForm from './DepositForm';
 
@@ -66,25 +66,15 @@ const UserWallet = () => {
             <ConnectAccount />
 
             {currentWallet.state === 'Deployed' && (
-              <button onClick={() => toggle('wrapForm')}>Wrap ETH</button>
-            )}
-
-            <Modal
-              isShowing={isShowing.wrapForm}
-              hide={() => toggle('wrapForm')}
-            >
-              <WrapEth />
-            </Modal>
-            {currentWallet.state === 'Deployed' && (
               <button onClick={() => toggle('allowanceForm')}>
-                Approve wETH
+                Approve DAI
               </button>
             )}
             <Modal
               isShowing={isShowing.allowanceForm}
               hide={() => toggle('allowanceForm')}
             >
-              <ApproveWeth />
+              <ApproveDai />
             </Modal>
 
             {currentWallet.state === 'Deployed' && (
@@ -104,13 +94,13 @@ const UserWallet = () => {
             <button
             className="Button--Primary"
             onClick={() => toggle('sendWeth')}
-            >Send wETH</button>
+            >Send DAI</button>
             )}
             <Modal
               isShowing={isShowing.sendWeth}
               hide={() => toggle('sendWeth')}
             >
-              <WithdrawWethForm />
+              <WithdrawDaiForm />
             </Modal>
             
             {currentWallet.state === 'Deployed' && (
@@ -118,7 +108,7 @@ const UserWallet = () => {
                 className="Button--Tertiary"
                 onClick={() => toggle('rageForm')}
               >
-                Rage Quit (╯°□°）╯︵ ┻━┻
+                Rage Quit
               </button>
             )}
             <Modal
