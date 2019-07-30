@@ -110,8 +110,8 @@ const Home = ({ client }) => {
             <div className="Intro">
               <h1>MetaCartel DAO</h1>
               <p>
-                If you want to go quick, go alone.
-                <br /> If you want to go far, go together.
+                If you want to go fast, go alone.<br />
+                If you want to go far, go together.
               </p>
             </div>
             <div className="Chart" style={{ width: '100%', height: '33vh' }}>

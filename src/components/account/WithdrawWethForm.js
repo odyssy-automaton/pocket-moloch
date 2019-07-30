@@ -24,7 +24,7 @@ const WithdrawWethForm = () => {
     <>
       {loading && <Loading />}
 
-      <h2>Withdraw wEth from your wallet address</h2>
+      <h2>Send wETH from your wallet</h2>
       <Formik
         initialValues={{
           amount: '',
@@ -68,7 +68,7 @@ const WithdrawWethForm = () => {
             console.log(estimated);
             if (ethToWei(currentWallet.eth).lt(estimated.totalCost)) {
               alert(
-                `you need more gas, at least: ${web3Service.fromWei(
+                `You need more gas, at least: ${web3Service.fromWei(
                   estimated.totalCost.toString(),
                 )}`,
               );
@@ -87,7 +87,7 @@ const WithdrawWethForm = () => {
             );
           } catch (err) {
             console.log(err);
-            alert(`Something went wrong. please try again`);
+            alert(`Something went wrong. Please try again.`);
           }
 
           resetForm();
