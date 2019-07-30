@@ -16,7 +16,7 @@
         flex-direction: row;
         align-content: center;
         justify-content: space-between;
-        background-color: $purpler;
+        background-color: $primary-hover;
         .Address {
             margin: 0;
             padding: 0px;
@@ -27,21 +27,21 @@
             display: flex;
             align-content: center;
             &:hover {
-                color: $tertiary;
-                fill: $tertiary;
+                color: $secondary;
+                fill: $secondary;
             }
-            svg { display: inline-block; fill: $tertiary; width: 18px; height: 18px; margin-left: 5px; }
+            svg { display: inline-block; fill: $secondary; width: 18px; height: 18px; margin-left: 5px; }
         }
         .Status {
             font-size: 0.85em;
             position: relative;
-            color: $tertiary;
+            color: $secondary;
             &:before {
                 content: '';
                 width: 8px;
                 height: 8px;
                 border-radius: 50%;
-                background-color: $tertiary;
+                background-color: $secondary;
                 display: block;
                 position: absolute;
                 left: 0;

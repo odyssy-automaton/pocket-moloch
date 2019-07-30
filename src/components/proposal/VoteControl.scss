@@ -52,13 +52,13 @@
         right: 15px;
     }
     &.Yes {
-        border-color: $purple;
+        border-color: $primary;
         &:hover {
-            border-color: $purple;
-            background-color: $purple;
+            border-color: $primary;
+            background-color: $primary;
         }
         &.Voted {
-            background-color: $purple;
+            background-color: $primary;
         }
     }
     &.No {

@@ -49,8 +49,8 @@ h6 {
 
 // Links and Buttons
 a {
-  color: $purple;
-  fill: $purple;
+  color: $primary;
+  fill: $primary;
   text-decoration: none;
   transition: all .15s linear;
   vertical-align: middle;
@@ -70,8 +70,8 @@ a {
     }
   }
   &:hover {
-    color: $purpler;
-    fill: $purpler;
+    color: $primary-hover;
+    fill: $primary-hover;
   }
 }
 
@@ -86,7 +86,7 @@ button,
   text-decoration: none;
   // Style
   transition: all 0.15s ease-in-out;
-  background-color: $tertiary;
+  background-color: $secondary;
   color: white;
   border-radius: 50px;
   padding: 15px 30px;
@@ -97,7 +97,7 @@ button,
   text-align: center;
   font-weight: 900;
   &:hover {
-    background-color: $greener;
+    background-color: $secondary-hover;
     color: white;
     fill: white;
   }
@@ -128,13 +128,13 @@ button,
       margin-left: 5px;
     }
   }
-  &--Red {
-    background-color: $secondary;
-    &:hover { background-color: $red; }
+  &--Tertiary {
+    background-color: $tertiary;
+    &:hover { background-color: $tertiary-hover; }
   }
-  &--Purple {
-    background-color: $purple;
-    &:hover { background-color: $purpler; }
+  &--Primary {
+    background-color: $primary;
+    &:hover { background-color: $primary-hover; }
   }
 }
 
@@ -286,7 +286,7 @@ button,
     position: absolute;
     left: 0;
     top: 7px;
-    color: lighten($purple, 10%);
+    color: lighten($primary, 10%);
     background-color: transparent;
     z-index: 10;
     transition: transform 150ms ease-out, font-size 150ms ease-out;
