@@ -25,6 +25,7 @@ h4,
 h5,
 h6 {
   font-family: $base-font;
+  color: $base-font-color;
 }
 
 h1,
@@ -49,8 +50,8 @@ h6 {
 
 // Links and Buttons
 a {
-  color: $purple;
-  fill: $purple;
+  color: $primary;
+  fill: $primary;
   text-decoration: none;
   transition: all .15s linear;
   vertical-align: middle;
@@ -133,8 +134,8 @@ button,
     &:hover { background-color: $red; }
   }
   &--Purple {
-    background-color: $purple;
-    &:hover { background-color: $purpler; }
+    background-color: $primary;
+    &:hover { background-color: $primary; }
   }
 }
 
@@ -286,7 +287,7 @@ button,
     position: absolute;
     left: 0;
     top: 7px;
-    color: lighten($purple, 10%);
+    color: lighten($primary, 10%);
     background-color: transparent;
     z-index: 10;
     transition: transform 150ms ease-out, font-size 150ms ease-out;
@@ -307,7 +308,7 @@ textarea {
   outline: none;
   appearance: none;
   border: none;
-  background-color: white;
+  background-color: $app-background;
   color: black;
   // Style
   border-bottom: 1px solid black;

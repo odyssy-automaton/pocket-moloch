@@ -16,7 +16,7 @@
         font-weight: 900;
         color: black;
         fill: black;
-        &:hover { color: $purple; fill: $purple; }
+        &:hover { color: $primary; fill: $primary; }
         svg {
             width: 24px;
             height: auto;
@@ -24,7 +24,7 @@
         }
     }
     &.Global {
-        background-color: white;
+        background-color: $app-background;
         border-top: 2px solid rgba(0,0,0,0.05);
     }
 }

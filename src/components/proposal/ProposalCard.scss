@@ -1,5 +1,7 @@
+@import '../../variables';
+
 .ProposalCard {
-  background-color: white;
+  background-color: $app-background;
     .CardVote {
       margin: 25px auto;
       .FullBar {
