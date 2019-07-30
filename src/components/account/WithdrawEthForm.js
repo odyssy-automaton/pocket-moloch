@@ -23,7 +23,7 @@ const WithdrawEthForm = () => {
     <>
       {loading && <Loading />}
 
-      <h2>Withdraw Eth from your wallet address</h2>
+      <h2>Send ETH from your wallet</h2>
       <Formik
         initialValues={{
           amount: '',
@@ -89,18 +89,6 @@ const WithdrawEthForm = () => {
       >
         {({ isSubmitting }) => (
           <Form className="Form">
-            <Field name="dist">
-              {({ field, form }) => (
-                <div className={field.value ? 'Field HasValue' : 'Field '}>
-                  <label>Destination</label>
-                  <input type="text" {...field} />
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="dist"
-              render={(msg) => <div className="Error">{msg}</div>}
-            />
             <Field name="amount">
               {({ field, form }) => (
                 <div className={field.value ? 'Field HasValue' : 'Field '}>
@@ -119,8 +107,20 @@ const WithdrawEthForm = () => {
               name="amount"
               render={(msg) => <div className="Error">{msg}</div>}
             />
+            <Field name="dist">
+              {({ field, form }) => (
+                <div className={field.value ? 'Field HasValue' : 'Field '}>
+                  <label>Destination Address</label>
+                  <input type="text" {...field} />
+                </div>
+              )}
+            </Field>
+            <ErrorMessage
+              name="dist"
+              render={(msg) => <div className="Error">{msg}</div>}
+            />
             <button type="submit" disabled={isSubmitting}>
-              Withdraw
+              Send
             </button>
           </Form>
         )}

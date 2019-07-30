@@ -108,10 +108,9 @@ const Home = ({ client }) => {
         return (
           <div className="Home">
             <div className="Intro">
-              <h1>MetaCartel DAO</h1>
+              <h1>Pocket Moloch</h1>
               <p>
-                If you want to go quick, go alone.
-                <br /> If you want to go far, go together.
+                Put a Moloch DAO in your pocket.
               </p>
             </div>
             <div className="Chart" style={{ width: '100%', height: '33vh' }}>
