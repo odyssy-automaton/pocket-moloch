@@ -1,5 +1,5 @@
-# Pocket Moloch
-Bare bones, mobile-first set up for Moloch frontend with Abridged Wallet SDK.
+# YangDAO
+Bare bones, mobile-first set up for Moloch frontend with Abridged Wallet SDK by Odyssy.
 
 ## Development
 
