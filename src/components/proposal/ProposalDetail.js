@@ -31,17 +31,21 @@ const ProposalDetail = ({
   useEffect(() => {
     const fetchData = async () => {
       const uuid = proposal.details.split('~')[1];
+
       if (uuid) {
         let metaData = await GetMetaData(uuid);
+        setS3Data(metaData);
+      } else {
+        let metaData = await GetMetaData(proposal.id);
         setS3Data(metaData);
       }
     };
 
     fetchData();
-  }, [proposal.details]);
+  }, [proposal.details, proposal.id]);
 
   const countDown = getProposalCountdownText(proposal, periodDuration);
-  const title = titleMaker(proposal);  
+  const title = titleMaker(proposal);
 
   return (
     <div className="ProposalDetail">
@@ -83,9 +87,15 @@ const ProposalDetail = ({
             <p>{s3Data.description}</p>
           </div>
         ) : null}
-        {s3Data.link ? (
+        {s3Data.link && ReactPlayer.canPlay(s3Data.link) ? (
           <div className="Video">
             <ReactPlayer url={s3Data.link} playing={false} loop={false} />
+          </div>
+        ) : s3Data.link && s3Data.link.indexOf('http') > -1 ? (
+          <div className="Link">
+            <a href={s3Data.link} rel="noopener noreferrer" target="_blank">
+              Link
+            </a>
           </div>
         ) : null}
       </div>

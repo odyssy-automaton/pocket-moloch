@@ -3,9 +3,12 @@ import { gql } from 'apollo-boost';
 
 export const GetMetaData = async (id) => {
   const uri = await Storage.get(`proposal_${id}.json`);
+  console.log('fetch', uri);
 
   try {
     const res = await fetch(uri);
+    console.log('fetch', res);
+    
     if (!res.ok) {
       throw new Error(res.statusText);
     }
