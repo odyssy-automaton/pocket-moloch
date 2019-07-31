@@ -6,6 +6,7 @@ export const GetMetaData = async (id) => {
 
   try {
     const res = await fetch(uri);
+    
     if (!res.ok) {
       throw new Error(res.statusText);
     }
