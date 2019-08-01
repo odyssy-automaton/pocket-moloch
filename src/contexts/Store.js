@@ -10,7 +10,7 @@ import {
 import config from '../config';
 
 import useInterval from '../utils/PollingUtil';
-import WethService from '../utils/WethService';
+import DaiService from '../utils/DaiService';
 import Web3Service from '../utils/Web3Service';
 import McDaoService from '../utils/McDaoService';
 import BcProcessorService from '../utils/BcProcessorService';
@@ -28,7 +28,7 @@ const Store = ({ children }) => {
   // stores user wallet balances and shares
   const [currentWallet, setCurrentWallet] = useState({
     eth: 0,
-    weth: 0,
+    dai: 0,
     allowamce: 0,
     shares: 0,
     state: null,
@@ -42,7 +42,7 @@ const Store = ({ children }) => {
   // track number of times to do a 1 second update
   const [numTries, setNumTries] = useState(0);
 
-  const wethService = new WethService();
+  const daiService = new DaiService();
   const web3Service = new Web3Service();
   const daoService = new McDaoService();
   const bcProcessorService = new BcProcessorService();
@@ -102,9 +102,9 @@ const Store = ({ children }) => {
         acctAddr,
       );
 
-      // get weth balance and allowance of contract
-      const wethWei = await wethService.balanceOf(acctAddr);
-      const allowanceWei = await wethService.allowance(
+      // get dai balance and allowance of contract
+      const dai = await daiService.balanceOf(acctAddr);
+      const allowance = await daiService.allowance(
         acctAddr,
         daoService.contractAddr,
       );
@@ -114,9 +114,7 @@ const Store = ({ children }) => {
       // shares will be 0 if not a member, could also be 0 if rage quit
       // TODO: check membersheip a different way
       const shares = member.shares.toNumber();
-      // convert from wei to eth
-      const weth = web3Service.fromWei(wethWei);
-      const allowance = web3Service.fromWei(allowanceWei);
+
       // use attached sdk
       const sdk = currentUser.sdk;
 
@@ -164,7 +162,7 @@ const Store = ({ children }) => {
       // set state
       setCurrentWallet({
         ...currentWallet,
-        ...{ weth, allowance, eth, state, shares, _txList, addrByBelegateKey },
+        ...{ dai, allowance, eth, state, shares, _txList, addrByBelegateKey },
       });
     }
   }, delay);

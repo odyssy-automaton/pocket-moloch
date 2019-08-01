@@ -28,7 +28,7 @@ const ProposalForm = ({ history }) => {
       {loading && <Loading />}
 
       <div>
-        {currentWallet.eth > 0.005 && currentWallet.weth > 0 ? (
+        {currentWallet.eth > 0.005 && currentWallet.dai > 0 ? (
           <Formik
             initialValues={{
               title: '',
@@ -229,7 +229,7 @@ const ProposalForm = ({ history }) => {
             <p className="Pad">Your ETH is empty or dangerously low.</p>
             <p className="Pad">
               If you are going to submit a proposal you need some ETH for gas
-              and wETH for deposit. Go to your Account to top them off.
+              and DAI for deposit. Go to your Account to top them off.
             </p>
             <p>
               <Link to="/account">

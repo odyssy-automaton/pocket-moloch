@@ -18,7 +18,6 @@ import UserTransactions from './UserTransactions';
 import WithdrawDaiForm from './WithdrawDaiForm';
 import WithdrawEthForm from './WithdrawEthForm';
 import Deploy from './Deploy';
-import WrapEth from './WrapEth';
 import ApproveDai from './ApproveDai';
 import RageQuit from './RageQuit';
 import DepositForm from './DepositForm';
@@ -93,12 +92,12 @@ const UserWallet = () => {
             {currentWallet.state === 'Deployed' && (
             <button
             className="Button--Primary"
-            onClick={() => toggle('sendWeth')}
+            onClick={() => toggle('sendDai')}
             >Send DAI</button>
             )}
             <Modal
-              isShowing={isShowing.sendWeth}
-              hide={() => toggle('sendWeth')}
+              isShowing={isShowing.sendDai}
+              hide={() => toggle('sendDai')}
             >
               <WithdrawDaiForm />
             </Modal>
