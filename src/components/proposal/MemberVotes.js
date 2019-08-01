@@ -1,6 +1,6 @@
 import React from 'react';
 import { truncateAddr } from '../../utils/Helpers';
-import VoteYes from '../../assets/star-struck.png';
+import VoteYes from '../../assets/thumbs-up.png';
 import VoteNo from '../../assets/thumbs-down.png';
 import './MemberVotes.scss';
 
