@@ -68,7 +68,7 @@ const UserBalance = () => {
             </div>
             <div className="Item">
               <p>DAI Allowance</p>
-              <p className="Data">{currentWallet.daiAllowance}</p>
+              <p className="Data">{currentWallet.allowance}</p>
             </div>
           </div>
         </div>

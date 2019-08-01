@@ -6,12 +6,10 @@ import Routes from './Routes';
 import Header from './components/header/Header';
 import Loading from './components/shared/Loading';
 import McDaoService from './utils/McDaoService';
-import WethService from './utils/WethService';
-import Web3Service from './utils/Web3Service';
+import DaiService from './utils/DaiService';
 
 const mcDao = new McDaoService();
-const weth = new WethService();
-const web3 = new Web3Service();
+const dai = new DaiService();
 
 const App = ({ client }) => {
   const [loading, setloading] = useState(true);
@@ -27,7 +25,7 @@ const App = ({ client }) => {
       const periodDuration = await mcDao.getPeriodDuration();
       const processingReward = await mcDao.getProcessingReward();
       const proposalDeposit = await mcDao.getProposalDeposit();
-      const guildBankValue = await weth.balanceOf(guildBankAddr);
+      const guildBankValue = await dai.balanceOf(guildBankAddr);
 
       client.writeData({
         data: {
@@ -37,10 +35,10 @@ const App = ({ client }) => {
           gracePeriodLength: gracePeriodLength.toNumber(),
           votingPeriodLength: votingPeriodLength.toNumber(),
           periodDuration: periodDuration.toNumber(),
-          processingReward: web3.fromWei(processingReward),
-          proposalDeposit: web3.fromWei(proposalDeposit),
-          guildBankValue: web3.fromWei(guildBankValue),
-          shareValue: web3.fromWei(guildBankValue) / totalShares,
+          processingReward: processingReward.toNumber(),
+          proposalDeposit: proposalDeposit.toNumber(),
+          guildBankValue: guildBankValue.toNumber(),
+          shareValue: guildBankValue / totalShares,
         },
       });
       setloading(false);
