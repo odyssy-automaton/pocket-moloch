@@ -59,8 +59,9 @@
                 margin: 0;
                 margin-bottom: 5px;
                 margin-top: 5px;
+                color: $base-font-color;
             }
-            a { color: #aaa; }
+            a { color: darken($base-font-color, 10%); }
         }
         .Status {
             display: flex;
@@ -71,8 +72,8 @@
             width: 80px;
             svg { width: 36px; height: 36px; }
         }
-        p:not(.Description__Title) { font-size: 0.85em; margin: 0; color: #aaa }
-        border-bottom: 1px solid #efefef;
+        p:not(.Description__Title) { font-size: 0.85em; margin: 0; color: darken($base-font-color, 10%); }
+        border-bottom: 1px solid $app-dark;
     }
 }
 
@@ -95,7 +96,7 @@
     width: calc(100% - 30px);
     background: $app-light;
     padding: 15px 15px;
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid $app-dark;
 }
 
 .Backdrop__Open {

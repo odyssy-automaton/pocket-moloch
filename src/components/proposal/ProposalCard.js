@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import IconDai from '../shared/IconDai';
 
 import StackedVote from './StackedVote';
 import Web3Service from '../../utils/Web3Service';
@@ -43,7 +44,7 @@ const ProposalCard = ({ proposal, client }) => {
         <div className="Tribute">
           <h5>Tribute</h5>
           <h2 className="Data">
-            Ξ {web3Service.fromWei(proposal.tokenTribute)}
+            <span class="Currency--Standard"><IconDai /></span>{web3Service.fromWei(proposal.tokenTribute)}
           </h2>
         </div>
       </div>

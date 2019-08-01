@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import ReactPlayer from 'react-player';
+import IconDai from '../shared/IconDai';
 
 import Web3Service from '../../utils/Web3Service';
 import { GetMetaData } from '../../utils/ProposalService';
@@ -68,7 +69,7 @@ const ProposalDetail = ({
         <div className="Tribute">
           <h5>Tribute</h5>
           <h2 className="Data">
-            Ξ {web3Service && web3Service.fromWei(proposal.tokenTribute)}
+            <span class="Currency--Standard"><IconDai /></span>{web3Service && web3Service.fromWei(proposal.tokenTribute)}
           </h2>
         </div>
       </div>

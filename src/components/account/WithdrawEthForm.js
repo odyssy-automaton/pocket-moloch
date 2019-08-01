@@ -59,7 +59,7 @@ const WithdrawEthForm = () => {
             console.log(estimated);
             if (ethToWei(currentWallet.eth).lt(estimated.totalCost)) {
               alert(
-                `you need more gas, at least: ${web3Service.fromWei(
+                `You need more gas, at least: ${web3Service.fromWei(
                   estimated.totalCost.toString(),
                 )}`,
               );
@@ -73,7 +73,7 @@ const WithdrawEthForm = () => {
             bcprocessor.setTx(
               hash,
               currentUser.attributes['custom:account_address'],
-              `Withdraw Eth: ${values.amount}`,
+              `Send ${values.amount} ETH`,
               true,
             );
           } catch (err) {

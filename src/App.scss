@@ -18,6 +18,8 @@ body {
   font-family: $base-font;
 }
 
+svg, img { max-width: 100%; }
+
 // Typography
 
 body,
@@ -138,6 +140,27 @@ button,
   &--Primary {
     background-color: $primary;
     &:hover { background-color: $primary-hover; }
+  }
+}
+
+// Icons
+
+.Currency {
+  &--Standard {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-top: -5px;
+    margin-right: 5px;
+  }
+  &--Large {
+    display: inline-block;
+    width: 36px;
+    height: 35px;
+    vertical-align: middle;
+    margin-top: -5px;
+    margin-right: 5px;
   }
 }
 

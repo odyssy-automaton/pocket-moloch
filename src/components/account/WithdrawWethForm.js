@@ -82,7 +82,7 @@ const WithdrawWethForm = () => {
             bcprocessor.setTx(
               hash,
               currentUser.attributes['custom:account_address'],
-              `Withdraw weth: ${values.amount}`,
+              `Send ${values.amount} wETH`,
               true,
             );
           } catch (err) {

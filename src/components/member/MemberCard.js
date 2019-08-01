@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Web3Service from '../../utils/Web3Service';
 import { truncateAddr } from '../../utils/Helpers';
 import { GetMetaData } from '../../utils/MemberService';
+import IconDai from '../shared/IconDai';
 
 import './MemberCard.scss';
 
@@ -34,7 +35,7 @@ const MemberCard = ({ member }) => {
           <div className="Tribute">
             <h5>Tribute</h5>
             <h2 className="Data">
-              Ξ {web3Service.fromWei(member.tokenTribute)}
+              <span class="Currency--Standard"><IconDai /></span>{web3Service.fromWei(member.tokenTribute)}
             </h2>
           </div>
         </div>
