@@ -100,7 +100,7 @@ const Home = ({ client }) => {
   }, [guildBankAddr, chartView]);
 
   return (
-    <Query query={GET_METADATA} pollInterval={2500}>
+    <Query query={GET_METADATA} pollInterval={30000}>
       {({ loading, error, data }) => {
         if (loading) return <Loading />;
         if (error) return <ErrorMessage message={error} />;
