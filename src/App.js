@@ -35,9 +35,9 @@ const App = ({ client }) => {
           gracePeriodLength: gracePeriodLength.toNumber(),
           votingPeriodLength: votingPeriodLength.toNumber(),
           periodDuration: periodDuration.toNumber(),
-          processingReward: processingReward,
-          proposalDeposit: proposalDeposit,
-          guildBankValue: guildBankValue,
+          processingReward: processingReward.toNumber(),
+          proposalDeposit: proposalDeposit.toNumber(),
+          guildBankValue: guildBankValue.toNumber(),
           shareValue: guildBankValue / totalShares,
         },
       });

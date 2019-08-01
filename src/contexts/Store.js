@@ -103,11 +103,13 @@ const Store = ({ children }) => {
       );
 
       // get dai balance and allowance of contract
-      const dai = await daiService.balanceOf(acctAddr);
-      const allowance = await daiService.allowance(
+      const daiRes = await daiService.balanceOf(acctAddr);
+      const allowanceRes = await daiService.allowance(
         acctAddr,
         daoService.contractAddr,
       );
+      const dai = daiRes.toNumber()
+      const allowance = allowanceRes.toNumber()
 
       // get member shares of dao contract
       const member = await daoService.members(addrByBelegateKey);

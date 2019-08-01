@@ -1,5 +1,5 @@
 import Web3Service from '../utils/Web3Service';
-import DaiAbi from '../contracts/guildbank.json';
+import DaiAbi from '../contracts/dai.json';
 import config from '../config';
 
 export default class DaiService {
@@ -8,7 +8,7 @@ export default class DaiService {
   contract;
   gbAbi;
 
-  constructor(contractAddr) {
+  constructor() {
     this.contractAddr = config.DAI_CONTRACT_ADDRESS;
     this.web3Service = new Web3Service();
     this.daiAbi = DaiAbi;
