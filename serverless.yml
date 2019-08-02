@@ -1,4 +1,4 @@
-service: mc-dao-app-v3
+service: yang-dao-app
 
 plugins:
   - serverless-single-page-app-plugin
