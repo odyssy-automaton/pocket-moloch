@@ -100,18 +100,30 @@ REACT_APP_COGNITO_IDENTITY_POOL_ID=
 
 #### 5. Build and deploy the app
 
-Sync production build to S3
+Sync production build to S3 and invalidate the cloudfront cache.
 
 ```bash
-build the app:
+build the app for dev/kovan:
 $ yarn build
 
-push to s3:
-$ sync build/ s3://<your s3> --profile <your profile name>
+build the app for dev/kovan:
+$ yarn prod-build
+
+You could use the aws cli to do this if you want to:
+
+$ aws s3 sync build/ s3://<your s3> --profile <your profile name>
 
 invalidate cloudfront cache:
 $ aws cloudfront create-invalidation --distribution-id <your distribution id> --paths /\* --profile <your profile name>
-
-helper cmd:
-$ yarn build && aws s3 sync build/ s3://<your s3> --profile <your profile name> && aws cloudfront create-invalidation --distribution-id <your distribution id> --paths /\* --profile <your profile name>
 ```
+
+#### Custom domain set up
+
+You will need to set up an ssl cert and point some cname records at the cloudfront distibution. Detailed instructions here:
+https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-https-alternate-domain-names.html
+
+1. Get a ssl cert from ACM. You'll have to verify domain ownership by adding a cname record where you're domain is managed.
+
+2. Update your CloudFront distribution to use the new certificate once it is provisioned.
+
+3. Create cname records to point the domain at the CloudFront url
