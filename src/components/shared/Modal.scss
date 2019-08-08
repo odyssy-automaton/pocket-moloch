@@ -20,5 +20,6 @@
     }
     .Contents {
         padding: $base-padding;
+        p { max-width: 600px; }
     }
 }

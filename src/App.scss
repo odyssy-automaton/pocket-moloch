@@ -57,6 +57,7 @@ a {
   text-decoration: none;
   transition: all .15s linear;
   vertical-align: middle;
+  cursor: pointer;
   svg {
     display: inline-block;
     margin: 0;
@@ -191,6 +192,10 @@ button,
     fill: $base-font-color;
   }
   p { margin: 0; }
+}
+
+.IconWarning svg {
+  fill: $danger;
 }
 
 // Utils
