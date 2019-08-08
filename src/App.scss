@@ -198,6 +198,8 @@ button,
   fill: $danger;
 }
 
+.QR svg:not(.IconRight) { padding: 25px; background-color: white; }
+
 // Utils
 
 .AddDevice {

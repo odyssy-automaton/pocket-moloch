@@ -90,7 +90,7 @@ const AddDevice = ({ match }) => {
           {renderList()}
         </>
       )}
-      {!currentUser && <p>not logged in</p>}
+      {!currentUser && <p className="Pad">Not logged in</p>}
       <BottomNav />
     </div>
   );
