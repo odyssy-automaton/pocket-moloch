@@ -6,6 +6,8 @@ import BcToast from './BcToast';
 
 import Brand from '../../assets/japanese-ogre.png';
 import './TopNav.scss';
+import useModal from './useModal';
+import Modal from './Modal'
 
 const TopNav = (props) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -13,6 +15,8 @@ const TopNav = (props) => {
   // Toggle functions
   const [isElementOpen, setElementOpen] = React.useState(false);
   const toggleElement = () => setElementOpen(!isElementOpen);
+  const { isShowing, toggle } = useModal();
+
 
   return (
     <div className="TopNav">
@@ -21,14 +25,14 @@ const TopNav = (props) => {
         className={isElementOpen ? 'Backdrop__Open' : 'Backdrop'}
         onClick={toggleElement}
       />
-      { props.match.params.name === '/proposal/' ? (
-      <p>back</p>
-      ):(
-      <Link className="Brand" to="/">
-        <img src={Brand} alt="Pocket Moloch" />
-      </Link>
+      {props.match.params.name === '/proposal/' ? (
+        <p>back</p>
+      ) : (
+        <Link className="Brand" to="/">
+          <img src={Brand} alt="Pocket Moloch" />
+        </Link>
       )}
-      
+
       {currentUser ? (
         <div className="Auth">
           <button className="Auth__Button" onClick={toggleElement}>
@@ -51,13 +55,28 @@ const TopNav = (props) => {
             >
               Account
             </Link>
-            <Link
+            <div
               className="Dropdown__Open--Item"
-              to="/sign-out"
-              onClick={toggleElement}
+              onClick={() => toggle('signOutMsg')}
             >
               {'<='} Sign out
-            </Link>
+            </div>
+            <Modal
+              isShowing={isShowing.signOutMsg}
+              hide={() => toggle('signOutMsg')}
+            >
+
+              <h2>Sign out Confirmation</h2>
+              <p>This DAO uses contract wallets which are owned by device keys, if you sign out of this device you will no longer be approved to make transactions from this device.</p>
+              <p>Make sure you have added at least one seconday device to access your wallet. You could always reapprove this device again, with one of your other approved device.</p>
+              <p>If you do choose to sign out and you have not added any other device keys, you will not be able to access your wallet in the future. EVER!</p>
+              <Link
+                to="/sign-out"
+                onClick={toggleElement}
+              >
+                Yes Sign Me out and remove this device
+              </Link>
+            </Modal>
           </div>
         </div>
       ) : (
