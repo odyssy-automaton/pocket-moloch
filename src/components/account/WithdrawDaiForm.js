@@ -55,7 +55,7 @@ const WithdrawDaiForm = () => {
             const data = await daiService.transfer(
               values.addr,
               values.dist,
-              values.amount,
+              web3Service.toWei(values.amount),
               true,
             );
 
