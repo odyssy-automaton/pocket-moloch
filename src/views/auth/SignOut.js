@@ -14,6 +14,7 @@ const SignOut = () => {
       try {
         await Auth.signOut();
         setCurrentUser();
+        localStorage.clear();
       } catch {}
     };
 
