@@ -2,8 +2,8 @@ Resources:
   CognitoIdentityPool:
     Type: AWS::Cognito::IdentityPool
     Properties:
-      IdentityPoolName: mcDaoV3${self:custom.stage}IdentityPool
-      AllowUnauthenticatedIdentities: false
+      IdentityPoolName: molochfork${self:custom.stage}IdentityPool
+      AllowUnauthenticatedIdentities: true
       CognitoIdentityProviders:
         - ClientId:
             Ref: CognitoUserPoolClient
