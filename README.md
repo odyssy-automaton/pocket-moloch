@@ -1,6 +1,6 @@
-# Pocket Moloch
 
-Bare bones, mobile-first set up for Moloch frontend with Abridged Wallet SDK by Odyssy.
+# Fork of pocket-moloch for mc-dao
+
 
 ## Development
 

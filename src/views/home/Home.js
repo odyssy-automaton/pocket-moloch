@@ -100,7 +100,7 @@ const Home = ({ client }) => {
   }, [guildBankAddr, chartView]);
 
   return (
-    <Query query={GET_METADATA} pollInterval={2500}>
+    <Query query={GET_METADATA} pollInterval={30000}>
       {({ loading, error, data }) => {
         if (loading) return <Loading />;
         if (error) return <ErrorMessage message={error} />;
@@ -108,9 +108,10 @@ const Home = ({ client }) => {
         return (
           <div className="Home">
             <div className="Intro">
-              <h1>Pocket Moloch</h1>
+              <h1>MetaCartel DAO</h1>
               <p>
-                Put a Moloch DAO in your pocket.
+                If you want to go fast, go alone.<br />
+                If you want to go far, go together.
               </p>
             </div>
             <div className="Chart" style={{ width: '100%', height: '33vh' }}>
