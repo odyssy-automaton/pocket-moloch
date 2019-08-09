@@ -1,4 +1,4 @@
-service: mc-dao-app-v3
+service: <your service name here>
 
 plugins:
   - serverless-single-page-app-plugin
@@ -12,6 +12,7 @@ provider:
   runtime: nodejs8.10
   stage: dev
   region: us-east-1
+  profile: default
 
 resources:
   - ${file(resources/s3-bucket.yml)}
