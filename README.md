@@ -1,5 +1,5 @@
 
-# Fork of pocket-moloch for mc-dao
+# Pocket Moloch aka Pokémol
 
 
 ## Development
