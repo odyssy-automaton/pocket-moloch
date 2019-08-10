@@ -14,7 +14,7 @@ const Proposals = ({match, history}) => {
 
   return (
     <Fragment>
-      <Query query={GET_PROPOSALS_QUERY} pollInterval={10000}> 
+      <Query query={GET_PROPOSALS_QUERY} pollInterval={20000}> 
         {({ loading, error, data }) => {
           if (loading) return <Loading />;
           if (error) return <ErrorMessage message={error} />;
