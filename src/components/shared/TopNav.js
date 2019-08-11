@@ -76,7 +76,10 @@ const TopNav = (props) => {
               <Link
                 className="AltOption"
                 to="/sign-out"
-                onClick={toggleElement}
+                onClick={() => {
+                  toggle('signOutMsg');
+                  toggleElement();
+                }}
               >
                 Yes, sign me out and remove this device
               </Link>

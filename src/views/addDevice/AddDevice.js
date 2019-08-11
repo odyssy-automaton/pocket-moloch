@@ -77,7 +77,7 @@ const AddDevice = ({ match }) => {
   };
   return (
     <div className="View Pad">
-      {currentWallet.state === 'Deployed' && currentWallet.eth > 0 && (
+      {currentWallet.state === 'Deployed' && currentWallet.eth > 0 && !deviceAdded && (
         <div className="AddDevice">
           <h3>Are you sure you want to add this new device?</h3>
           <p>{deviceAddr}</p>
