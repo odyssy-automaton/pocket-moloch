@@ -9,12 +9,12 @@ import BottomNav from '../../components/shared/BottomNav';
 import Loading from '../../components/shared/Loading';
 import { CurrentWalletContext } from '../../contexts/Store';
 
-const Proposals = () => {
-  const [currentWallet] = useContext(CurrentWalletContext);
+const Proposals = ({match, history}) => {
+  const [currentWallet] = useContext(CurrentWalletContext);  
 
   return (
     <Fragment>
-      <Query query={GET_PROPOSALS_QUERY}>
+      <Query query={GET_PROPOSALS_QUERY} pollInterval={20000}> 
         {({ loading, error, data }) => {
           if (loading) return <Loading />;
           if (error) return <ErrorMessage message={error} />;
@@ -43,7 +43,7 @@ const Proposals = () => {
                   </div>
                 ) : null}
               </div>
-              <ProposalFilter proposals={data.proposals} />
+              <ProposalFilter proposals={data.proposals} filter={match.params.filter || 'na'} history={history} />
             </div>
           );
         }}

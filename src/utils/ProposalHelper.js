@@ -155,10 +155,11 @@ export const groupByStatus = (proposals) => {
     InQueue: proposals.filter((p) => p.status === 'InQueue'),
     Completed: proposals.filter((p) => {
       return (
-        p.status === 'Aborted' ||
-        p.status === 'Passed' ||
-        p.status === 'Failed' ||
-        p.status === 'Unknown'
+        // 'Aborted', 'Passed', 'Failed', 'Unknown'
+        p.status !== 'VotingPeriod' &&
+        p.status !== 'GracePeriod' &&
+        p.status !== 'ReadyForProcessing' &&
+        p.status !== 'InQueue'
       );
     }),
   };

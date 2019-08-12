@@ -5,23 +5,34 @@ import { groupByStatus } from '../../utils/ProposalHelper';
 
 import './ProposalFilter.scss';
 
-const ProposalFilter = ({ proposals }) => {
+const ProposalFilter = ({ proposals, filter, history}) => {
   const [groupedProposals, setGroupedProposals] = useState();
   const [filteredProposals, setFilteredProposals] = useState([]);
-  const [activeList, setActiveList] = useState();
-
+  
   const handleSelect = (list, listName) => {
     setFilteredProposals(list);
-    setActiveList(listName);
+    history.push(`/proposals/${listName}`)
   };
 
   useEffect(() => {
-    const groupedProps = groupByStatus(proposals);
-
-    setGroupedProposals(groupByStatus(proposals));
-    setFilteredProposals(groupedProps.VotingPeriod);
-    setActiveList('VotingPeriod');
-  }, [proposals]);
+    if(proposals){
+      const groupedProps = groupByStatus(proposals);
+    
+      if(filter in groupedProps){
+        setGroupedProposals(groupByStatus(proposals));
+        setFilteredProposals(groupedProps[filter]);
+      } else {
+        if(groupedProps.VotingPeriod.length > 0) {
+          history.push(`/proposals/VotingPeriod`);
+        } else {
+          history.push(`/proposals/Completed`);
+          
+        }
+        
+      }
+      
+    }
+  }, [proposals, filter, history]);
 
   if (!groupedProposals) {
     return <></>;
@@ -34,7 +45,7 @@ const ProposalFilter = ({ proposals }) => {
           onClick={() =>
             handleSelect(groupedProposals.VotingPeriod, 'VotingPeriod')
           }
-          className={activeList === 'VotingPeriod' ? 'Active' : null}
+          className={filter === 'VotingPeriod' ? 'Active' : null}
         >
           Voting Period ({groupedProposals.VotingPeriod.length})
         </button>
@@ -42,7 +53,7 @@ const ProposalFilter = ({ proposals }) => {
           onClick={() =>
             handleSelect(groupedProposals.GracePeriod, 'GracePeriod')
           }
-          className={activeList === 'GracePeriod' ? 'Active' : null}
+          className={filter === 'GracePeriod' ? 'Active' : null}
         >
           Grace Period ({groupedProposals.GracePeriod.length})
         </button>
@@ -53,19 +64,19 @@ const ProposalFilter = ({ proposals }) => {
               'ReadyForProcessing',
             )
           }
-          className={activeList === 'ReadyForProcessing' ? 'Active' : null}
+          className={filter === 'ReadyForProcessing' ? 'Active' : null}
         >
           Ready For Processing ({groupedProposals.ReadyForProcessing.length})
         </button>
         <button
           onClick={() => handleSelect(groupedProposals.Completed, 'Completed')}
-          className={activeList === 'Completed' ? 'Active' : null}
+          className={filter === 'Completed' ? 'Active' : null}
         >
           Completed ({groupedProposals.Completed.length})
         </button>
         <button
           onClick={() => handleSelect(groupedProposals.InQueue, 'InQueue')}
-          className={activeList === 'InQueue' ? 'Active' : null}
+          className={filter === 'InQueue' ? 'Active' : null}
         >
           In Queue ({groupedProposals.InQueue.length})
         </button>
