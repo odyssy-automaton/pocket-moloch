@@ -11,10 +11,10 @@
     openzeppelin-solidity "2.1.2"
     solidity-bytes-utils "0.0.8"
 
-"@archanova/sdk@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@archanova/sdk/-/sdk-1.0.0.tgz#c334a4ac7e802ffbc9336a60498b57b866203a7e"
-  integrity sha512-yIVZJayX0KIQ9+LK3Z8abSbbEinQm3t8aY46Ot91IlaFYV36oc1TR6EMmwCvCdpZWSOT3/E/sHmgc5xbclD0Qw==
+"@archanova/sdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@archanova/sdk/-/sdk-1.1.0.tgz#2b7b6e3c5d7a67e194404db48492d3dd3fa5b5cf"
+  integrity sha512-jE+pENmPEcT6bSYWsFpKDLNw18/+eNrb4GbdrlMScll+TxvmhaRZDW9kkARR+r2AAez3zMTYHKqN9o6KLJAYnw==
   dependencies:
     "@archanova/contracts" "^1.0.0"
     "@babel/runtime" "^7.4.4"
