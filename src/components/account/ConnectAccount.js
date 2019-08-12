@@ -63,7 +63,7 @@ const ConnectAccount = () => {
           <p>Copied!</p>
         </div>
       )}
-      {currentWallet.state !== 'Deployed' ? (
+      {currentWallet.state === 'Not Connected' ? (
         <button
           onClick={() => {
             toggle('getQrCode');
