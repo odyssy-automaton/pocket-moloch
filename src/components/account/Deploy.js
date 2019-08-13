@@ -9,7 +9,6 @@ const Deploy = () => {
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet, setCurrentWallet] = useContext(CurrentWalletContext);
   const web3Service = new Web3Service();
-  console.log('current wallet');
 
   return (
     <>
@@ -35,7 +34,7 @@ const Deploy = () => {
                     return false;
                   }
                   sdk
-                    .deployAccount()
+                    .deployAccount(estimated)
                     .then((data) => {
                       console.log('deployed', data);
                       bcprocessor.setTx(
