@@ -25,6 +25,12 @@ const RageQuit = () => {
       {loading && <Loading />}
       <h2>Rage Quit</h2>
       <p>Enter the amount of shares you want to burn.</p>
+      <p>
+        Note: ragequit At any time, so long as a member has not voted YES on any
+        proposal in the voting period or grace period, they can irreversibly
+        destroy some of their shares and receive a proportional sum of value from
+        the Guild Bank.
+      </p>
       <Formik
         initialValues={{
           amount: '',
