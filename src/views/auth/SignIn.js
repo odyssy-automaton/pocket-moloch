@@ -201,6 +201,9 @@ const SignIn = ({ history }) => {
       <Link className="AltOption" to="/sign-up">
         Create a new account
       </Link>
+      <Link className="AltOption" to="/forgot-password">
+        Forgot Password
+      </Link>
     </div>
   );
 };
