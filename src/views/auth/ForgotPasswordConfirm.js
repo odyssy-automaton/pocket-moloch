@@ -49,6 +49,8 @@ const ForgotPasswordConfirm = ({ history }) => {
 
           return (
             <Form className="Form">
+              <h2>Confirm your Email</h2>
+              <p>Check your email for a reset code. Enter it here and create a new password.</p>
               {authError ? (
                 <div className="Form__auth-error">{authError.message}</div>
               ) : null}
@@ -66,7 +68,7 @@ const ForgotPasswordConfirm = ({ history }) => {
                 </div>
               )}
               </Field>
-              <ErrorMessage name="username" component="div" />
+              <ErrorMessage name="username" render={msg => <div className="Error">{msg}</div>} />
 
               <Field name="authCode">
               {({ field, form }) => (
@@ -77,12 +79,12 @@ const ForgotPasswordConfirm = ({ history }) => {
                       : 'Field '
                   }
                 >
-                  <label>Auth Code</label>
+                  <label>Reset Code</label>
                   <input type="text" {...field} />
                 </div>
               )}
               </Field>
-              <ErrorMessage name="authCode" component="div" />
+              <ErrorMessage name="authCode" render={msg => <div className="Error">{msg}</div>} />
 
               <Field name="newPassword">
               {({ field, form }) => (
@@ -98,7 +100,7 @@ const ForgotPasswordConfirm = ({ history }) => {
                 </div>
               )}
               </Field>
-              <ErrorMessage name="newPassword" component="div" />
+              <ErrorMessage name="newPassword" render={msg => <div className="Error">{msg}</div>} />
 
               <button type="submit" disabled={isSubmitting}>
                 Submit

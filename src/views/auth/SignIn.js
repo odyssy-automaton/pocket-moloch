@@ -27,7 +27,6 @@ const SignIn = ({ history }) => {
 
   return (
     <div>
-      <h2 className="Pad">Sign in to existing account</h2>
       <Modal
               isShowing={isShowing.signInMsg}
               hide={() => toggle('signInMsg')}
@@ -158,8 +157,12 @@ const SignIn = ({ history }) => {
 
           return (
             <Form className="Form">
+              <h2>Sign in to an existing account</h2>
+              <Link to="/sign-up">
+                Create a new account =>
+              </Link>
               {authError ? (
-                <div className="Form__auth-error">{authError.message}</div>
+                <div className="Form__auth-error"><p className="Danger">{authError.message}</p></div>
               ) : null}
               <Field name="username">
               {({ field, form }) => (
@@ -191,19 +194,18 @@ const SignIn = ({ history }) => {
               )}
               </Field>
               <ErrorMessage name="password" render={msg => <div className="Error">{msg}</div>} />
-              <button type="submit" disabled={isSubmitting}>
-                Sign In
-              </button>
+              <div className="ButtonGroup">
+                <button type="submit" disabled={isSubmitting}>
+                  Sign In
+                </button>
+                <Link to="/forgot-password">
+                  Forgot Password?
+                </Link>
+              </div>
             </Form>
           );
         }}
       </Formik>
-      <Link className="AltOption" to="/sign-up">
-        Create a new account
-      </Link>
-      <Link className="AltOption" to="/forgot-password">
-        Forgot Password
-      </Link>
     </div>
   );
 };

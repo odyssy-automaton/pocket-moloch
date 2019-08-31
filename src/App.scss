@@ -234,11 +234,28 @@ button,
   color: rgb(182, 182, 182);
 }
 
+.Danger {
+  color: $danger;
+}
+
 .AltOption {
   display: block;
   text-align: center;
   width: 100%;
-  padding: 25px 0px;
+  padding: 25px 25px;
+  margin: 0;
+}
+
+.RightButton {
+
+}
+
+.ButtonGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .Video {
