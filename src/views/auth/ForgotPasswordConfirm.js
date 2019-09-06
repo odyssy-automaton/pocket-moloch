@@ -23,6 +23,9 @@ const ForgotPasswordConfirm = ({ history }) => {
           if (!values.newPassword) {
             errors.newPassword = 'Required';
           }
+          if (values.newPassword.length<6) {
+            errors.newPassword = 'Password must be at least 7 characters long'
+          }
 
           return errors;
         }}
