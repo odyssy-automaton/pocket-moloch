@@ -44,7 +44,7 @@ const ForgotPassword = ({ history }) => {
               <h2>Forgot Password?</h2>
               <p>Enter your pseudonym and we'll shoot a confirmation email to the address attached.</p>
               {authError &&
-                <div className="Form__auth-error">{authError}</div>}
+                <div className="Form__auth-error">{authError.message}</div>}
               <Field name="username">
               {({ field, form }) => (
                 <div

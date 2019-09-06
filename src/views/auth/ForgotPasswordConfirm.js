@@ -49,7 +49,7 @@ const ForgotPasswordConfirm = ({ history }) => {
               <h2>Confirm your Email</h2>
               <p>Check your email for a reset code. Enter it here and create a new password.</p>
               {authError &&
-                <div className="Form__auth-error">{authError}</div>}
+                <div className="Form__auth-error">{authError.message}</div>}
               <Field name="username">
               {({ field, form }) => (
                 <div
