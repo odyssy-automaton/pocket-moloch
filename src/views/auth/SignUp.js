@@ -55,9 +55,8 @@ const SignUp = ({ history }) => {
 
           return (
             <Form className="Form">
-              {authError ? (
-                <div className="Form__auth-error">{authError.message}</div>
-              ) : null}
+              {authError &&
+                <div className="Form__auth-error">{authError.message}</div>}
               <Field name="username">
                 {({ field, form }) => (
                   <div className={field.value ? 'Field HasValue' : 'Field '}>
