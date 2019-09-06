@@ -17,7 +17,7 @@ const SignUp = ({ history }) => {
         validate={(values) => {
           let errors = {};
           if (!values.username) {
-            errors.email = 'Required';
+            errors.username = 'Required';
           }
           if (!values.email) {
             errors.email = 'Required';
