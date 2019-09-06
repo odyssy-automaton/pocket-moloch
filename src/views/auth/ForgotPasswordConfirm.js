@@ -28,15 +28,12 @@ const ForgotPasswordConfirm = ({ history }) => {
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            Auth.forgotPasswordSubmit(values.username, values.authCode, values.newPassword)
-            .then(() => {
+            await Auth.forgotPasswordSubmit(values.username, values.authCode, values.newPassword)
                 history.push('/sign-in');
-              });
 
             setSubmitting(false);
 
           } catch (err) {
-            console.log('error: ', err);
             authError = err;
             setSubmitting(false);
           }
@@ -51,9 +48,8 @@ const ForgotPasswordConfirm = ({ history }) => {
             <Form className="Form">
               <h2>Confirm your Email</h2>
               <p>Check your email for a reset code. Enter it here and create a new password.</p>
-              {authError ? (
-                <div className="Form__auth-error">{authError.message}</div>
-              ) : null}
+              {authError &&
+                <div className="Form__auth-error">{authError}</div>}
               <Field name="username">
               {({ field, form }) => (
                 <div
