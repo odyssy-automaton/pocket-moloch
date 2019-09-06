@@ -22,7 +22,7 @@ const SignUp = ({ history }) => {
           if (!values.email) {
             errors.email = 'Required';
           }
-          if (!values.email) {
+          if (!values.password) {
             errors.password = 'Required';
           }
 
