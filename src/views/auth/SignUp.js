@@ -13,7 +13,7 @@ const SignUp = ({ history }) => {
     <div>
       <h2 className="Pad">Sign up with Email</h2>
       <Formik
-        initialValues={{ username: '', email: '', password: '' }}
+        initialValues={{ username: '', email: '', password: '', passwordConfirm: '', }}
         validate={(values) => {
           let errors = {};
           if (!values.username) {
@@ -24,6 +24,15 @@ const SignUp = ({ history }) => {
           }
           if (!values.password) {
             errors.password = 'Required';
+          }
+          if (values.password.length<6) {
+            errors.password = 'Password must be at least 7 characters long';
+          }
+          if (!values.passwordConfirm) {
+            errors.passwordConfirm = 'Required';
+          }
+          if (values.password !== values.passwordConfirm) {
+            errors.passwordConfirm = 'Passwords do not match';
           }
 
           return errors;
@@ -91,6 +100,18 @@ const SignUp = ({ history }) => {
               </Field>
               <ErrorMessage
                 name="password"
+                render={(msg) => <div className="Error">{msg}</div>}
+              />
+              <Field name="passwordConfirm">
+                {({ field, form }) => (
+                  <div className={field.value ? 'Field HasValue' : 'Field '}>
+                    <label>Confirm password</label>
+                    <input type="password" {...field} />
+                  </div>
+                )}
+              </Field>
+              <ErrorMessage
+                name="passwordConfirm"
                 render={(msg) => <div className="Error">{msg}</div>}
               />
               <button type="submit" disabled={isSubmitting}>
