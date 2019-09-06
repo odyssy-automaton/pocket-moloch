@@ -11,7 +11,7 @@ const ForgotPasswordConfirm = ({ history }) => {
   return (
     <div className="ForgotPasswordConfirm">
       <Formik
-        initialValues={{ username: '', authCode: '', newPassword: '' }}
+        initialValues={{ username: '', authCode: '', newPassword: '', newPasswordConfirm: '' }}
         validate={(values) => {
           let errors = {};
           if (!values.username) {
@@ -25,6 +25,9 @@ const ForgotPasswordConfirm = ({ history }) => {
           }
           if (values.newPassword.length<6) {
             errors.newPassword = 'Password must be at least 7 characters long'
+          }
+          if (values.newPassword !== values.newPasswordConfirm) {
+            errors.newPasswordConfirm = 'Passwords do not match';
           }
 
           return errors;
@@ -100,6 +103,21 @@ const ForgotPasswordConfirm = ({ history }) => {
               )}
               </Field>
               <ErrorMessage name="newPassword" render={msg => <div className="Error">{msg}</div>} />
+              <Field name="newPasswordConfirm">
+              {({ field, form }) => (
+                <div
+                  className={
+                    field.value
+                      ? 'Field HasValue'
+                      : 'Field '
+                  }
+                >
+                  <label>Confirm New Password</label>
+                  <input type="password" {...field} />
+                </div>
+              )}
+              </Field>
+              <ErrorMessage name="newPasswordConfirm" render={msg => <div className="Error">{msg}</div>} />
 
               <button type="submit" disabled={isSubmitting}>
                 Submit
