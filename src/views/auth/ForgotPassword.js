@@ -15,7 +15,7 @@ const ForgotPassword = ({ history }) => {
         validate={(values) => {
           let errors = {};
           if (!values.username) {
-            errors.username = 'This field is required';
+            errors.username = 'Required';
           }
 
           return errors;
