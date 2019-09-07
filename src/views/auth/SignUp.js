@@ -16,6 +16,7 @@ const SignUp = ({ history }) => {
         initialValues={{ username: '', email: '', password: '', passwordConfirm: '', }}
         validate={(values) => {
           let errors = {};
+          const regexPasswordValidation= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.,])\\S*$')
           if (!values.username) {
             errors.username = 'Required';
           }
@@ -25,8 +26,11 @@ const SignUp = ({ history }) => {
           if (!values.password) {
             errors.password = 'Required';
           }
-          if (values.password.length<6) {
-            errors.password = 'Password must be at least 7 characters long';
+          if (values.password.length<7) {
+            errors.password = 'Password must be at least 8 characters long';
+          }
+          if (!regexPasswordValidation.test(values.password)) {
+            errors.password = 'Password must contain an uppercase letter, a lowercase letter, a number and a special character'
           }
           if (!values.passwordConfirm) {
             errors.passwordConfirm = 'Required';
