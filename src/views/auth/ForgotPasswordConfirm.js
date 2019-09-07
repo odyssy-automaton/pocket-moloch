@@ -14,6 +14,8 @@ const ForgotPasswordConfirm = ({ history }) => {
         initialValues={{ username: '', authCode: '', newPassword: '', newPasswordConfirm: '' }}
         validate={(values) => {
           let errors = {};
+          const regexPasswordValidation= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.,])\\S*$')
+
           if (!values.username) {
             errors.username = 'Required';
           }
@@ -23,8 +25,11 @@ const ForgotPasswordConfirm = ({ history }) => {
           if (!values.newPassword) {
             errors.newPassword = 'Required';
           }
-          if (values.newPassword.length<6) {
-            errors.newPassword = 'Password must be at least 7 characters long'
+          if (values.newPassword.length<7) {
+            errors.newPassword = 'Password must be at least 8 characters long'
+          }
+          if (!regexPasswordValidation.test(values.newPassword)) {
+            errors.newPassword = 'Password must contain an uppercase letter, a lowercase letter, a number and a special character'
           }
           if (values.newPassword !== values.newPasswordConfirm) {
             errors.newPasswordConfirm = 'Passwords do not match';
