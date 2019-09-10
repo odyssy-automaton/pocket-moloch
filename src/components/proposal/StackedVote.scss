@@ -7,11 +7,12 @@
     bottom: 42px;
     width: calc(100% - 150px);
     .FullBar {
-        width: 100%;
+        width: 001%;
         height: 5px;
         position: relative;
         .Labels {
             position: relative;
+            min-height: 5px;
             .NoLabel {
                 width: 65px;
                 padding: 0px;
