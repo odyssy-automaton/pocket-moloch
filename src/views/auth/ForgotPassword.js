@@ -22,14 +22,13 @@ const ForgotPassword = ({ history }) => {
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            Auth.forgotPassword(values.username).then(() => {
+            await Auth.forgotPassword(values.username)
                 history.push('/forgot-password-confirm');
-              });
+             
 
             setSubmitting(false);
 
           } catch (err) {
-            console.log('error forgetting pass: ', err);
             authError = err;
             setSubmitting(false);
           }
@@ -44,9 +43,8 @@ const ForgotPassword = ({ history }) => {
             <Form className="Form">
               <h2>Forgot Password?</h2>
               <p>Enter your pseudonym and we'll shoot a confirmation email to the address attached.</p>
-              {authError ? (
-                <div className="Form__auth-error">{authError.message}</div>
-              ) : null}
+              {authError &&
+                <div className="Form__auth-error">{authError.message}</div>}
               <Field name="username">
               {({ field, form }) => (
                 <div

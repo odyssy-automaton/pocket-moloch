@@ -11,9 +11,11 @@ const ForgotPasswordConfirm = ({ history }) => {
   return (
     <div className="ForgotPasswordConfirm">
       <Formik
-        initialValues={{ username: '', authCode: '', newPassword: '' }}
+        initialValues={{ username: '', authCode: '', newPassword: '', newPasswordConfirm: '' }}
         validate={(values) => {
           let errors = {};
+          const regexPasswordValidation= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.,])\\S*$')
+
           if (!values.username) {
             errors.username = 'Required';
           }
@@ -23,20 +25,26 @@ const ForgotPasswordConfirm = ({ history }) => {
           if (!values.newPassword) {
             errors.newPassword = 'Required';
           }
+          if (values.newPassword.length<7) {
+            errors.newPassword = 'Password must be at least 8 characters long'
+          }
+          if (!regexPasswordValidation.test(values.newPassword)) {
+            errors.newPassword = 'Password must contain an uppercase letter, a lowercase letter, a number and a special character'
+          }
+          if (values.newPassword !== values.newPasswordConfirm) {
+            errors.newPasswordConfirm = 'Passwords do not match';
+          }
 
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            Auth.forgotPasswordSubmit(values.username, values.authCode, values.newPassword)
-            .then(() => {
+            await Auth.forgotPasswordSubmit(values.username, values.authCode, values.newPassword)
                 history.push('/sign-in');
-              });
 
             setSubmitting(false);
 
           } catch (err) {
-            console.log('error: ', err);
             authError = err;
             setSubmitting(false);
           }
@@ -51,9 +59,8 @@ const ForgotPasswordConfirm = ({ history }) => {
             <Form className="Form">
               <h2>Confirm your Email</h2>
               <p>Check your email for a reset code. Enter it here and create a new password.</p>
-              {authError ? (
-                <div className="Form__auth-error">{authError.message}</div>
-              ) : null}
+              {authError &&
+                <div className="Form__auth-error">{authError.message}</div>}
               <Field name="username">
               {({ field, form }) => (
                 <div
@@ -101,6 +108,21 @@ const ForgotPasswordConfirm = ({ history }) => {
               )}
               </Field>
               <ErrorMessage name="newPassword" render={msg => <div className="Error">{msg}</div>} />
+              <Field name="newPasswordConfirm">
+              {({ field, form }) => (
+                <div
+                  className={
+                    field.value
+                      ? 'Field HasValue'
+                      : 'Field '
+                  }
+                >
+                  <label>Confirm New Password</label>
+                  <input type="password" {...field} />
+                </div>
+              )}
+              </Field>
+              <ErrorMessage name="newPasswordConfirm" render={msg => <div className="Error">{msg}</div>} />
 
               <button type="submit" disabled={isSubmitting}>
                 Submit
