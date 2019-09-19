@@ -16,7 +16,7 @@ const TopNav = (props) => {
   const [isElementOpen, setElementOpen] = React.useState(false);
   const toggleElement = () => setElementOpen(!isElementOpen);
   const { isShowing, toggle } = useModal();
-
+  const {location: {pathname}}=props;
 
   return (
     <div className="TopNav">
@@ -25,6 +25,8 @@ const TopNav = (props) => {
         className={isElementOpen ? 'Backdrop__Open' : 'Backdrop'}
         onClick={toggleElement}
       />
+      {(pathname === '/sign-up' || pathname ==='/confirm') ? <Link to="/">New Account</Link>:
+      <>
       {props.match.params.name === '/proposal/' ? (
         <p>back</p>
       ) : (
@@ -32,6 +34,7 @@ const TopNav = (props) => {
           <img src={Brand} alt="Pocket Moloch" />
         </Link>
       )}
+      </>}
 
       {currentUser ? (
         <div className="Auth">
