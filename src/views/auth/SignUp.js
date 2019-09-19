@@ -11,7 +11,7 @@ const SignUp = ({ history }) => {
 
   return (
     <div>
-      <h2 className="Pad">Sign up with Email</h2>
+      <h2 className="Pad">Create your account</h2>
       <Formik
         initialValues={{ username: '', email: '', password: '', passwordConfirm: '', }}
         validate={(values) => {
@@ -26,7 +26,7 @@ const SignUp = ({ history }) => {
           if (!values.password) {
             errors.password = 'Required';
           }
-          if (values.password.length<7) {
+          if (values.password.length<8) {
             errors.password = 'Password must be at least 8 characters long';
           }
           if (!regexPasswordValidation.test(values.password)) {
@@ -38,7 +38,6 @@ const SignUp = ({ history }) => {
           if (values.password !== values.passwordConfirm) {
             errors.passwordConfirm = 'Passwords do not match';
           }
-
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
@@ -53,7 +52,10 @@ const SignUp = ({ history }) => {
                 'custom:device_address': '0x0',
               },
             });
-            history.push('/confirm');
+            history.push({
+  pathname: '/confirm',
+  state: { userName: values.username }
+});
           } catch (err) {
             console.log('error signing up: ', err);
             setSubmitting(false);
@@ -61,7 +63,7 @@ const SignUp = ({ history }) => {
           }
         }}
       >
-        {({ isSubmitting }) => {
+        {({ isSubmitting, errors, touched }) => {
           if (isSubmitting) {
             return <Loading />;
           }
@@ -86,7 +88,7 @@ const SignUp = ({ history }) => {
                 {({ field, form }) => (
                   <div className={field.value ? 'Field HasValue' : 'Field '}>
                     <label>Email</label>
-                    <input type="text" {...field} />
+                    <input type="email" {...field} />
                   </div>
                 )}
               </Field>
@@ -118,19 +120,13 @@ const SignUp = ({ history }) => {
                 name="passwordConfirm"
                 render={(msg) => <div className="Error">{msg}</div>}
               />
-              <button type="submit" disabled={isSubmitting}>
+              <button type="submit" className={(Object.keys(errors).length<1 && Object.keys(touched).length>2)?"":"Disabled"} disabled={isSubmitting}>
                 Submit
               </button>
             </Form>
           );
         }}
       </Formik>
-      <Link className="AltOption" to="/sign-in">
-        I already have an account
-      </Link>
-      <Link className="AltOption" to="/confirm">
-        Confirm account
-      </Link>
     </div>
   );
 };
