@@ -1,5 +1,5 @@
 // import React, { useContext } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Query } from 'react-apollo';
 import { ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { withApollo } from 'react-apollo';
@@ -13,10 +13,35 @@ import { GET_METADATA } from '../../utils/Queries';
 
 import './Home.scss';
 import WethService from '../../utils/WethService';
+import TwoButtonModal from '../../components/shared/TwoButtonModal';
+import useModal from '../../components/shared/useModal';
 
-const Home = ({ client }) => {
+import { CurrentUserContext } from '../../contexts/Store';
+
+const Home = ({ client, history }) => {
   const [vizData, setVizData] = useState([]);
   const [chartView, setChartView] = useState('bank');
+  const { isShowing, toggle } = useModal();
+  const [currentUser] = useContext(CurrentUserContext);
+  useEffect(()=>{
+    if (history.location.state && history.location.state.signUpModal) {
+      toggle('signUpModal')
+    } else {
+      (async () => {
+        if (currentUser && currentUser.sdk) {
+        
+          const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
+
+          if (!_accountDevices.items.some(item=> item.device.adress === currentUser.sdk.state.deviceAddress)) {
+            toggle('newDeviceModal')
+          } 
+          if (_accountDevices.items.length<2) {
+            toggle('addDeviceModal')
+          }
+        }
+    })()}
+    // eslint-disable-next-line
+  },[currentUser]);
 
   // const weth = new WethService();
   const { guildBankAddr } = client.cache.readQuery({ query: GET_METADATA });
@@ -106,12 +131,18 @@ const Home = ({ client }) => {
         if (error) return <ErrorMessage message={error} />;
 
         return (
+          <>
+          <TwoButtonModal
+            isShowing={isShowing.signUpModal}
+            hide={() => toggle('signUpModal')}
+          >
+            <p>hello</p>
+          </TwoButtonModal>
           <div className="Home">
             <div className="Intro">
               <h1>PokéMol DAO</h1>
               <p>
-                Is that a Moloch in your pocket, <br />
-                or are you just happy to see me?
+              Put a Moloch in Your Pocket
               </p>
             </div>
             <div className="Chart" style={{ width: '100%', height: '33vh' }}>
@@ -179,6 +210,7 @@ const Home = ({ client }) => {
             </div>
             <BottomNav />
           </div>
+          </>
         );
       }}
     </Query>
