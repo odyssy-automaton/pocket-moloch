@@ -1,25 +1,26 @@
 @import '../../variables';
 
-.Modal {
+.ModalBackground {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
     min-height: 100vh;
-    background-color: $app-light;
+    background-color: rgba(0,0,0,0.4);
     display: flex;
     justify-content: center;
     flex-direction: column;
-    z-index: 1;
-    .Close { 
-        position: absolute; top: 25px; right: 25px; 
-        background: none;
-        margin: 0;
-        padding: 0px;
-        svg { fill: black; width: 36px; height: 36px; }
-    }
-    .Contents {
-        padding: $base-padding;
-        p { max-width: 600px; }
+    z-index: 8;
+    padding: 0 40px;
+    .ModalContent {
+        display: flex;
+        flex-direction: column;
+        background-color: whitesmoke;
+       border-radius: 23px;
+        .ButtonFlex{
+            display: flex;
+            button {
+                width:130px;
+            }
+        }
     }
 }

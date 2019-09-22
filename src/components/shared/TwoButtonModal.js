@@ -1,41 +1,41 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './Modal.scss';
+import './TwoButtonModal.scss';
 
-const Modal = ({ isShowing, hide, children }) =>
+const Modal = ({ isShowing, hide, title, text, handleConfirm }) =>
   isShowing
-    ? ReactDOM.createPortal(
-        <React.Fragment>
-          <div className="ModalBackdrop" />
+    ? 
+        <>
+          <div className="ModalBackground">
           <div
-            className="Modal"
+            className="ModalContent"
             aria-modal
             aria-hidden
             tabIndex={-1}
             role="dialog"
           >
+          <p className="ModalTitle">{title}</p>
+          <p className="ModalText">{text}</p>
+          <div className="ButtonFlex">
             <button
               type="button"
-              className="Close"
+              className="Cancel"
               data-dismiss="modal"
-              aria-label="Close"
+              aria-label="Cancel"
               onClick={hide}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-                <path d="M0 0h24v24H0z" fill="none" />
-              </svg>
+            >Cancel
             </button>
-            <div className="Contents FlexCenter">{children}</div>
+            <button
+              type="button"
+              className="Confirm"
+              data-dismiss="modal"
+              aria-label="Confirm"
+              onClick={handleConfirm}
+            >Continue
+            </button>
+</div>
           </div>
-        </React.Fragment>,
-        document.body,
-      )
+          </div>
+        </>
     : null;
 
 export default Modal;
