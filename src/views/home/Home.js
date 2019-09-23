@@ -140,22 +140,22 @@ const Home = ({ client, history }) => {
             hide={() => toggle('signUpModal')}
             title="Account almost ready"
             text="You need to add at least one more recovery option"
-          >
-          </TwoButtonModal>
+            handleConfirm={history.push('/account-recovery')}
+          />
           <TwoButtonModal
             isShowing={isShowing.newDeviceDetectedModal}
             hide={() => toggle('newDeviceDetectedModal')}
             title="New Device or Browser"
             text="This device does not have access. Would you like to add it?"
-          >
-          </TwoButtonModal>
+            handleConfirm={history.push('/account-recovery')}
+          />
           <TwoButtonModal
             isShowing={isShowing.addDeviceModal}
             hide={() => toggle('addDeviceModal')}
             title="Secure your account"
             text="You need to add at least one more recovery option"
-          >
-          </TwoButtonModal>
+            handleConfirm={history.push('/account-recovery')}
+          />
             <div className="Intro">
               <h1>PokéMol DAO</h1>
               <p>
