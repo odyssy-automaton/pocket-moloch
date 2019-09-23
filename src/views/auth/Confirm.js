@@ -6,29 +6,40 @@ import { Auth } from 'aws-amplify';
 import Loading from '../../components/shared/Loading';
 import GreenCheck from '../../assets/GreenCheck.svg'
 const Confirm = ({ history }) => {
-  if (!history.location.state){history.push('/sign-up')}
   const [focused, setFocused] = React.useState(false)
+  const [authSuccess, setAuthSuccess] = React.useState(false)
+  let historyState = history.location.state;
   let authError = null;
-  let authSuccess = false;
   return (
     <div className="Confirm">
       <Formik
-        initialValues={{ authCode: '' }}
+        initialValues={{ userName: '',authCode: '' }}
         validate={(values) => {
           let errors = {};
           if (!values.authCode) {
             errors.authCode = 'Required';
+          }
+          if (!historyState && !values.userName) {
+            errors.userName = 'Required';
           }
 
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            let data = await Auth.confirmSignUp(history.location.state.userName, values.authCode, {
+            if (historyState && historyState.userName) {
+            let data = await Auth.confirmSignUp(historyState.userName, values.authCode, {
               forceAliasCreation: false,
             })
             setSubmitting(false)
-            authSuccess = data === 'SUCCESS';
+            setAuthSuccess(!!data)}
+            else {
+              let data = await Auth.confirmSignUp(values.userName, values.authCode, {
+              forceAliasCreation: false,
+            })
+            setSubmitting(false)
+            setAuthSuccess(!!data)
+            }
           } catch (err) {
             console.log('error confirming signing up: ', err);
             authError = err;
@@ -56,6 +67,25 @@ const Confirm = ({ history }) => {
               <>
               <h2 className="Pad">Confirm your email</h2>
               <p>We sent a Confirmation Code to your email address. Enter it here to continue.</p>
+              {!historyState &&
+              <>
+              <Field name="userName">
+              {({ field, form }) => (
+                <div
+                  className={
+                    field.value
+                      ? 'Field HasValue'
+                      : 'Field '
+                  }
+                >
+                  <label>Username</label>
+                  <input type="text" {...field}/>
+                </div>
+              )}
+              </Field>
+              <ErrorMessage name="authCode"  render={(msg) => <div className="Error">{msg}</div>}
+              />
+              </>}
               <Field name="authCode">
               {({ field, form }) => (
                 <div
