@@ -21,6 +21,8 @@ const sdkEnv = getSdkEnvironment(SdkEnvironmentNames[`${config.SDK_ENV}`]); // k
 const SignIn = ({ history }) => {
   const [, setCurrentUser] = useContext(CurrentUserContext);
   const [authError, setAuthError] = useState();
+  const [pseudonymTouch, setPseudonymTouch] = useState(false);
+  const [passwordTouch, setPasswordTouch] = useState(false);
 
   return (
     <div>
@@ -126,7 +128,7 @@ const SignIn = ({ history }) => {
           }
         }}
       >
-        {({ isSubmitting }) => {
+        {({ isSubmitting, errors, touched }) => {
           if (isSubmitting) {
             return <Loading />;
           }
@@ -150,7 +152,7 @@ const SignIn = ({ history }) => {
                   }
                 >
                   <label>Pseudonym</label>
-                  <input type="text" {...field} />
+                  <input type="text" {...field} onInput={()=>setPseudonymTouch(true)} />
                 </div>
               )}
               </Field>
@@ -165,13 +167,13 @@ const SignIn = ({ history }) => {
                   }
                 >
                   <label>Password</label>
-                  <input type="password" {...field} />
+                  <input type="password" {...field} onInput={()=>setPasswordTouch(true)} />
                 </div>
               )}
               </Field>
               <ErrorMessage name="password" render={msg => <div className="Error">{msg}</div>} />
               <div className="ButtonGroup">
-                <button type="submit" disabled={isSubmitting}>
+                <button type="submit" className={(Object.keys(errors).length<1 && pseudonymTouch && passwordTouch)?"":"Disabled"}  disabled={isSubmitting}>
                   Sign In
                 </button>
                 <Link to="/forgot-password">
