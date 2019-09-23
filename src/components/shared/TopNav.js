@@ -25,6 +25,7 @@ const TopNav = (props) => {
         className={isElementOpen ? 'Backdrop__Open' : 'Backdrop'}
         onClick={toggleElement}
       />
+      {pathname === '/sign-in' ? <Link to="/">Sign in with Password</Link>: <>
       {(pathname === '/sign-up' || pathname ==='/confirm') ? <Link to="/">New Account</Link>:
       <>
       {props.match.params.name === '/proposal/' ? (
@@ -34,7 +35,7 @@ const TopNav = (props) => {
           <img src={Brand} alt="Pocket Moloch" />
         </Link>
       )}
-      </>}
+      </>}</>}
 
       {currentUser ? (
         <div className="Auth">
