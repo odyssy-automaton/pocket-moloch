@@ -33,10 +33,10 @@ const Home = ({ client, history }) => {
         
           const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
 
-          if (!_accountDevices.items.some(item=> item.device.adress === currentUser.sdk.state.deviceAddress)) {
+          if (!_accountDevices.items.some(item=> item.device.address === currentUser.sdk.state.deviceAddress)) {
             toggle('newDeviceDetectedModal')
           } 
-          if (_accountDevices.items.length<2) {
+          else if (_accountDevices.items.length<2) {
             toggle('addDeviceModal')
           }
         }
@@ -140,21 +140,21 @@ const Home = ({ client, history }) => {
             hide={() => toggle('signUpModal')}
             title="Account almost ready"
             text="You need to add at least one more recovery option"
-            handleConfirm={history.push('/account-recovery')}
+            handleConfirm={()=>history.push('/account-recovery')}
           />
           <TwoButtonModal
             isShowing={isShowing.newDeviceDetectedModal}
             hide={() => toggle('newDeviceDetectedModal')}
             title="New Device or Browser"
             text="This device does not have access. Would you like to add it?"
-            handleConfirm={history.push('/account-recovery')}
+            handleConfirm={()=>history.push('/account-recovery')}
           />
           <TwoButtonModal
             isShowing={isShowing.addDeviceModal}
             hide={() => toggle('addDeviceModal')}
             title="Secure your account"
             text="You need to add at least one more recovery option"
-            handleConfirm={history.push('/account-recovery')}
+            handleConfirm={()=>history.push('/account-recovery')}
           />
             <div className="Intro">
               <h1>PokéMol DAO</h1>
