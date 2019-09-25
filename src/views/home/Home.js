@@ -32,7 +32,7 @@ const Home = ({ client, history }) => {
         if (currentUser && currentUser.sdk) {
         
           const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
-
+          
           if (!_accountDevices.items.some(item=> item.device.address === currentUser.sdk.state.deviceAddress)) {
             toggle('newDeviceDetectedModal')
           } 
