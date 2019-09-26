@@ -4,32 +4,42 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Auth } from 'aws-amplify';
 
 import Loading from '../../components/shared/Loading';
-
+import GreenCheck from '../../assets/GreenCheck.svg'
 const Confirm = ({ history }) => {
+  const [focused, setFocused] = React.useState(false)
+  const [authSuccess, setAuthSuccess] = React.useState(false)
+  let historyState = history.location.state;
   let authError = null;
-
   return (
     <div className="Confirm">
       <Formik
-        initialValues={{ username: '', authCode: '' }}
+        initialValues={{ userName: '',authCode: '' }}
         validate={(values) => {
           let errors = {};
           if (!values.authCode) {
             errors.authCode = 'Required';
           }
-          if (!values.username) {
-            errors.username = 'Required';
+          if (!historyState && !values.userName) {
+            errors.userName = 'Required';
           }
 
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            await Auth.confirmSignUp(values.username, values.authCode, {
+            if (historyState && historyState.userName) {
+            let data = await Auth.confirmSignUp(historyState.userName, values.authCode, {
               forceAliasCreation: false,
-            }).then(() => {
-              history.push('/sign-in');
-            });
+            })
+            setSubmitting(false)
+            setAuthSuccess(!!data)}
+            else {
+              let data = await Auth.confirmSignUp(values.userName, values.authCode, {
+              forceAliasCreation: false,
+            })
+            setSubmitting(false)
+            setAuthSuccess(!!data)
+            }
           } catch (err) {
             console.log('error confirming signing up: ', err);
             authError = err;
@@ -37,17 +47,29 @@ const Confirm = ({ history }) => {
           }
         }}
       >
-        {({ isSubmitting }) => {
+        {({ isSubmitting, errors }) => {
           if (isSubmitting) {
             return <Loading />;
           }
 
           return (
             <Form className="Form">
-              {authError ? (
+              {authError &&
                 <div className="Form__auth-error">{authError.message}</div>
-              ) : null}
-              <Field name="username">
+              }
+              {authSuccess ? <>
+                <h2 className="Pad">Email Verified</h2>
+                <img src={GreenCheck} alt='check svg'/>
+                <button type="button" onClick={()=>history.push('/sign-in')}>
+                Sign In
+              </button>
+              </> :
+              <>
+              <h2 className="Pad">Confirm your email</h2>
+              <p>We sent a Confirmation Code to your email address. Enter it here to continue.</p>
+              {!historyState &&
+              <>
+              <Field name="userName">
               {({ field, form }) => (
                 <div
                   className={
@@ -56,12 +78,14 @@ const Confirm = ({ history }) => {
                       : 'Field '
                   }
                 >
-                  <label>Pseudonym</label>
-                  <input type="text" {...field} />
+                  <label>Username</label>
+                  <input type="text" {...field}/>
                 </div>
               )}
               </Field>
-              <ErrorMessage name="username" component="div" />
+              <ErrorMessage name="authCode"  render={(msg) => <div className="Error">{msg}</div>}
+              />
+              </>}
               <Field name="authCode">
               {({ field, form }) => (
                 <div
@@ -72,14 +96,16 @@ const Confirm = ({ history }) => {
                   }
                 >
                   <label>Confirmation Code</label>
-                  <input type="text" {...field} />
+                  <input type="text" {...field} onInput={()=>setFocused(true)}/>
                 </div>
               )}
               </Field>
-              <ErrorMessage name="authCode" component="div" />
-              <button type="submit" disabled={isSubmitting}>
+              <ErrorMessage name="authCode"  render={(msg) => <div className="Error">{msg}</div>}
+              />
+              <button type="submit" className={(Object.keys(errors).length<1 && focused)?"":"Disabled"} disabled={isSubmitting}>
                 Submit
               </button>
+              </>}
             </Form>
           );
         }}

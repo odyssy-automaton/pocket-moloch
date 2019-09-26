@@ -1,0 +1,26 @@
+@import '../../variables';
+
+.ModalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 8;
+    padding: 0 40px;
+    .ModalContent {
+        display: flex;
+        flex-direction: column;
+        background-color: whitesmoke;
+       border-radius: 23px;
+        .ButtonFlex{
+            display: flex;
+            button {
+                width:130px;
+            }
+        }
+    }
+}

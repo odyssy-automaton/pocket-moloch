@@ -17,6 +17,7 @@ import AddDevice from './views/addDevice/AddDevice';
 import Advanced from './views/account/Advanced';
 import ForgotPassword from './views/auth/ForgotPassword';
 import ForgotPasswordConfirm from './views/auth/ForgotPasswordConfirm';
+import AccountRecovery from './views/account/AccountRecovery';
 
 const Routes = () => (
   <Switch>
@@ -37,6 +38,7 @@ const Routes = () => (
     <Route path="/forgot-password" exact component={ForgotPassword} />
     <Route path="/forgot-password-confirm" exact component={ForgotPasswordConfirm} />
     <Route path="/add-device/:deviceAddr" exact component={AddDevice} />
+    <Route path="/account-recovery" exact component={AccountRecovery} />
     <Route path="*" component={FourOhFour} />
   </Switch>
 );

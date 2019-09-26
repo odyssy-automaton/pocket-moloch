@@ -105,6 +105,9 @@ button,
     color: white;
     fill: white;
   }
+  &.Disabled {
+    opacity: 0.5;
+  }
   &.Back {
     margin: 0;
     margin-top: 20px;
