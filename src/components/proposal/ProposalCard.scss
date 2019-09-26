@@ -6,6 +6,8 @@
     height: 5px;
     position: relative;
     .Labels {
+      position: relative;
+      min-height: 5px;
         .NoLabel {
             width: 65px;
             padding: 0px;
@@ -64,24 +66,24 @@
 //ProposalCard overrides
 .ProposalCard {
   background-color: $app-light;
-    .CardVote {
-      margin: 25px auto;
-      .FullBar {
-        margin-top: 50px;
-        width: calc(100%)!important;
-      }
-      .YesLabel {
-        right: 0px !important;
-        top: -25px !important;
-        text-align: right;
-        width: auto !important;
-      }
-      .NoLabel {
-        left: 0px !important;
-        top: -25px !important;
-        text-align: left;
-        width: auto !important;
-      }
+  .CardVote {
+    margin: 25px auto;
+    .FullBar {
+      margin-top: 50px;
+      width: calc(100%)!important;
+    }
+    .YesLabel {
+      right: 0px !important;
+      top: -25px !important;
+      text-align: right;
+      width: auto !important;
+    }
+    .NoLabel {
+      left: 0px !important;
+      top: -25px !important;
+      text-align: left;
+      width: auto !important;
     }
   }
+}
 
