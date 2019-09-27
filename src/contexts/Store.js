@@ -113,7 +113,7 @@ const Store = ({ children }) => {
       const member = await daoService.members(addrByBelegateKey);
       // shares will be 0 if not a member, could also be 0 if rage quit
       // TODO: check membersheip a different way
-      const shares = member.shares.toNumber();
+      const shares = parseInt(member.shares);
       // convert from wei to eth
       const weth = web3Service.fromWei(wethWei);
       const allowance = web3Service.fromWei(allowanceWei);
