@@ -40,8 +40,8 @@
       svg {
         display: block;
         position: absolute;
-        right: 7px;
-        top: 3px;
+        right: -5px;
+        top: -3px;
         fill: $base-font-color;
       }
       &:hover {
@@ -70,7 +70,10 @@
     }
   }
 }
-
+.Backrop {
+  background-color: rgba(0,0,0,0);
+  transition: all .15s linear;
+}
 .Backdrop__Open {
   position: fixed;
   top: 0;
@@ -78,4 +81,5 @@
   width: 100vw;
   height: 100vh;
   z-index: 1;
+  background-color: rgba(0,0,0,0.85);
 }
