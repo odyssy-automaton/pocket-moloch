@@ -33,8 +33,6 @@ const AccountRecovery = () => {
 const [inputTouched,setInputTouched]=useState(false)
     const [showQrreader, setshowQrreader] = useState(false);
 
-
-
     const onCopy = () => {
         setDelay(2500);
         setCopied(true);
@@ -73,8 +71,8 @@ const [inputTouched,setInputTouched]=useState(false)
             if (currentUser && currentUser.sdk) {
                 try {
                 const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
-                setIsThisDeviceAdded(_accountDevices.items.some(item => item.device.address !== currentUser.sdk.state.deviceAddress));
-                setAccountDevices(_accountDevices.items.filter(item => item.device.address === currentUser.sdk.state.deviceAddress));
+                setIsThisDeviceAdded(_accountDevices.items.some(item => item.device.address === currentUser.sdk.state.deviceAddress));
+                setAccountDevices(_accountDevices.items.filter(item => item.device.address !== currentUser.sdk.state.deviceAddress));
                 getQr();
                 setWaitingSdk(false);
               }
@@ -114,15 +112,20 @@ const [inputTouched,setInputTouched]=useState(false)
 
                   return errors;
                 }}
-                onSubmit={async (values, { setSubmitting, resetForm }) => {
+                onSubmit={async (values, { setSubmitting }) => {
                  try {
-                   const user = await Auth.currentAuthenticatedUser()
-                  const newDevice = await sdk.createAccountDevice(writeQrCode)
-                  await Auth.updateUserAttributes(user, {})
-                  console.log('accountDevice', newDevice)
+                  const user = await Auth.currentAuthenticatedUser()
+                  const userAttributes = await Auth.userAttributes(user)
+                  const namedDevices=userAttributes.find(item=>item.Name==='custom:named_devices').Value;
+                  const newAttr={};
+                  newAttr[values.deviceName]=writeQrCode
+                  const mergedAttributes = JSON.stringify(Object.assign(newAttr, JSON.parse(namedDevices)))
+                  await sdk.createAccountDevice(writeQrCode)
+                  await Auth.updateUserAttributes(user, {'custom:named_devices':mergedAttributes})
                  }
                  catch (err) {
                    console.error('Something went wrong: '+err)
+                   setSubmitting(false)
                  }
                 }}
               >
