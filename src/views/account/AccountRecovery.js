@@ -9,8 +9,8 @@ import PlusSign from '../../assets/+.svg';
 import Modal from '../../components/shared/Modal';
 import useModal from '../../components/shared/useModal';
 import useInterval from '../../utils/PollingUtil';
-import config from '../../config';
-
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Auth } from 'aws-amplify';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import QRCode from 'react-qr-code';
@@ -20,15 +20,20 @@ const AccountRecovery = () => {
     const [loading] = useContext(LoaderContext);
     const [currentUser] = useContext(CurrentUserContext);
 
+    const sdk = currentUser.sdk;
   const [currentWallet] = useContext(CurrentWalletContext);
     const [isThisDeviceAdded, setIsThisDeviceAdded] = useState(true);
     const [waitingSdk, setWaitingSdk] = useState(true);
     const [accountDevices, setAccountDevices] =  useState([]);
-    const [qrCode, setQrCode] = useState('');
+    const [readQrCode, setReadQrCode] = useState('');
+    const [writeQrCode, setWriteQrCode] = useState('');
     const [delay, setDelay] = useState(null);
     const [copied, setCopied] = useState(false);
     const { isShowing, toggle } = useModal();
-    const QrDelay = 500;
+const [inputTouched,setInputTouched]=useState(false)
+    const [showQrreader, setshowQrreader] = useState(false);
+
+
 
     const onCopy = () => {
         setDelay(2500);
@@ -42,12 +47,9 @@ const AccountRecovery = () => {
     
       const getQr = () => {
         const sdk = currentUser.sdk;
-        //update from localhost with config
-        const url = `${config.QR_HOST_URL}`;
         try {
-          const connectUrl = `${url}/add-device/${sdk.state.deviceAddress}`;
-          // console.log('connectUrl', connectUrl);
-          setQrCode(connectUrl);
+          const connectUrl = sdk.state.deviceAddress;
+          setReadQrCode(connectUrl);
         } catch (err) {
           console.log(err);
         }
@@ -55,7 +57,9 @@ const AccountRecovery = () => {
     
       const handleScan = (data) => {
         if (data) {
-          window.location = data;
+          setshowQrreader(false);
+          toggle('addScannedDevice');
+          setWriteQrCode(data);
         }
       };
     
@@ -69,9 +73,11 @@ const AccountRecovery = () => {
             if (currentUser && currentUser.sdk) {
                 try {
                 const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
-                setIsThisDeviceAdded(_accountDevices.items.some(item => item.device.address === currentUser.sdk.state.deviceAddress));
-                setAccountDevices(_accountDevices.items.filter(item => item.device.address !== currentUser.sdk.state.deviceAddress));
-                setWaitingSdk(false)}
+                setIsThisDeviceAdded(_accountDevices.items.some(item => item.device.address !== currentUser.sdk.state.deviceAddress));
+                setAccountDevices(_accountDevices.items.filter(item => item.device.address === currentUser.sdk.state.deviceAddress));
+                getQr();
+                setWaitingSdk(false);
+              }
                 catch (error){
                     console.error(error)
                 }
@@ -86,38 +92,95 @@ const AccountRecovery = () => {
           <p>Copied!</p>
         </div>
       )}
-        <Modal
-            isShowing={isShowing.connectQrReader}
-            hide={() => toggle('connectQrReader')}
+      <Modal
+            isShowing={isShowing.addScannedDevice}
+            hide={() => toggle('addScannedDevice')}
           >
+          <p>Account Recovery</p>
+            <div className="FlexCenter">
+              <h3>Are you sure you want to add this device? </h3>
+              <p>
+              Give the device/browser a name you’d recognize. For remembering where you have access and removing in the future.
+              </p>
+              <Formik
+                initialValues={{
+                  deviceName: '',
+                }}
+                validate={(values) => {
+                  let errors = {};
+                  if (!values.deviceName) {
+                    errors.deviceName = 'Required';
+                  }
+
+                  return errors;
+                }}
+                onSubmit={async (values, { setSubmitting, resetForm }) => {
+                 try {
+                   const user = await Auth.currentAuthenticatedUser()
+                  const newDevice = await sdk.createAccountDevice(writeQrCode)
+                  await Auth.updateUserAttributes(user, {})
+                  console.log('accountDevice', newDevice)
+                 }
+                 catch (err) {
+                   console.error('Something went wrong: '+err)
+                 }
+                }}
+              >
+                {({ isSubmitting, errors }) => (
+                  <Form className="Form">
+                    <Field name="deviceName">
+                      {({ field, form }) => (
+                        <div
+                          className={
+                            field.value
+                              ? 'Field HasValue'
+                              : 'Field '
+                          }
+                        >
+                          <label>Device Name</label>
+                          <input type="text" {...field} onInput={()=>setInputTouched(true)}/>
+                        </div>
+                      )}
+                    </Field>
+                    <ErrorMessage name="deviceName" render={msg => <div className="Error">{msg}</div>} />
+                    <p>Ex. Mary’s Macbook/Chrome</p>
+                    <button type="submit" className={(inputTouched && Object.keys(errors).length===0) ? '':'Disabled'} disabled={isSubmitting}>
+                      Submit
+                    </button>
+                  </Form>
+        )}
+      </Formik>
+            </div>
+          </Modal>
+        {showQrreader && <Modal
+            isShowing={true}
+            hide={() => setshowQrreader(false)}
+
+          >
+          <p>Account Recovery</p>
             <div className="FlexCenter">
               <h3>Approve a new Device</h3>
               <p>
-                Sign in on another device and scan it from here to add that
-                device to your account.
+              Sign in on another device or browser and scan the QR Code there to give that device or browser access.
               </p>
               <QrReader
-                delay={QrDelay}
+                delay={500}
                 onError={handleError}
                 onScan={handleScan}
                 style={{ width: '80%' }}
               />
             </div>
-          </Modal>
-          <Modal isShowing={isShowing.getQrCode} hide={() => {toggle('getQrCode');
-          getQr();}}>
+          </Modal>}
+          <Modal isShowing={isShowing.getreadQrCode} hide={() => toggle('getreadQrCode')}>
         <div className="FlexCenter">
           <h3>Add this Device</h3>
           <p>
-            Sign into a device/browser that has access to this acccount. Then,
-            scan the QR code below to grant this device access. If you do not
-            have access to a QR reader, then just copy the link below and
-            navigate there on the device/browser that is connected.
+          Sign in on another device that has access and scan this QR Code to give this device or browser access.
           </p>
-          {qrCode && (
+          {readQrCode && (
             <div className="QR">
-              <QRCode value={qrCode} />
-              <CopyToClipboard onCopy={onCopy} text={qrCode}>
+              <QRCode value={readQrCode} />
+              <CopyToClipboard onCopy={onCopy} text={readQrCode}>
                 <button className="Address">
                   Copy Link
                   <svg
@@ -148,19 +211,19 @@ const AccountRecovery = () => {
                     </div>)
                     }
             <div
-                onClick={isThisDeviceAdded ? null:() => toggle('getQrCode')}
+                onClick={isThisDeviceAdded ? null:() => toggle('getreadQrCode')}
                 className="RecoveryOption" 
                 style={{ backgroundColor: isThisDeviceAdded ? 'greenyellow' : 'whitesmoke', }}
                 >
                 <p className="atSign">@</p><p>{isThisDeviceAdded ? 'This device' : 'Add this device'}</p>
                 <img src={isThisDeviceAdded ? WhiteCheck : PlusSign} alt="device status" />
             </div>
-            <div className="AddDeviceList" onClick={() => toggle('connectQrReader')}>
+            <div className="AddDeviceList" onClick={() => setshowQrreader(true)}>
                 <img src={EthLogo} alt="eth logo" className="AddDeviceEthLogo" />
                     <p className="PinkText">Add another Device</p>
                 <img src={PlusSign} alt="device status" />
             </div>
-            {accountDevices.length < 1 && <p>You need to add at least one more device or browser with access to use as a recovery option.</p>}
+            {accountDevices.length < 1 ? <p>You need to add at least one more device or browser with access to use as a recovery option.</p> : <button>Continue</button>}
         </div>
     )
 };
