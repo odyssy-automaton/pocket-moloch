@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Auth } from 'aws-amplify';
 
 import Loading from '../../components/shared/Loading';
-import GreenCheck from '../../assets/GreenCheck.svg'
+import GreenCheck from '../../assets/GreenCheck.svg';
 const Confirm = ({ history }) => {
   const [focused, setFocused] = React.useState(false)
   const [authSuccess, setAuthSuccess] = React.useState(false)
@@ -83,7 +83,7 @@ const Confirm = ({ history }) => {
                 </div>
               )}
               </Field>
-              <ErrorMessage name="authCode"  render={(msg) => <div className="Error">{msg}</div>}
+              <ErrorMessage name="userName"  render={(msg) => <div className="Error">{msg}</div>}
               />
               </>}
               <Field name="authCode">
@@ -102,6 +102,7 @@ const Confirm = ({ history }) => {
               </Field>
               <ErrorMessage name="authCode"  render={(msg) => <div className="Error">{msg}</div>}
               />
+              <p style={{color:'#d756d9'}} onClick={()=>history.push('/resend-code')}>Didn't get the code? Click here!</p>
               <button type="submit" className={(Object.keys(errors).length<1 && focused)?"":"Disabled"} disabled={isSubmitting}>
                 Submit
               </button>
