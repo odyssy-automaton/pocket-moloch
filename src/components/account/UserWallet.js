@@ -30,7 +30,6 @@ const UserWallet = ({history}) => {
   const [currentWallet] = useContext(CurrentWalletContext);
   const { isShowing, toggle } = useModal();
   const [waitingSdk, setWaitingSdk] =useState(true);
-
   useEffect(()=>{
     (async () => {
         if (currentUser && currentUser.sdk) {
@@ -56,7 +55,7 @@ const UserWallet = ({history}) => {
             isShowing={isShowing.newDeviceDetectedModal}
             hide={() => toggle('newDeviceDetectedModal')}
             title="New Device or Browser"
-            text="This device does not have access. Would you like to add it?"
+            text="This device does not have access. You need to add it."
             handleConfirm={()=>history.push('/account-recovery')}
           />
           <TwoButtonModal
