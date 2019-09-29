@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import useModal from '../shared/useModal';
 import Modal from '../shared/Modal';
@@ -22,17 +22,51 @@ import WrapEth from './WrapEth';
 import ApproveWeth from './ApproveWeth';
 import RageQuit from './RageQuit';
 import DepositForm from './DepositForm';
+import TwoButtonModal from '../../components/shared/TwoButtonModal';
 
-const UserWallet = () => {
+const UserWallet = ({history}) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading] = useContext(LoaderContext);
   const [currentWallet] = useContext(CurrentWalletContext);
   const { isShowing, toggle } = useModal();
+  const [waitingSdk, setWaitingSdk] =useState(true);
 
+  useEffect(()=>{
+    (async () => {
+        if (currentUser && currentUser.sdk) {
+        
+          const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
+          setWaitingSdk(false);
+          if (!_accountDevices.items.some(item=> item.device.address === currentUser.sdk.state.deviceAddress)) {
+            toggle('newDeviceDetectedModal')
+          } 
+          else if (_accountDevices.items.length<2) {
+            toggle('addDeviceModal')
+          }
+        }
+    })()
+    // eslint-disable-next-line
+  },[currentUser]);
   return (
     <>
-      {loading && <Loading />}
-      {currentUser && currentUser.sdk && (
+      {(loading  || waitingSdk) && <Loading />}
+      {currentUser && currentUser.sdk && (<>
+        <TwoButtonModal
+            oneButton
+            isShowing={isShowing.newDeviceDetectedModal}
+            hide={() => toggle('newDeviceDetectedModal')}
+            title="New Device or Browser"
+            text="This device does not have access. Would you like to add it?"
+            handleConfirm={()=>history.push('/account-recovery')}
+          />
+          <TwoButtonModal
+            oneButton
+            isShowing={isShowing.addDeviceModal}
+            hide={() => toggle('addDeviceModal')}
+            title="Secure your account"
+            text="You need to add at least one more recovery option"
+            handleConfirm={()=>history.push('/account-recovery')}
+          />
         <div className="UserWallet">
           <UserBalance />
           <div className="Actions Pad">
@@ -133,7 +167,7 @@ const UserWallet = () => {
             */}
           </div>
         </div>
-      )}
+      </>)}
       <UserTransactions />
     </>
   );

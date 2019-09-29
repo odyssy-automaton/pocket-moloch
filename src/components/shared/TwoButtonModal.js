@@ -1,7 +1,7 @@
 import React from 'react';
 import './TwoButtonModal.scss';
 
-const Modal = ({ isShowing, hide, title, text, handleConfirm }) =>
+const Modal = ({ isShowing, hide, title, text, handleConfirm, oneButton }) =>
   isShowing ? (
     <>
       <div className="ModalBackground">
@@ -15,6 +15,7 @@ const Modal = ({ isShowing, hide, title, text, handleConfirm }) =>
           <h2>{title}</h2>
           <p>{text}</p>
           <div className="ButtonGroup">
+          {!oneButton &&
             <button
               type="button"
               className="Button--Cancel"
@@ -23,7 +24,7 @@ const Modal = ({ isShowing, hide, title, text, handleConfirm }) =>
               onClick={hide}
             >
               Cancel
-            </button>
+            </button>}
             <button
               type="button"
               className="Button--Success"
