@@ -101,7 +101,6 @@ const [inputTouched,setInputTouched]=useState(false)
             isShowing={isShowing.addScannedDevice}
             hide={() => toggle('addScannedDevice')}
           >
-          <p>Account Recovery</p>
             <div className="FlexCenter">
               <h3>Are you sure you want to add this device? </h3>
               <p>
@@ -171,7 +170,6 @@ const [inputTouched,setInputTouched]=useState(false)
             hide={() => setshowQrreader(false)}
 
           >
-          <p>Account Recovery</p>
             <div className="FlexCenter">
               <h3>Approve a new Device</h3>
               <p>
