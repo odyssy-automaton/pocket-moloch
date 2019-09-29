@@ -82,7 +82,7 @@ const SignIn = ({ history }) => {
                 'custom:account_address': account.address,
                 'custom:device_address': accountDevices.items[0].device.address,
                 'custom:ens_name': ensLabel,
-                'custom:named_devices': JSON.stringify({OG_device: accountDevices.items[0].device.address}),
+                'custom:named_devices': JSON.stringify({'OG device': accountDevices.items[0].device.address}),
               });
               const jsonse = JSON.stringify(
                 {

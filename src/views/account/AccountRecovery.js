@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 
-import { LoaderContext, CurrentUserContext,CurrentWalletContext } from '../../contexts/Store';
+import { LoaderContext, CurrentUserContext } from '../../contexts/Store';
 import Loading from '../../components/shared/Loading';
 import './AccountRecovery.scss';
 import WhiteCheck from '../../assets/WhiteCheckSmall.svg';
@@ -16,12 +16,9 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import QRCode from 'react-qr-code';
 import QrReader from 'react-qr-reader';
 
-const AccountRecovery = () => {
+const AccountRecovery = ({history}) => {
     const [loading] = useContext(LoaderContext);
     const [currentUser] = useContext(CurrentUserContext);
-
-    const sdk = currentUser.sdk;
-  const [currentWallet] = useContext(CurrentWalletContext);
     const [isThisDeviceAdded, setIsThisDeviceAdded] = useState(true);
     const [waitingSdk, setWaitingSdk] = useState(true);
     const [accountDevices, setAccountDevices] =  useState([]);
@@ -32,6 +29,8 @@ const AccountRecovery = () => {
     const { isShowing, toggle } = useModal();
 const [inputTouched,setInputTouched]=useState(false)
     const [showQrreader, setshowQrreader] = useState(false);
+    const [parsedNamedDevices, setParsedNamedDevices] = useState({});
+
 
     const onCopy = () => {
         setDelay(2500);
@@ -44,13 +43,14 @@ const [inputTouched,setInputTouched]=useState(false)
       }, delay);
     
       const getQr = () => {
+        if (currentUser){
         const sdk = currentUser.sdk;
         try {
           const connectUrl = sdk.state.deviceAddress;
           setReadQrCode(connectUrl);
         } catch (err) {
           console.log(err);
-        }
+        }}
       };
     
       const handleScan = (data) => {
@@ -70,14 +70,21 @@ const [inputTouched,setInputTouched]=useState(false)
         (async () => {
             if (currentUser && currentUser.sdk) {
                 try {
+                  setWaitingSdk(true);
                 const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
                 setIsThisDeviceAdded(_accountDevices.items.some(item => item.device.address === currentUser.sdk.state.deviceAddress));
                 setAccountDevices(_accountDevices.items.filter(item => item.device.address !== currentUser.sdk.state.deviceAddress));
                 getQr();
-                setWaitingSdk(false);
+                const user = await Auth.currentAuthenticatedUser()
+                  const userAttributes = await Auth.userAttributes(user)
+                  setWaitingSdk(false);
+                  if (userAttributes.find(item=>item.Name==='custom:named_devices')){
+                  setParsedNamedDevices(JSON.parse(userAttributes.find(item=>item.Name==='custom:named_devices').Value));
+                  }
               }
                 catch (error){
                     console.error(error)
+                    setWaitingSdk(false);
                 }
             }
         })()
@@ -114,17 +121,21 @@ const [inputTouched,setInputTouched]=useState(false)
                 }}
                 onSubmit={async (values, { setSubmitting }) => {
                  try {
-                  const user = await Auth.currentAuthenticatedUser()
-                  const userAttributes = await Auth.userAttributes(user)
-                  const namedDevices=userAttributes.find(item=>item.Name==='custom:named_devices').Value;
+                   if (accountDevices.some(item=>item.device.address===writeQrCode)){
+                     throw new Error('Device already added!')
+                   }
+                  const user = await Auth.currentAuthenticatedUser();
                   const newAttr={};
-                  newAttr[values.deviceName]=writeQrCode
-                  const mergedAttributes = JSON.stringify(Object.assign(newAttr, JSON.parse(namedDevices)))
-                  await sdk.createAccountDevice(writeQrCode)
-                  await Auth.updateUserAttributes(user, {'custom:named_devices':mergedAttributes})
+                  newAttr[values.deviceName]=writeQrCode;
+                  const mergedAttributes = JSON.stringify(Object.assign(newAttr, parsedNamedDevices));
+                  await currentUser.sdk.createAccountDevice(writeQrCode);
+                  await Auth.updateUserAttributes(user, {'custom:named_devices':mergedAttributes});
+                  toggle('addScannedDevice');
+                  window.location.reload();
+                   
                  }
                  catch (err) {
-                   console.error('Something went wrong: '+err)
+                   alert('Something went wrong: '+err)
                    setSubmitting(false)
                  }
                 }}
@@ -210,7 +221,7 @@ const [inputTouched,setInputTouched]=useState(false)
            
             {accountDevices.map(item=>
                     <div key={item.device.address} className="RecoveryOption">
-                        <p className="atSign">@</p><p>{item.device.address}</p><img src={WhiteCheck} alt="white check" />
+                        <p className="atSign">@</p><p>{Object.keys(parsedNamedDevices).find(key=>parsedNamedDevices[key]===item.device.address) || item.device.address}</p><img src={WhiteCheck} alt="white check" />
                     </div>)
                     }
             <div
@@ -226,7 +237,7 @@ const [inputTouched,setInputTouched]=useState(false)
                     <p className="PinkText">Add another Device</p>
                 <img src={PlusSign} alt="device status" />
             </div>
-            {accountDevices.length < 1 ? <p>You need to add at least one more device or browser with access to use as a recovery option.</p> : <button>Continue</button>}
+            {accountDevices.length === 0 ? <p>You need to add at least one more device or browser with access to use as a recovery option.</p> : <button onClick={()=>history.push('/account')}>Continue</button>}
         </div>
     )
 };
