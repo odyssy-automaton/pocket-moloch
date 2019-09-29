@@ -1,27 +1,11 @@
+@import '../../variables';
 .FlexContainer {
-display: flex;
-flex-direction: column;
-justify-content: center;
-width: 100%;
-overflow-x: hidden;
-// hidden to make loading work properly on small screens
-.RecoveryOption {
-    background-color: greenyellow;
-    display: flex;
-    border: 1px solid black;
-    width: 80%;
-    border-radius: 25px;
-    justify-content: space-between;
-}
-.AddDeviceList{
-    display: flex;
-    border: 1px solid black;
-    width: 80%;
-    border-radius: 25px;
-    align-items: center;
-    justify-content: space-between;
-    .AddDeviceEthLogo{
-        height: 32px;
-    }
-}
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $base-padding;
+  width: calc(100% - ($base-padding * 2));
+  overflow-x: hidden;
+  // hidden to make loading work properly on small screen.
 }

@@ -27,7 +27,6 @@ const UserWallet = () => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading] = useContext(LoaderContext);
   const [currentWallet] = useContext(CurrentWalletContext);
-
   const { isShowing, toggle } = useModal();
 
   return (

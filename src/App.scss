@@ -88,6 +88,7 @@ button,
   border: none;
   cursor: pointer;
   text-decoration: none;
+  position: relative;
   // Style
   transition: all 0.15s ease-in-out;
   background-color: $secondary;
@@ -96,7 +97,7 @@ button,
   padding: 15px 30px;
   max-width: 100%;
   display: block;
-  margin: 25px 0px;
+  margin: 15px 0px;
   font-size: 16px;
   text-align: center;
   font-weight: 900;
@@ -110,13 +111,15 @@ button,
   }
   &.Back {
     margin: 0;
-    margin-top: 20px;
+    padding-top: 20px;
+    padding-left: 0px;
     margin-left: 0px;
+    left: 0;
+    text-align: left;
     background-color: transparent;
     color: black !important;
     svg {fill: black !important;}
     border-radius: 0px;
-    padding: 0px;
     width: auto;
     &:hover {
       margin-left: -5px;
@@ -143,6 +146,54 @@ button,
     background-color: $primary;
     &:hover { background-color: $primary-hover; }
   }
+  &--Cancel {
+    background-color: transparent;
+    color: $primary;
+    border: 2px solid $primary;
+    &:hover { 
+      color: $primary-hover; 
+      border-color: $primary-hover;
+      background-color: transparent;
+    }
+  }
+  &--Input {
+    background-color: $app-light;
+    min-width: 300px;
+    border-radius: 30px;
+    padding: 15px;
+    padding-right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: $primary;
+    box-shadow: $shadow;
+    &.Verified, &.Verified:hover {
+      background-color: $success;
+      color: white;
+      svg { fill: $app-light;}
+    }
+    svg { 
+      height: 24px; fill: $primary; margin-right: 5px; 
+    }
+    &:hover {
+      color: $primary-hover;
+      background-color: $app-light;
+      fill: $primary-hover;
+    }
+  }
+  .AddItem {
+    fill: $primary; 
+    position: absolute;
+    right: 15px;
+  }
+}
+
+.ButtonGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
 // Proposal Utils
@@ -249,18 +300,6 @@ button,
   margin: 0 auto;
 }
 
-.RightButton {
-
-}
-
-.ButtonGroup {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .Video {
   max-width: 100%;
   div:first-child {
@@ -291,36 +330,12 @@ button,
 // Forms
 .Form {
   padding: $base-padding;
-  input, textarea { background-color: transparent; appearance: none; }
   .Error {
     color: red;
     font-size: 13px;
     position: relative;
     bottom: 20px;
     left: 0px;
-  }
-}
-
-.Field {
-  position: relative;
-  margin-top: 25px;
-  label {
-    pointer-events: none;
-    position: absolute;
-    left: 0;
-    top: 7px;
-    color: lighten($primary, 10%);
-    background-color: transparent;
-    z-index: 10;
-    transition: transform 150ms ease-out, font-size 150ms ease-out;
-    z-index: -1;
-    
-  }
-  &.HasValue {
-    label {
-      transform: translateY(-125%);
-      font-size: .75em;
-    }
   }
 }
 
@@ -333,10 +348,32 @@ textarea {
   background-color: $app-light;
   color: black;
   // Style
-  border-bottom: 1px solid black;
-  width: 100%;
+  border: none;
+  min-width: 300px;
   max-width: 100%;
   font-size: 21px;
-  margin-bottom: 25px;
-  padding: 5px 0px;
+  padding: 20px 20px 10px 20px;
+  border-radius: 35px;
+  box-shadow: $shadow;
+}
+
+.Field {
+  position: relative;
+  margin-top: 25px;
+  label {
+    pointer-events: none;
+    position: absolute;
+    left: 20px;
+    top: 17px;
+    color: lighten($primary, 10%);
+    background-color: transparent;
+    z-index: 10;
+    transition: transform 150ms ease-out, font-size 150ms ease-out;
+  }
+  &.HasValue {
+    label {
+      transform: translateY(-75%);
+      font-size: .75em;
+    }
+  }
 }

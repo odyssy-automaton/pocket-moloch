@@ -11,14 +11,14 @@
     openzeppelin-solidity "2.1.2"
     solidity-bytes-utils "0.0.8"
 
-"@archanova/sdk@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@archanova/sdk/-/sdk-1.1.0.tgz#2b7b6e3c5d7a67e194404db48492d3dd3fa5b5cf"
-  integrity sha512-jE+pENmPEcT6bSYWsFpKDLNw18/+eNrb4GbdrlMScll+TxvmhaRZDW9kkARR+r2AAez3zMTYHKqN9o6KLJAYnw==
+"@archanova/sdk@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@archanova/sdk/-/sdk-1.1.2.tgz#0cafc0226f931d74abe73b221d9482129acadbd5"
+  integrity sha512-k/0SjiecfiWZ6RaUB6GBOCxmUNK9pGv6961zFdc49isLllzUmpRhBQaeByEYcZJ8jCbpPLURS9ny+oAbdn3Vzw==
   dependencies:
     "@archanova/contracts" "^1.0.0"
     "@babel/runtime" "^7.4.4"
-    "@netgum/types" "^0.1.7"
+    "@netgum/types" "^0.1.8"
     "@netgum/utils" "^0.1.3"
     "@types/node" "^12.0.0"
     "@types/webpack-env" "^1.13.9"
@@ -1247,10 +1247,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@netgum/types@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@netgum/types/-/types-0.1.7.tgz#7a058d7cabb07a303fc65aef291b57fd9bde534a"
-  integrity sha512-vsT2HNB3Rzr24QuGnBcJtqN9lUi7wxBsOm18ZaQUi8v5nXGWA6UAsRtKPkGDfquVuErP/twqca13ZDrkTHf3mQ==
+"@netgum/types@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@netgum/types/-/types-0.1.8.tgz#d18eb6ac55f53235110a385ed73684574597a6ee"
+  integrity sha512-NQAaCb3vwhRHbuXx+Y7dfEjN8dOwwOIxogj6Oj619LI31ZLDyWehMdwZKMyyDP/K5wd+eNn2xffTBsexUD1iYg==
 
 "@netgum/utils@^0.1.3":
   version "0.1.3"

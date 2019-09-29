@@ -2,40 +2,41 @@ import React from 'react';
 import './TwoButtonModal.scss';
 
 const Modal = ({ isShowing, hide, title, text, handleConfirm }) =>
-  isShowing
-    ? 
-        <>
-          <div className="ModalBackground">
-          <div
-            className="ModalContent"
-            aria-modal
-            aria-hidden
-            tabIndex={-1}
-            role="dialog"
-          >
-          <p className="ModalTitle">{title}</p>
-          <p className="ModalText">{text}</p>
-          <div className="ButtonFlex">
+  isShowing ? (
+    <>
+      <div className="ModalBackground">
+        <div
+          className="ModalContent"
+          aria-modal
+          aria-hidden
+          tabIndex={-1}
+          role="dialog"
+        >
+          <h2>{title}</h2>
+          <p>{text}</p>
+          <div className="ButtonGroup">
             <button
               type="button"
-              className="Cancel"
+              className="Button--Cancel"
               data-dismiss="modal"
               aria-label="Cancel"
               onClick={hide}
-            >Cancel
+            >
+              Cancel
             </button>
             <button
               type="button"
-              className="Confirm"
+              className="Button--Success"
               data-dismiss="modal"
               aria-label="Confirm"
               onClick={handleConfirm}
-            >Continue
+            >
+              Continue
             </button>
-</div>
           </div>
-          </div>
-        </>
-    : null;
+        </div>
+      </div>
+    </>
+  ) : null;
 
 export default Modal;
