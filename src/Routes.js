@@ -15,6 +15,10 @@ import Confirm from './views/auth/Confirm';
 import SignOut from './views/auth/SignOut';
 import AddDevice from './views/addDevice/AddDevice';
 import Advanced from './views/account/Advanced';
+import ForgotPassword from './views/auth/ForgotPassword';
+import ForgotPasswordConfirm from './views/auth/ForgotPasswordConfirm';
+import AccountRecovery from './views/account/AccountRecovery';
+import ResendCode from './views/auth/ResendCode';
 
 const Routes = () => (
   <Switch>
@@ -32,7 +36,11 @@ const Routes = () => (
     <Route path="/sign-in" exact component={SignIn} />
     <Route path="/sign-out" exact component={SignOut} />
     <Route path="/confirm" exact component={Confirm} />
+    <Route path="/forgot-password" exact component={ForgotPassword} />
+    <Route path="/forgot-password-confirm" exact component={ForgotPasswordConfirm} />
     <Route path="/add-device/:deviceAddr" exact component={AddDevice} />
+    <Route path="/account-recovery" exact component={AccountRecovery} />
+    <Route path="/resend-code" exact component={ResendCode} />
     <Route path="*" component={FourOhFour} />
   </Switch>
 );

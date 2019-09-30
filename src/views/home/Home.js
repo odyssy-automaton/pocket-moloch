@@ -1,5 +1,5 @@
 // import React, { useContext } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Query } from 'react-apollo';
 import { ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { withApollo } from 'react-apollo';
@@ -13,10 +13,36 @@ import { GET_METADATA } from '../../utils/Queries';
 
 import './Home.scss';
 import WethService from '../../utils/WethService';
+import TwoButtonModal from '../../components/shared/TwoButtonModal';
+import useModal from '../../components/shared/useModal';
 
-const Home = ({ client }) => {
+import { CurrentUserContext } from '../../contexts/Store';
+
+const Home = ({ client, history }) => {
   const [vizData, setVizData] = useState([]);
   const [chartView, setChartView] = useState('bank');
+  const { isShowing, toggle } = useModal();
+  const [currentUser] = useContext(CurrentUserContext);
+  useEffect(()=>{
+    if (history.location.state && history.location.state.signUpModal) {
+      toggle('signUpModal')
+      
+    } else {
+      (async () => {
+        if (currentUser && currentUser.sdk) {
+        
+          const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
+          
+          if (!_accountDevices.items.some(item=> item.device.address === currentUser.sdk.state.deviceAddress)) {
+            toggle('newDeviceDetectedModal')
+          } 
+          else if (_accountDevices.items.length<2) {
+            toggle('addDeviceModal')
+          }
+        }
+    })()}
+    // eslint-disable-next-line
+  },[currentUser]);
 
   // const weth = new WethService();
   const { guildBankAddr } = client.cache.readQuery({ query: GET_METADATA });
@@ -106,12 +132,34 @@ const Home = ({ client }) => {
         if (error) return <ErrorMessage message={error} />;
 
         return (
+          <>
+          
           <div className="Home">
+          <TwoButtonModal
+            isShowing={isShowing.signUpModal}
+            hide={() => toggle('signUpModal')}
+            title="Account almost ready"
+            text="You need to add at least one more recovery option"
+            handleConfirm={()=>history.push('/account-recovery')}
+          />
+          <TwoButtonModal
+            isShowing={isShowing.newDeviceDetectedModal}
+            hide={() => toggle('newDeviceDetectedModal')}
+            title="New Device or Browser"
+            text="This device does not have access. Would you like to add it?"
+            handleConfirm={()=>history.push('/account-recovery')}
+          />
+          <TwoButtonModal
+            isShowing={isShowing.addDeviceModal}
+            hide={() => toggle('addDeviceModal')}
+            title="Secure your account"
+            text="You need to add at least one more recovery option"
+            handleConfirm={()=>history.push('/account-recovery')}
+          />
             <div className="Intro">
               <h1>PokéMol DAO</h1>
               <p>
-                Is that a Moloch in your pocket, <br />
-                or are you just happy to see me?
+              Put a Moloch in Your Pocket
               </p>
             </div>
             <div className="Chart" style={{ width: '100%', height: '33vh' }}>
@@ -179,6 +227,7 @@ const Home = ({ client }) => {
             </div>
             <BottomNav />
           </div>
+          </>
         );
       }}
     </Query>

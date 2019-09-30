@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/Store';
 import BcToast from './BcToast';
 
-import Brand from '../../assets/japanese-ogre.png';
+import Brand from '../../assets/PokéMol__Logo.svg';
 import './TopNav.scss';
 import useModal from './useModal';
 import Modal from './Modal'
@@ -16,7 +16,7 @@ const TopNav = (props) => {
   const [isElementOpen, setElementOpen] = React.useState(false);
   const toggleElement = () => setElementOpen(!isElementOpen);
   const { isShowing, toggle } = useModal();
-
+  const {location: {pathname}}=props;
 
   return (
     <div className="TopNav">
@@ -25,13 +25,17 @@ const TopNav = (props) => {
         className={isElementOpen ? 'Backdrop__Open' : 'Backdrop'}
         onClick={toggleElement}
       />
+      {pathname === '/sign-in' ? <div className="Button Back"><Link to="/">{'<='}  Back</Link></div>: <>
+      {(pathname === '/sign-up' || pathname ==='/confirm') ? <div className="Button Back"><Link to="/">{'<='}  Back</Link></div>:
+      <>
       {props.match.params.name === '/proposal/' ? (
-        <p>back</p>
+        <p>Back</p>
       ) : (
         <Link className="Brand" to="/">
           <img src={Brand} alt="Pocket Moloch" />
         </Link>
       )}
+      </>}</>}
 
       {currentUser ? (
         <div className="Auth">
@@ -88,7 +92,7 @@ const TopNav = (props) => {
         </div>
       ) : (
         <div className="Auth">
-          <Link className="Auth__Button" to="/sign-in" onClick={toggleElement}>
+          <Link className="Auth__Button" to="/sign-in">
             Sign in {'=>'}
           </Link>
         </div>
