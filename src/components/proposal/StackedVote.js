@@ -48,11 +48,11 @@ const StackedVote = ({id, baseColor, noColor, yesColor, currentYesVote, currentN
   return (
     <div className="FullBar">
       <div className="Labels">
-        <span className="NoLabel">
-          {noVoteShares}
-        </span>
         <span className="YesLabel">
           {yesVoteShares}
+        </span>
+        <span className="NoLabel">
+          {noVoteShares}
         </span>
       </div>
       <div className="BaseBar" />
