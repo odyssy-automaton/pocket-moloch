@@ -41,7 +41,7 @@ const ResendCode = ({history}) => {
               {authError &&
                 <div className="Form__auth-error">{authError.message}</div>
               }
-              {resendSuccess? 
+              {resendSuccess ? 
               <>
               <h2 className="Pad">We sent the code to your email</h2>
                 <img src={GreenCheck} alt='check svg'/>
