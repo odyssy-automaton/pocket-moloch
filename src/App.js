@@ -31,12 +31,12 @@ const App = ({ client }) => {
 
       client.writeData({
         data: {
-          currentPeriod: currentPeriod.toNumber(),
-          totalShares: totalShares.toNumber(),
+          currentPeriod: parseInt(currentPeriod),
+          totalShares: parseInt(totalShares),
           guildBankAddr,
-          gracePeriodLength: gracePeriodLength.toNumber(),
-          votingPeriodLength: votingPeriodLength.toNumber(),
-          periodDuration: periodDuration.toNumber(),
+          gracePeriodLength: parseInt(gracePeriodLength),
+          votingPeriodLength: parseInt(votingPeriodLength),
+          periodDuration: parseInt(periodDuration),
           processingReward: web3.fromWei(processingReward),
           proposalDeposit: web3.fromWei(proposalDeposit),
           guildBankValue: web3.fromWei(guildBankValue),
