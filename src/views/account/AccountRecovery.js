@@ -1,10 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 
-import {
-  LoaderContext,
-  CurrentUserContext,
-  CurrentWalletContext,
-} from '../../contexts/Store';
+import { LoaderContext, CurrentUserContext } from '../../contexts/Store';
 import Loading from '../../components/shared/Loading';
 import './AccountRecovery.scss';
 import WhiteCheck from '../../assets/WhiteCheckSmall.svg';
@@ -23,7 +19,6 @@ import QrReader from 'react-qr-reader';
 const AccountRecovery = ({ history }) => {
   const [loading] = useContext(LoaderContext);
   const [currentUser] = useContext(CurrentUserContext);
-  const [currentWallet] = useContext(CurrentWalletContext);
   const [isThisDeviceAdded, setIsThisDeviceAdded] = useState(true);
   const [waitingSdk, setWaitingSdk] = useState(true);
   const [accountDevices, setAccountDevices] = useState([]);
@@ -75,50 +70,34 @@ const AccountRecovery = ({ history }) => {
       if (currentUser && currentUser.sdk) {
         try {
           setWaitingSdk(true);
-
-          const _accountDevices = currentWallet.devices;
-
-          if (!_accountDevices) {
-            console.log('go home');
-            
-          } else if (
-            !_accountDevices.items.some(
+          const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
+          setIsThisDeviceAdded(
+            _accountDevices.items.some(
               (item) =>
                 item.device.address === currentUser.sdk.state.deviceAddress,
-            )
-          ) {
-            setIsThisDeviceAdded(
-              _accountDevices.items.some(
-                (item) =>
-                  item.device.address === currentUser.sdk.state.deviceAddress,
-              ),
-            );
-            setAccountDevices(
-              _accountDevices.items.filter(
-                (item) =>
-                  item.device.address !== currentUser.sdk.state.deviceAddress,
-              ),
-            );
-            getQr();
-            const user = await Auth.currentAuthenticatedUser();
-            const userAttributes = await Auth.userAttributes(user);
-            if (
-              userAttributes.find((item) => item.Name === 'custom:named_devices')
-            ) {
-              setParsedNamedDevices(
-                JSON.parse(
-                  userAttributes.find(
-                    (item) => item.Name === 'custom:named_devices',
-                  ).Value,
-                ),
-              );
-            }
-
-          }
+            ),
+          );
+          setAccountDevices(
+            _accountDevices.items.filter(
+              (item) =>
+                item.device.address !== currentUser.sdk.state.deviceAddress,
+            ),
+          );
+          getQr();
+          const user = await Auth.currentAuthenticatedUser();
+          const userAttributes = await Auth.userAttributes(user);
           setWaitingSdk(false);
-
-
-          
+          if (
+            userAttributes.find((item) => item.Name === 'custom:named_devices')
+          ) {
+            setParsedNamedDevices(
+              JSON.parse(
+                userAttributes.find(
+                  (item) => item.Name === 'custom:named_devices',
+                ).Value,
+              ),
+            );
+          }
         } catch (error) {
           console.error(error);
           setWaitingSdk(false);
@@ -226,6 +205,49 @@ const AccountRecovery = ({ history }) => {
               Sign in on another device or browser and scan the QR Code there to
               give that device or browser access.
             </p>
+            <p>Or paste here</p>
+            <Formik
+              initialValues={{
+                newAddr: '',
+              }}
+              validate={(values) => {
+                let errors = {};
+                if (!values.newAddr) {
+                  errors.newAddr = 'Required';
+                }
+
+                return errors;
+              }}
+              onSubmit={async (values, { setSubmitting, resetForm }) => {
+                setshowQrreader(false);
+                toggle('addScannedDevice');
+                setWriteQrCode(values.newAddr);
+                setSubmitting(false);
+                resetForm();
+              }}
+            >
+              {({ isSubmitting }) => (
+                <Form className="Form">
+                  <Field name="newAddr">
+                    {({ field, form }) => (
+                      <div
+                        className={field.value ? 'Field HasValue' : 'Field '}
+                      >
+                        <label>paste address</label>
+                        <input type="text" {...field} />
+                      </div>
+                    )}
+                  </Field>
+                  <ErrorMessage
+                    name="newAddr"
+                    render={(msg) => <div className="Error">{msg}</div>}
+                  />
+                  <button type="submit" disabled={isSubmitting}>
+                    add
+                  </button>
+                </Form>
+              )}
+            </Formik>
             <QrReader
               delay={500}
               onError={handleError}

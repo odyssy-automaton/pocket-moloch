@@ -24,7 +24,29 @@ const Home = ({ client, history }) => {
   const { isShowing, toggle } = useModal();
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
+  useEffect(()=>{
+    if (history.location.state && history.location.state.signUpModal) {
+      toggle('signUpModal')
+      
+    } else {
+      (async () => {
 
+        if (currentUser && currentUser.sdk) {
+        
+          const _accountDevices = currentWallet.devices;
+          
+          if (!_accountDevices) {
+            toggle('deviceNotConnectedModal')
+          }
+          else if (!_accountDevices && _accountDevices.items.length<2) {
+            toggle('addDeviceModal')
+          } else if (!_accountDevices.items.some(item=> item.device.address === currentUser.sdk.state.deviceAddress)){
+            toggle('newDeviceDetectedModal')
+          }
+        }
+    })()}
+    // eslint-disable-next-line
+  },[currentUser]);
 
   // const weth = new WethService();
   const { guildBankAddr } = client.cache.readQuery({ query: GET_METADATA });
@@ -123,6 +145,13 @@ const Home = ({ client, history }) => {
             title="Account almost ready"
             text="You need to add at least one more recovery option"
             handleConfirm={()=>history.push('/account-recovery')}
+          />
+          <TwoButtonModal
+            isShowing={isShowing.deviceNotConnectedModal}
+            hide={() => toggle('deviceNotConnectedModal')}
+            title="Would you like to authorize this device?"
+            text="You must authorize from an already connected Device"
+            handleConfirm={()=>history.push('/connect-account')}
           />
           <TwoButtonModal
             isShowing={isShowing.newDeviceDetectedModal}

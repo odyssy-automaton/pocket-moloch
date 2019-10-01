@@ -136,7 +136,7 @@ const Store = ({ children }) => {
       //     could i check earlier that there is no account info
       //     not with getConnectedDevices because it errors before account connected
       if (sdk && sdk.state.account) {
-        console.log('duh', sdk.state);
+        console.log('connected state', sdk.state);
 
         ethWei = (sdk && sdk.state.account.balance.real.toString()) || 0;
         eth = web3Service.fromWei(ethWei);
@@ -147,7 +147,7 @@ const Store = ({ children }) => {
         // set delay to 10 seconds after sdk balance is updated
         setDelay(10000);
       } else {
-        console.log('try again', sdk);
+        console.log('not connected, try again', sdk);
 
         setNumTries(numTries + 1);
         // console.log('tries', numTries);
