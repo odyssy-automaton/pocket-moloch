@@ -4,29 +4,6 @@
     .Offer {
       margin-top: 25px;
     }
-    .DrawerToggle {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: transparent;
-      color: $base-font-color;
-      z-index: 99;
-      width: calc(100% - 150px);
-      top: 15px;
-      margin: 0 auto;
-      padding: 0px;
-      text-align: center;
-      transition: all .15s linear;
-      svg {
-        fill: $base-font-color;
-        width: 36px;
-        height: auto;
-      }
-      &:hover {
-        top: 12px;
-        transition: all .15s linear;
-      }
-    }
     .Drawer {
       position: absolute;
       bottom: 45px;
@@ -38,7 +15,32 @@
       overflow: hidden;
       z-index: 99;
       transition: all .15s ease-in-out;
+      pointer-events: none;
       h3 { margin-top: 50px; }
+      .DrawerToggle {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: transparent;
+        color: $base-font-color;
+        z-index: 99;
+        width: calc(100% - 150px);
+        top: 15px;
+        margin: 0 auto;
+        padding: 0px;
+        text-align: center;
+        transition: all .15s linear;
+        pointer-events: all !important;
+        svg {
+          fill: $base-font-color;
+          width: 36px;
+          height: auto;
+        }
+        &:hover {
+          top: 12px;
+          transition: all .15s linear;
+        }
+      }
       &.Open {
         position: fixed;
         top: 0px;
@@ -49,7 +51,7 @@
         overflow: scroll;
         .DrawerToggle {
           transform: translateX(-50%) rotate(180deg);
-          top: 15px;
+          top: 15px; 
           &:hover {
             top: 18px;
           }
