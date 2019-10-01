@@ -36,6 +36,7 @@ const UserWallet = ({history}) => {
 
   useEffect(()=>{
     (async () => {
+      
         if (currentUser && currentUser.sdk) {
           const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
           setWaitingSdk(false);
