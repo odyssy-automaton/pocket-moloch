@@ -32,7 +32,9 @@ const Store = ({ children }) => {
     allowamce: 0,
     shares: 0,
     state: null,
+    devices: null,
     _txList: [],
+    addrByBelegateKey: null,
   });
 
   // const [name, setName] = useState('MetaCartel DAO');
@@ -71,6 +73,7 @@ const Store = ({ children }) => {
         );
         await sdk.initialize();
         // check if account is connected in local storage
+
         const accounts = await sdk.getConnectedAccounts();
         // if the there is an account connect it
         // this should never not exsist, it is added to AWS on first signin
@@ -95,6 +98,7 @@ const Store = ({ children }) => {
   useInterval(async () => {
     // run on interval defined by $delay only if authenticated
     if (currentUser) {
+      let accountDevices = null;
       // get account address from aws
       const acctAddr = currentUser.attributes['custom:account_address'];
       // get delegate key from contract to see if it is different
@@ -132,15 +136,19 @@ const Store = ({ children }) => {
       //     could i check earlier that there is no account info
       //     not with getConnectedDevices because it errors before account connected
       if (sdk && sdk.state.account) {
+        console.log('duh', sdk.state);
+
         ethWei = (sdk && sdk.state.account.balance.real.toString()) || 0;
         eth = web3Service.fromWei(ethWei);
         // state.account.state undefined if still connecting?
         state = (sdk && sdk.state.account.state) || 'connecting';
         // check acount devices on sdk
-        //const accountDevices = await sdk.getConnectedAccountDevices();
+        accountDevices = await sdk.getConnectedAccountDevices();
         // set delay to 10 seconds after sdk balance is updated
         setDelay(10000);
       } else {
+        console.log('try again', sdk);
+
         setNumTries(numTries + 1);
         // console.log('tries', numTries);
         // if sdk is not connected withen 5 seconds it probably is a new account
@@ -164,7 +172,16 @@ const Store = ({ children }) => {
       // set state
       setCurrentWallet({
         ...currentWallet,
-        ...{ weth, allowance, eth, state, shares, _txList, addrByBelegateKey },
+        ...{
+          weth,
+          allowance,
+          eth,
+          state,
+          shares,
+          accountDevices,
+          _txList,
+          addrByBelegateKey,
+        },
       });
     }
   }, delay);

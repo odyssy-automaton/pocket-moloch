@@ -16,33 +16,15 @@ import WethService from '../../utils/WethService';
 import TwoButtonModal from '../../components/shared/TwoButtonModal';
 import useModal from '../../components/shared/useModal';
 
-import { CurrentUserContext } from '../../contexts/Store';
+import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
 
 const Home = ({ client, history }) => {
   const [vizData, setVizData] = useState([]);
   const [chartView, setChartView] = useState('bank');
   const { isShowing, toggle } = useModal();
   const [currentUser] = useContext(CurrentUserContext);
-  useEffect(()=>{
-    if (history.location.state && history.location.state.signUpModal) {
-      toggle('signUpModal')
-      
-    } else {
-      (async () => {
-        if (currentUser && currentUser.sdk) {
-        
-          const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
-          
-          if (!_accountDevices.items.some(item=> item.device.address === currentUser.sdk.state.deviceAddress)) {
-            toggle('newDeviceDetectedModal')
-          } 
-          else if (_accountDevices.items.length<2) {
-            toggle('addDeviceModal')
-          }
-        }
-    })()}
-    // eslint-disable-next-line
-  },[currentUser]);
+  const [currentWallet] = useContext(CurrentWalletContext);
+
 
   // const weth = new WethService();
   const { guildBankAddr } = client.cache.readQuery({ query: GET_METADATA });
