@@ -128,7 +128,7 @@ const Store = ({ children }) => {
       // these are set to zero every interval, maybe needed when user logs out
       let ethWei = 0;
       let eth = 0;
-      let state = 'Not Connected';
+      let state = 'Started';
 
       // state.account will be undefined if not connected
       // should be loading durring this?
@@ -141,13 +141,16 @@ const Store = ({ children }) => {
         ethWei = (sdk && sdk.state.account.balance.real.toString()) || 0;
         eth = web3Service.fromWei(ethWei);
         // state.account.state undefined if still connecting?
-        state = (sdk && sdk.state.account.state) || 'connecting';
+        // will be 'Created' or 'Delpoyed'
+        state = (sdk && sdk.state.account.state);
         // check acount devices on sdk
         accountDevices = await sdk.getConnectedAccountDevices();
+        
         // set delay to 10 seconds after sdk balance is updated
         setDelay(10000);
       } else {
         console.log('not connected, try again', sdk);
+        state = 'Connecting';
 
         setNumTries(numTries + 1);
         // console.log('tries', numTries);
@@ -155,6 +158,9 @@ const Store = ({ children }) => {
         // should be loading durring this?
         // TODO: need a better way to check this
         if (numTries === 5) {
+          state = 'Not Connected';
+          
+
           setDelay(10000);
         }
       }

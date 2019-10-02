@@ -133,6 +133,8 @@ const AccountRecovery = ({ history }) => {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
+              console.log('writeQrCod', writeQrCode);
+              
               try {
                 if (
                   accountDevices.some(

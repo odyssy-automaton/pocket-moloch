@@ -24,6 +24,7 @@ import RageQuit from './RageQuit';
 import DepositForm from './DepositForm';
 import TwoButtonModal from '../../components/shared/TwoButtonModal';
 import useInterval from '../../utils/PollingUtil';
+import DeployDevices from './DeployDevices';
 const UserWallet = ({history}) => {
 
   const [delay, setDelay] = useState(null);
@@ -139,6 +140,8 @@ const UserWallet = ({history}) => {
             </Modal>
 
             <Deploy />
+
+            <DeployDevices />
             
             <ConnectAccount />
 
