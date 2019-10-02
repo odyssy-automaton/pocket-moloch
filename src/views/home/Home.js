@@ -13,80 +13,12 @@ import { GET_METADATA } from '../../utils/Queries';
 
 import './Home.scss';
 import WethService from '../../utils/WethService';
-import TwoButtonModal from '../../components/shared/TwoButtonModal';
-import useModal from '../../components/shared/useModal';
-
-import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
+import StateModals from '../../components/shared/StateModals';
 
 const Home = ({ client, history }) => {
   const [vizData, setVizData] = useState([]);
   const [chartView, setChartView] = useState('bank');
-  const { isShowing, toggle, open } = useModal();
-  const [currentUser] = useContext(CurrentUserContext);
-  const [currentWallet] = useContext(CurrentWalletContext);
 
-  /*
-check for all States
-should be moved to something more reusable
-  */
-  useEffect(() => {
-    if (history.location.state && history.location.state.signUpModal) {
-      // user just signed up
-      open('signUpModal');
-    } else {
-      (async () => {
-        console.log('currentWallet.state', currentWallet.state);
-        const _accountDevices = currentWallet.accountDevices;
-
-        if (currentWallet.state && currentWallet.state === 'Not Connected') {
-          open('deviceNotConnectedModal');
-          return false;
-        }
-
-        if (
-          _accountDevices &&
-          _accountDevices.items.length > 1 &&
-          (currentWallet.state && currentWallet.state === 'Created')
-        ) {
-          open('connectedUndeployed');
-          return false;
-        }
-
-        if (currentWallet.state && currentWallet.state === 'Created') {
-          console.log('[][][][][][', _accountDevices);
-
-          if (!_accountDevices) {
-            open('addDeviceModal');
-            return false;
-          }
-
-          if (
-            currentWallet.state === 'Deployed' &&
-            _accountDevices &&
-            _accountDevices.items.length < 2
-          ) {
-            open('addDeviceModal');
-            return false;
-          }
-
-          if (
-            currentWallet.state === 'Deployed' &&
-            _accountDevices &&
-            !_accountDevices.items.some(
-              (item) =>
-                item.device.address === currentUser.sdk.state.deviceAddress,
-            )
-          ) {
-            open('newDeviceDetectedModal');
-            return false;
-          }
-        }
-      })();
-    }
-    // eslint-disable-next-line
-  }, [currentWallet]);
-
-  // const weth = new WethService();
   const { guildBankAddr } = client.cache.readQuery({ query: GET_METADATA });
 
   useEffect(() => {
@@ -175,42 +107,10 @@ should be moved to something more reusable
 
         return (
           <>
+            <StateModals />
+
             <div className="Home">
-              <TwoButtonModal
-                isShowing={isShowing.signUpModal}
-                hide={() => toggle('signUpModal')}
-                title="Account almost ready"
-                text="You need to add at least one more recovery option"
-                handleConfirm={() => history.push('/account-recovery')}
-              />
-              <TwoButtonModal
-                isShowing={isShowing.connectedUndeployed}
-                hide={() => toggle('connectedUndeployed')}
-                title="You are ready to deploy your account"
-                text="You need to add some gas and deploy"
-                handleConfirm={() => history.push('/account')}
-              />
-              <TwoButtonModal
-                isShowing={isShowing.deviceNotConnectedModal}
-                hide={() => toggle('deviceNotConnectedModal')}
-                title="Would you like to authorize this device?"
-                text="You must authorize from an already connected Device"
-                handleConfirm={() => history.push('/connect-account')}
-              />
-              <TwoButtonModal
-                isShowing={isShowing.newDeviceDetectedModal}
-                hide={() => toggle('newDeviceDetectedModal')}
-                title="New Device or Browser"
-                text="This device does not have access. Would you like to add it?"
-                handleConfirm={() => history.push('/account-recovery')}
-              />
-              <TwoButtonModal
-                isShowing={isShowing.addDeviceModal}
-                hide={() => toggle('addDeviceModal')}
-                title="Secure your account"
-                text="You need to add at least one more recovery option"
-                handleConfirm={() => history.push('/account-recovery')}
-              />
+              
               <div className="Intro">
                 <h1>PokéMol DAO</h1>
                 <p>Put a Moloch in Your Pocket</p>
