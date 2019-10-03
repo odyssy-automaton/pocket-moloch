@@ -7,6 +7,9 @@ import './StateModals.scss';
 import useModal from './useModal';
 
 import TwoButtonModal from './TwoButtonModal';
+import Web3Service from '../../utils/Web3Service';
+import Modal from './Modal';
+import DepositForm from '../account/DepositForm';
 
 const StateModals = (props) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -14,17 +17,15 @@ const StateModals = (props) => {
 
   // Toggle functions
   const { isShowing, toggle, open } = useModal();
-  const {
-    history,
-  } = props;
+  const { history, location } = props;
+
+  const web3Service = new Web3Service();
 
   useEffect(() => {
-
-    if(!currentUser){
-      console.log('no user', currentUser)
+    if (!currentUser) {
+      console.log('no user', currentUser);
       return () => false;
-    }
-     else if (history.location.state && history.location.state.signUpModal) {
+    } else if (history.location.state && history.location.state.signUpModal) {
       // user just signed up
       open('signUpModal');
     } else {
@@ -38,42 +39,54 @@ const StateModals = (props) => {
         }
 
         if (
+          currentWallet.state &&
+          currentWallet.state === 'Created' &&
+          !_accountDevices
+        ) {
+          open('addDeviceModal');
+          return false;
+        }
+
+        if (
           _accountDevices &&
           _accountDevices.items.length > 1 &&
+          location.pathname !== '/account' &&
           (currentWallet.state && currentWallet.state === 'Created')
         ) {
           open('connectedUndeployed');
           return false;
         }
 
-        if (currentWallet.state && currentWallet.state === 'Created') {
-          console.log('[][][][][][', _accountDevices);
+        if (
+          currentWallet.state &&
+          currentWallet.state === 'Created' &&
+          location.pathname === '/account' &&
+          web3Service.fromWei(
+            currentUser.sdk.state.account.balance.real.toString(),
+          ) < 0.001
+        ) {
+          open('depositForm');
+        }
 
-          if (!_accountDevices) {
-            open('addDeviceModal');
-            return false;
-          }
+        if (
+          currentWallet.state === 'Deployed' &&
+          _accountDevices &&
+          _accountDevices.items.length < 2
+        ) {
+          open('addDeviceModal');
+          return false;
+        }
 
-          if (
-            currentWallet.state === 'Deployed' &&
-            _accountDevices &&
-            _accountDevices.items.length < 2
-          ) {
-            open('addDeviceModal');
-            return false;
-          }
-
-          if (
-            currentWallet.state === 'Deployed' &&
-            _accountDevices &&
-            !_accountDevices.items.some(
-              (item) =>
-                item.device.address === currentUser.sdk.state.deviceAddress,
-            )
-          ) {
-            open('newDeviceDetectedModal');
-            return false;
-          }
+        if (
+          currentWallet.state === 'Deployed' &&
+          _accountDevices &&
+          !_accountDevices.items.some(
+            (item) =>
+              item.device.address === currentUser.sdk.state.deviceAddress,
+          )
+        ) {
+          open('newDeviceDetectedModal');
+          return false;
         }
       })();
     }
@@ -82,6 +95,12 @@ const StateModals = (props) => {
 
   return (
     <>
+      <Modal
+        isShowing={isShowing.depositForm}
+        hide={() => toggle('depositForm')}
+      >
+        <DepositForm className="FlexCenter" />
+      </Modal>
       <TwoButtonModal
         isShowing={isShowing.signUpModal}
         hide={() => toggle('signUpModal')}
@@ -94,7 +113,10 @@ const StateModals = (props) => {
         hide={() => toggle('connectedUndeployed')}
         title="You are ready to deploy your account"
         text="You need to add some gas and deploy"
-        handleConfirm={() => history.push('/account')}
+        handleConfirm={() => {
+          toggle('connectedUndeployed');
+          history.push('/account');
+        }}
       />
       <TwoButtonModal
         isShowing={isShowing.deviceNotConnectedModal}

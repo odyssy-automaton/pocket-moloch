@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -13,7 +13,7 @@ import Modal from '../shared/Modal';
 import useInterval from '../../utils/PollingUtil';
 import useModal from '../shared/useModal';
 
-const ConnectAccount = ({history}) => {
+const ConnectAccount = ({history, location}) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
   //const [loading] = useContext(LoaderContext);
@@ -48,6 +48,22 @@ const ConnectAccount = ({history}) => {
     }
   };
 
+  useEffect(() => {
+    if(currentWallet.state === 'Not Connected'){
+      toggle('getQrCode');
+      getQr();
+    } else if (location.pathname === '/connect-account') {
+      history.push('/account-recovery')
+    }
+
+
+  }, [])
+
+  useEffect(()=>{
+    if(currentWallet.state === 'Connected'){
+      history.push('/account')
+    }
+  }, [currentWallet])
 
   return (
     <>
@@ -56,7 +72,10 @@ const ConnectAccount = ({history}) => {
           <p>Copied!</p>
         </div>
       )}
+      {/* {location.pathname} */}
       {currentWallet.state !== 'Connected' && currentWallet.state !== 'Deployed' ? (
+        <>
+        {(location.pathname === '/connect-account') && !isShowing.getQrCode}
         <button
           onClick={() => {
             toggle('getQrCode');
@@ -65,8 +84,10 @@ const ConnectAccount = ({history}) => {
         >
           Add This Device
         </button>
+        </>
       ) : (
         <>
+
           <button onClick={() => history.push('/account-recovery')}>
             Approve a New Device
           </button>

@@ -20,12 +20,9 @@ const DeployDevices = () => {
         currentWallet.state !== 'Not Connected' && (
           <Formik
             onSubmit={async (values, { setSubmitting }) => {
-
               try {
                 const sdk = currentUser.sdk;
-                const bcprocessor = new BcProcessorService();
                 const extimatedTxs = [];
-                console.log('devices', currentWallet.accountDevices);
                 currentWallet.accountDevices.items
                   .filter((device) => device.state !== 'Deployed')
                   .forEach((device) => {
@@ -35,11 +32,11 @@ const DeployDevices = () => {
                       ),
                     );
                   });
-                console.log(extimatedTxs);
 
-                await Promise.all(extimatedTxs);
-                const totalGas = extimatedTxs.reduce((total, estimated) =>
-                  total.add(estimated.totalCost),
+                const resolvedEstimates = await Promise.all(extimatedTxs);
+
+                const totalGas = resolvedEstimates.reduce(
+                  (total, estimated) => total.totalCost.add(estimated.totalCost),
                 );
                 console.log('total gas', totalGas);
                 if (ethToWei(currentWallet.eth).lt(totalGas)) {
@@ -50,21 +47,21 @@ const DeployDevices = () => {
                   );
                 }
 
-                const data = await Promise.all(
-                  extimatedTxs.forEach((estimate) => {
-                    return sdk.submitAccountTransaction(estimate);
-                  }),
-                );
-                console.log(data);
+                // fails here for some reason
+                // maybe nonce
+                resolvedEstimates.reverse().forEach((estimate) => {
+                  sdk
+                    .submitAccountTransaction(estimate)
+                    .then(console.log)
+                    .catch(console.error);
+                });
 
-                console.log(currentWallet.accountDevices.items.split(','));
-
-                bcprocessor.setTx(
-                  data,
-                  currentUser.attributes['custom:account_address'],
-                  'Deploy all recovery Devices for contract wallet.',
-                  true,
-                );
+                // bcprocessor.setTx(
+                //   data,
+                //   currentUser.attributes['custom:account_address'],
+                //   'Deploy all recovery Devices for contract wallet.',
+                //   true,
+                // );
               } catch (err) {
                 alert('Something went wrong: ' + err);
                 setSubmitting(false);
@@ -73,10 +70,7 @@ const DeployDevices = () => {
           >
             {({ isSubmitting, errors }) => (
               <Form className="Form">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                >
+                <button type="submit" disabled={isSubmitting}>
                   DeployDevices
                 </button>
               </Form>

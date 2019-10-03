@@ -129,6 +129,7 @@ const Store = ({ children }) => {
       let ethWei = 0;
       let eth = 0;
       let state = 'Started';
+      setLoading(true)
 
       // state.account will be undefined if not connected
       // should be loading durring this?
@@ -142,6 +143,8 @@ const Store = ({ children }) => {
         eth = web3Service.fromWei(ethWei);
         // state.account.state undefined if still connecting?
         // will be 'Created' or 'Delpoyed'
+        setLoading(false)
+
         state = (sdk && sdk.state.account.state);
         // check acount devices on sdk
         accountDevices = await sdk.getConnectedAccountDevices();
@@ -159,6 +162,7 @@ const Store = ({ children }) => {
         // TODO: need a better way to check this
         if (numTries === 5) {
           state = 'Not Connected';
+          setLoading(false)
           
 
           setDelay(10000);
