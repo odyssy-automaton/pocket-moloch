@@ -14,8 +14,6 @@ import config from '../../config';
 
 import { CurrentUserContext } from '../../contexts/Store';
 import Loading from '../../components/shared/Loading';
-import useModal from '../../components/shared/useModal';
-import Modal from '../../components/shared/Modal'
 
 
 const sdkEnv = getSdkEnvironment(SdkEnvironmentNames[`${config.SDK_ENV}`]); // kovan env by default
@@ -23,35 +21,12 @@ const sdkEnv = getSdkEnvironment(SdkEnvironmentNames[`${config.SDK_ENV}`]); // k
 const SignIn = ({ history }) => {
   const [, setCurrentUser] = useContext(CurrentUserContext);
   const [authError, setAuthError] = useState();
-  const { isShowing, toggle } = useModal();
+  const [pseudonymTouch, setPseudonymTouch] = useState(false);
+  const [passwordTouch, setPasswordTouch] = useState(false);
 
   return (
     <div>
-      <h2 className="Pad">Sign in to existing account</h2>
-      <Modal
-              isShowing={isShowing.signInMsg}
-              hide={() => toggle('signInMsg')}
-            >
-
-              <h2>Welcom to the Dao</h2>
-              <div className="IconWarning">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
-              </div>
-              <p>Thank you for creating an account. If you would like to join the DAO as a member, go to the twitter, telegram, or discord and find a current member to sponser you.</p>
-              <h3>Important!</h3>
-              <p>This app will not work in private mode. If you are using private mode in your browser please turn it off.</p>
-              <h3>Some Notes:</h3>
-              <p>This DAO uses contract wallets which are owned by your device keys. If you sign out of this device, you will no longer be able to access your wallet from this device.</p>
-              <p>Make sure you have added at least one secondary device to access your wallet. With another approved device, you can always reapprove this device again.</p>
-              <p>If you do choose to sign out and have not added any other device keys, you will not be able to access your wallet in the future. EVER!</p>
-              <Link
-                className="AltOption"
-                to="/proposals"
-                onClick={() => toggle('signInMsg')}
-              >
-                I undrstand, continue on
-              </Link>
-            </Modal>
+      
       <Formik
         initialValues={{ username: '', password: '' }}
         validate={(values) => {
@@ -107,6 +82,7 @@ const SignIn = ({ history }) => {
                 'custom:account_address': account.address,
                 'custom:device_address': accountDevices.items[0].device.address,
                 'custom:ens_name': ensLabel,
+                'custom:named_devices': JSON.stringify({'OG device': accountDevices.items[0].device.address}),
               });
               const jsonse = JSON.stringify(
                 {
@@ -141,8 +117,10 @@ const SignIn = ({ history }) => {
 
               setSubmitting(false);
 
-              toggle('signInMsg')
-              //history.push('/proposals');
+              history.push({
+  pathname: '/',
+  state: { signUpModal: true }
+});
             }
           } catch (err) {
             setAuthError(err);
@@ -151,16 +129,20 @@ const SignIn = ({ history }) => {
           }
         }}
       >
-        {({ isSubmitting }) => {
+        {({ isSubmitting, errors, touched }) => {
           if (isSubmitting) {
             return <Loading />;
           }
 
           return (
             <Form className="Form">
-              {authError ? (
-                <div className="Form__auth-error">{authError.message}</div>
-              ) : null}
+              <h2>Sign in to an existing account</h2>
+              <Link to="/sign-up">
+                Create a new account =>
+              </Link>
+              {authError &&
+                <div className="Form__auth-error"><p className="Danger">{authError.message}</p></div>
+              }
               <Field name="username">
               {({ field, form }) => (
                 <div
@@ -171,7 +153,7 @@ const SignIn = ({ history }) => {
                   }
                 >
                   <label>Pseudonym</label>
-                  <input type="text" {...field} />
+                  <input type="text" {...field} onInput={()=>setPseudonymTouch(true)} />
                 </div>
               )}
               </Field>
@@ -186,21 +168,23 @@ const SignIn = ({ history }) => {
                   }
                 >
                   <label>Password</label>
-                  <input type="password" {...field} />
+                  <input type="password" {...field} onInput={()=>setPasswordTouch(true)} />
                 </div>
               )}
               </Field>
               <ErrorMessage name="password" render={msg => <div className="Error">{msg}</div>} />
-              <button type="submit" disabled={isSubmitting}>
-                Sign In
-              </button>
+              <div className="ButtonGroup">
+                <button type="submit" className={(Object.keys(errors).length<1 && pseudonymTouch && passwordTouch)?"":"Disabled"}  disabled={isSubmitting}>
+                  Sign In
+                </button>
+                <Link to="/forgot-password">
+                  Forgot Password?
+                </Link>
+              </div>
             </Form>
           );
         }}
       </Formik>
-      <Link className="AltOption" to="/sign-up">
-        Create a new account
-      </Link>
     </div>
   );
 };

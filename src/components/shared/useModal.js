@@ -4,6 +4,9 @@ const useModal = () => {
   const [isShowing, setIsShowing] = useState({
     depositForm: false,
     rageForm: false,
+    deviceNotConnectedModal: false,
+    addDeviceModa: false,
+    newDeviceDetectedModal: false
   });
 
   function toggle(modalName) {
@@ -13,9 +16,17 @@ const useModal = () => {
     });
   }
 
+  function open(modalName) {
+    setIsShowing({
+      ...isShowing,
+      ...{ [modalName]: true },
+    });
+  }
+
   return {
     isShowing,
     toggle,
+    open,
   };
 };
 

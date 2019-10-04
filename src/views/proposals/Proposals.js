@@ -8,13 +8,16 @@ import ErrorMessage from '../../components/shared/ErrorMessage';
 import BottomNav from '../../components/shared/BottomNav';
 import Loading from '../../components/shared/Loading';
 import { CurrentWalletContext } from '../../contexts/Store';
+import StateModals from '../../components/shared/StateModals';
 
-const Proposals = ({match, history}) => {
-  const [currentWallet] = useContext(CurrentWalletContext);  
+const Proposals = ({ match, history }) => {
+  const [currentWallet] = useContext(CurrentWalletContext);
 
   return (
     <Fragment>
-      <Query query={GET_PROPOSALS_QUERY} pollInterval={20000}> 
+      <StateModals />
+
+      <Query query={GET_PROPOSALS_QUERY} pollInterval={20000}>
         {({ loading, error, data }) => {
           if (loading) return <Loading />;
           if (error) return <ErrorMessage message={error} />;
@@ -43,7 +46,11 @@ const Proposals = ({match, history}) => {
                   </div>
                 ) : null}
               </div>
-              <ProposalFilter proposals={data.proposals} filter={match.params.filter || 'na'} history={history} />
+              <ProposalFilter
+                proposals={data.proposals}
+                filter={match.params.filter || 'na'}
+                history={history}
+              />
             </div>
           );
         }}

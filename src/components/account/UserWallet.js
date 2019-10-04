@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import useModal from '../shared/useModal';
 import Modal from '../shared/Modal';
-
+import CopyToClipboard from 'react-copy-to-clipboard';
 import ConnectAccount from './ConnectAccount';
 
 import {
@@ -23,11 +23,12 @@ import ApproveWeth from './ApproveWeth';
 import RageQuit from './RageQuit';
 import DepositForm from './DepositForm';
 
-const UserWallet = () => {
+import DeployDevices from './DeployDevices';
+import StateModals from '../shared/StateModals';
+const UserWallet = ({ history }) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading] = useContext(LoaderContext);
   const [currentWallet] = useContext(CurrentWalletContext);
-
   const { isShowing, toggle } = useModal();
 
   return (
@@ -35,6 +36,7 @@ const UserWallet = () => {
       {loading && <Loading />}
       {currentUser && currentUser.sdk && (
         <div className="UserWallet">
+          <StateModals />
           <UserBalance />
           <div className="Actions Pad">
             <h3>Actions</h3>
@@ -62,7 +64,9 @@ const UserWallet = () => {
             </Modal>
 
             <Deploy />
-            
+
+            <DeployDevices />
+
             <ConnectAccount />
 
             {currentWallet.state === 'Deployed' && (
@@ -88,23 +92,24 @@ const UserWallet = () => {
             </Modal>
 
             {currentWallet.state === 'Deployed' && (
-            <button
-            className="Button--Primary"
-            onClick={() => toggle('sendEth')}
-            >Send ETH</button>
+              <button
+                className="Button--Primary"
+                onClick={() => toggle('sendEth')}
+              >
+                Send ETH
+              </button>
             )}
-            <Modal
-              isShowing={isShowing.sendEth}
-              hide={() => toggle('sendEth')}
-            >
+            <Modal isShowing={isShowing.sendEth} hide={() => toggle('sendEth')}>
               <WithdrawEthForm />
             </Modal>
 
             {currentWallet.state === 'Deployed' && (
-            <button
-            className="Button--Primary"
-            onClick={() => toggle('sendWeth')}
-            >Send wETH</button>
+              <button
+                className="Button--Primary"
+                onClick={() => toggle('sendWeth')}
+              >
+                Send wETH
+              </button>
             )}
             <Modal
               isShowing={isShowing.sendWeth}
@@ -112,7 +117,7 @@ const UserWallet = () => {
             >
               <WithdrawWethForm />
             </Modal>
-            
+
             {currentWallet.state === 'Deployed' && (
               <button
                 className="Button--Tertiary"

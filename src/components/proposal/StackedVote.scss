@@ -4,7 +4,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 42px;
+    bottom: 47px;
     width: calc(100% - 150px);
     .FullBar {
         width: 100%;
@@ -13,12 +13,13 @@
         .Labels {
             position: relative;
             min-height: 5px;
+            width: 100%;
             .NoLabel {
                 width: 65px;
                 padding: 0px;
                 position: absolute;
                 top: -50px;
-                left: -62px;
+                right: -62px;
                 text-align: center;
                 background-color: transparent;
                 font-weight: 900;
@@ -30,7 +31,7 @@
                 padding: 0px;
                 position: absolute;
                 top: -50px;
-                right: -62px;
+                left: -62px;
                 text-align: center;
                 background-color: transparent;
                 font-weight: 900;

@@ -1,0 +1,11 @@
+@import '../../variables';
+.FlexContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $base-padding;
+  width: calc(100% - ($base-padding * 2));
+  overflow-x: hidden;
+  // hidden to make loading work properly on small screen.
+}

@@ -6,12 +6,15 @@ import MemberList from '../../components/member/MemberList';
 import ErrorMessage from '../../components/shared/ErrorMessage';
 import BottomNav from '../../components/shared/BottomNav';
 import Loading from '../../components/shared/Loading';
+import StateModals from '../../components/shared/StateModals';
 
 const Members = () => {
   // const members = getUserList();
 
   return (
     <div className="View">
+      <StateModals />
+
       <Query query={GET_MEMBERS_QUERY}>
         {({ loading, error, data }) => {
           if (loading) return <Loading />;

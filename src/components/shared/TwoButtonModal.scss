@@ -1,0 +1,24 @@
+@import '../../variables';
+
+.ModalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 8;
+    .ModalContent {
+      display: flex;
+      flex-direction: column;
+      background-color: whitesmoke;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: $base-padding;
+      outline: none;
+    }
+  }

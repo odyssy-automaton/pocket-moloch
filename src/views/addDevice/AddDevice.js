@@ -18,6 +18,7 @@ const AddDevice = ({ match }) => {
 
   useEffect(() => {
     const getDevices = async () => {
+
       if (currentUser && currentUser.sdk) {
         
         const _accountDevices = await currentUser.sdk.getConnectedAccountDevices();
