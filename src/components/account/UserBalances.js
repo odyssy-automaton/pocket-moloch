@@ -64,6 +64,7 @@ const UserBalance = ({toggle}) => {
               >
                 Deposit
               </div>
+              <div onClick={()=>window.open('https://uniswap.exchange/swap','_blank')}>Uniswap</div>
               {currentWallet.state === 'Deployed' && (
               <div onClick={() => toggle('wrapForm')}>Wrap ETH</div>
             )}
