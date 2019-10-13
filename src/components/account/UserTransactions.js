@@ -117,7 +117,6 @@ const UserTransactions = () => {
     <div className="Transactions">
       {currentUser && (
         <>
-          <h3 className="Pad">Transactions</h3>
           {renderList()}
         </>
       )}
