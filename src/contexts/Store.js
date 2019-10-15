@@ -14,6 +14,7 @@ import WethService from '../utils/WethService';
 import Web3Service from '../utils/Web3Service';
 import McDaoService from '../utils/McDaoService';
 import BcProcessorService from '../utils/BcProcessorService';
+import { WalletStatuses, currentStatus } from '../utils/WalletStatus';
 
 export const CurrentUserContext = createContext();
 export const CurrentWalletContext = createContext();
@@ -35,6 +36,7 @@ const Store = ({ children }) => {
     devices: null,
     _txList: [],
     addrByBelegateKey: null,
+    status: WalletStatuses.Unknown
   });
 
   // const [name, setName] = useState('MetaCartel DAO');
@@ -128,7 +130,7 @@ const Store = ({ children }) => {
       // these are set to zero every interval, maybe needed when user logs out
       let ethWei = 0;
       let eth = 0;
-      let state = 'Started';
+      let state = WalletStatuses.Unknown;
       setLoading(true)
 
       // state.account will be undefined if not connected
@@ -146,6 +148,8 @@ const Store = ({ children }) => {
         setLoading(false)
 
         state = (sdk && sdk.state.account.state);
+        console.log('when connected?', sdk && sdk.state.account.state);
+        
         // check acount devices on sdk
         accountDevices = await sdk.getConnectedAccountDevices();
         
@@ -153,7 +157,7 @@ const Store = ({ children }) => {
         setDelay(10000);
       } else {
         console.log('not connected, try again', sdk);
-        state = 'Connecting';
+        state = WalletStatuses.Connecting;
 
         setNumTries(numTries + 1);
         // console.log('tries', numTries);
@@ -161,7 +165,7 @@ const Store = ({ children }) => {
         // should be loading durring this?
         // TODO: need a better way to check this
         if (numTries === 5) {
-          state = 'Not Connected';
+          state = WalletStatuses.NotConnected;
           setLoading(false)
           
 
@@ -179,6 +183,9 @@ const Store = ({ children }) => {
         }
       }
 
+      const status = currentStatus(currentWallet, currentUser, state);
+      console.log('status 123', status);
+      
       // set state
       setCurrentWallet({
         ...currentWallet,
@@ -191,6 +198,7 @@ const Store = ({ children }) => {
           accountDevices,
           _txList,
           addrByBelegateKey,
+          status,
         },
       });
     }

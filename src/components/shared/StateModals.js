@@ -10,6 +10,7 @@ import TwoButtonModal from './TwoButtonModal';
 import Web3Service from '../../utils/Web3Service';
 import Modal from './Modal';
 import DepositForm from '../account/DepositForm';
+import { WalletStatuses } from '../../utils/WalletStatus';
 
 const StateModals = (props) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -18,8 +19,6 @@ const StateModals = (props) => {
   // Toggle functions
   const { isShowing, toggle, open } = useModal();
   const { history, location } = props;
-
-  const web3Service = new Web3Service();
 
   useEffect(() => {
     if (!currentUser) {
@@ -30,68 +29,40 @@ const StateModals = (props) => {
       open('signUpModal');
     } else {
       (async () => {
-        console.log('currentWallet.state', currentWallet.state);
-        const _accountDevices = currentWallet.accountDevices;
+        console.log('currentWallet.status check', currentWallet.status);
+        const status = currentWallet.status;
 
-        if (currentWallet.state && currentWallet.state === 'Not Connected') {
-          open('deviceNotConnectedModal');
-          return false;
+        switch (status) {
+          case WalletStatuses.NotConnected:
+            open('deviceNotConnectedModal');          
+            break;
+          case WalletStatuses.UnDeployedNeedsDevices:
+            open('addDeviceModal');
+            break;
+          case location.pathname !== '/account':
+          case WalletStatuses.UnDeployed:
+            open('connectedUndeployed');
+            break;
+          case location.pathname !== '/account':
+          case WalletStatuses.LowGas:
+            open('depositForm');
+            break;
+          case WalletStatuses.DeployedNeedsDevices:
+            open('addDeviceModal');
+            break;
+          case WalletStatuses.DeployedNewDevice:
+            open('newDeviceDetectedModal');
+            break;
+          default:
+            break;
         }
 
-        if (
-          currentWallet.state &&
-          currentWallet.state === 'Created' &&
-          !_accountDevices
-        ) {
-          open('addDeviceModal');
-          return false;
-        }
-
-        if (
-          _accountDevices &&
-          _accountDevices.items.length > 1 &&
-          location.pathname !== '/account' &&
-          (currentWallet.state && currentWallet.state === 'Created')
-        ) {
-          open('connectedUndeployed');
-          return false;
-        }
-
-        if (
-          currentWallet.state &&
-          currentWallet.state === 'Created' &&
-          location.pathname === '/account' &&
-          web3Service.fromWei(
-            currentUser.sdk.state.account.balance.real.toString(),
-          ) < 0.001
-        ) {
-          open('depositForm');
-        }
-
-        if (
-          currentWallet.state === 'Deployed' &&
-          _accountDevices &&
-          _accountDevices.items.length < 2
-        ) {
-          open('addDeviceModal');
-          return false;
-        }
-
-        if (
-          currentWallet.state === 'Deployed' &&
-          _accountDevices &&
-          !_accountDevices.items.some(
-            (item) =>
-              item.device.address === currentUser.sdk.state.deviceAddress,
-          )
-        ) {
-          open('newDeviceDetectedModal');
-          return false;
-        }
       })();
     }
     // eslint-disable-next-line
   }, [currentWallet]);
+
+
 
   return (
     <>
