@@ -14,6 +14,7 @@ import config from '../../config';
 
 import { CurrentUserContext } from '../../contexts/Store';
 import Loading from '../../components/shared/Loading';
+import Web3Service from '../../utils/Web3Service';
 
 
 const sdkEnv = getSdkEnvironment(SdkEnvironmentNames[`${config.SDK_ENV}`]); // kovan env by default
@@ -41,6 +42,8 @@ const SignIn = ({ history }) => {
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
+          const web3Service = new Web3Service();
+
           try {
             const user = await Auth.signIn({
               username: values.username,
@@ -78,11 +81,23 @@ const SignIn = ({ history }) => {
               const account = await sdk.createAccount(ensLabel);
               const accountDevices = await sdk.getConnectedAccountDevices();
 
+              // create keystore
+              const network = config.SDK_ENV.toLowerCase();
+              const aValue = JSON.parse(
+                localStorage.getItem(`@archanova:${network}:device:private_key`),
+              );
+
+              const store = await web3Service.getKeyStore(
+                '0x' + aValue.data,
+                values.password,
+              );
+
               await Auth.updateUserAttributes(user, {
                 'custom:account_address': account.address,
                 'custom:device_address': accountDevices.items[0].device.address,
                 'custom:ens_name': ensLabel,
                 'custom:named_devices': JSON.stringify({'OG device': accountDevices.items[0].device.address}),
+                'custom:encrypted_pk2': JSON.stringify(store),
               });
               const jsonse = JSON.stringify(
                 {
