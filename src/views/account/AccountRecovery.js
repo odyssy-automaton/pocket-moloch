@@ -238,7 +238,7 @@ const AccountRecovery = ({ history }) => {
                       <div
                         className={field.value ? 'Field HasValue' : 'Field '}
                       >
-                        <label>Paste the Link</label>
+                        <label>Paste the New Device Address</label>
                         <input type="text" {...field} />
                       </div>
                     )}

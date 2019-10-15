@@ -164,10 +164,9 @@ const Store = ({ children }) => {
         // if sdk is not connected withen 5 seconds it probably is a new account
         // should be loading durring this?
         // TODO: need a better way to check this
-        if (numTries === 5) {
+        if (numTries >= 5) {
           state = WalletStatuses.NotConnected;
           setLoading(false)
-          
 
           setDelay(10000);
         }

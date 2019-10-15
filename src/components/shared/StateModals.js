@@ -34,7 +34,7 @@ const StateModals = (props) => {
 
         switch (status) {
           case WalletStatuses.NotConnected:
-            open('deviceNotConnectedModal');          
+            open('deviceNotConnectedModal');
             break;
           case WalletStatuses.UnDeployedNeedsDevices:
             open('addDeviceModal');
@@ -56,13 +56,10 @@ const StateModals = (props) => {
           default:
             break;
         }
-
       })();
     }
     // eslint-disable-next-line
   }, [currentWallet]);
-
-
 
   return (
     <>
@@ -89,13 +86,15 @@ const StateModals = (props) => {
           history.push('/account');
         }}
       />
-      <TwoButtonModal
+      <Modal
         isShowing={isShowing.deviceNotConnectedModal}
         hide={() => toggle('deviceNotConnectedModal')}
-        title="Would you like to authorize this device?"
-        text="You must authorize from an already connected Device"
-        handleConfirm={() => history.push('/connect-account')}
-      />
+      >
+        <p>This device does not have access. Would you like to link it with a primary account on anoter device?</p>
+        <button onClick={() => history.push('/account')}>Yes this</button>
+        <p>Or have you lost your primary device and you would like to set up a new one?</p>
+        <button onClick={() => history.push('/advanced')}>Yes lets do that.</button>
+      </Modal>
       <TwoButtonModal
         isShowing={isShowing.newDeviceDetectedModal}
         hide={() => toggle('newDeviceDetectedModal')}

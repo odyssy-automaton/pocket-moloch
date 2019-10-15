@@ -30,7 +30,6 @@ const Advanced = () => {
       {/* {loading && <Loading />} */}
 
       <h2>Advanced</h2>
-      <ConnectAccount />
       <hr />
       {currentWallet.state === 'Deployed' ? (
         <>

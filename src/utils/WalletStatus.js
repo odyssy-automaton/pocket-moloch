@@ -68,5 +68,4 @@ export const currentStatus = (currentWallet, currentUser, state = null) => {
     return WalletStatuses.DeployedNewDevice;
   }
 
-  return WalletStatuses.Connected
 };
