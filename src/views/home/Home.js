@@ -1,5 +1,5 @@
 // import React, { useContext } from 'react';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Query } from 'react-apollo';
 import { ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { withApollo } from 'react-apollo';

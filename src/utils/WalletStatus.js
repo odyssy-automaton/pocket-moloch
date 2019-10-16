@@ -1,4 +1,5 @@
-import Web3Service from "./Web3Service";
+import Web3Service from './Web3Service';
+const web3Service = new Web3Service();
 
 export const WalletStatuses = {
   Unknown: 'Unknown',
@@ -10,24 +11,21 @@ export const WalletStatuses = {
   LowGas: 'Low Gas',
   DeployedNeedsDevices: 'Deployed Needs Devices',
   DeployedNewDevice: 'Deployed New Device',
+  Deployed: 'Deployed',
 };
 
 export const currentStatus = (currentWallet, currentUser, state = null) => {
-  const web3Service = Web3Service;
   const _accountDevices = currentWallet.accountDevices;
   const _state = state || currentWallet.state || '';
+  console.log('_accountDevices', _accountDevices);
   // NotConnected user should see signup flow
   if (_state === WalletStatuses.NotConnected) {
     return WalletStatuses.NotConnected;
   }
 
+  // Connecting
   if (_state === WalletStatuses.Connecting) {
     return WalletStatuses.Connecting;
-  }
-
-  // UnDeployedNeedsDevices user needs to add at least one recovery
-  if (_state === 'Created' && !_accountDevices) {
-    return WalletStatuses.UnDeployedNeedsDevices;
   }
 
   // UnDeployed user needs to deploy wallet
@@ -46,6 +44,11 @@ export const currentStatus = (currentWallet, currentUser, state = null) => {
       0.001
   ) {
     return WalletStatuses.LowGas;
+  }
+
+  // UnDeployedNeedsDevices user needs to add at least one recovery
+  if (_state === 'Created' && !_accountDevices) {
+    return WalletStatuses.UnDeployedNeedsDevices;
   }
 
   // DeployedNeedsDevices user has deployed but needs another device option
@@ -67,5 +70,4 @@ export const currentStatus = (currentWallet, currentUser, state = null) => {
   ) {
     return WalletStatuses.DeployedNewDevice;
   }
-
 };

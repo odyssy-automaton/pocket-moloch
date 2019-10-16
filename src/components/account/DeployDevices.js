@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
-import BcProcessorService from '../../utils/BcProcessorService';
+//import BcProcessorService from '../../utils/BcProcessorService';
 import Web3Service from '../../utils/Web3Service';
 import { ethToWei } from '@netgum/utils'; // returns BN
 
 import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
 import { Formik, Form } from 'formik';
+import { WalletStatuses } from '../../utils/WalletStatus';
 
 const DeployDevices = () => {
   const [currentUser] = useContext(CurrentUserContext);
-  const [currentWallet, setCurrentWallet] = useContext(CurrentWalletContext);
+  const [currentWallet] = useContext(CurrentWalletContext);
   const web3Service = new Web3Service();
 
   /*
@@ -16,7 +17,7 @@ const DeployDevices = () => {
     */
   return (
     <>
-      {currentWallet.state === 'Deployed' &&
+      {currentWallet.state === WalletStatuses.Deployed &&
         currentWallet.state !== 'Not Connected' && (
           <Formik
             onSubmit={async (values, { setSubmitting }) => {
@@ -24,7 +25,7 @@ const DeployDevices = () => {
                 const sdk = currentUser.sdk;
                 const extimatedTxs = [];
                 currentWallet.accountDevices.items
-                  .filter((device) => device.state !== 'Deployed')
+                  .filter((device) => device.state !== WalletStatuses.Deployed)
                   .forEach((device) => {
                     extimatedTxs.push(
                       sdk.estimateAccountDeviceDeployment(

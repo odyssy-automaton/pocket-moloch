@@ -12,6 +12,7 @@ import Modal from '../shared/Modal';
 
 import useInterval from '../../utils/PollingUtil';
 import useModal from '../shared/useModal';
+import { WalletStatuses } from '../../utils/WalletStatus';
 
 const ConnectAccount = ({history, location}) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -49,21 +50,25 @@ const ConnectAccount = ({history, location}) => {
   };
 
   useEffect(() => {
-    if(currentWallet.state === 'Not Connected'){
+    if(currentWallet.state === WalletStatuses.NotConnected){
+    console.log('currentWallet.state >>>', currentWallet.state);
+
       toggle('getQrCode');
       getQr();
     } else if (location.pathname === '/connect-account') {
       history.push('/account-recovery')
     }
 
-
+// eslint-disable-next-line
   }, [])
 
-  useEffect(()=>{
-    if(currentWallet.state === 'Connected'){
-      history.push('/account')
-    }
-  }, [currentWallet])
+  // useEffect(()=>{
+  //   console.log('currentWallet.state >>>', currentWallet.state);
+    
+  //   if(currentWallet.state === WalletStatuses.Connected){
+  //     history.push('/account')
+  //   }
+  // }, [currentWallet])
 
   return (
     <>
@@ -73,7 +78,7 @@ const ConnectAccount = ({history, location}) => {
         </div>
       )}
       {/* {location.pathname} */}
-      {currentWallet.state !== 'Connected' && currentWallet.state !== 'Deployed' ? (
+      {currentWallet.state !== WalletStatuses.Connected && currentWallet.state !== WalletStatuses.Deployed ? (
         <>
         {(location.pathname === '/connect-account') && !isShowing.getQrCode}
         <div

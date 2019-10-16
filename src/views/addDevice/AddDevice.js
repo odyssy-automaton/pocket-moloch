@@ -6,6 +6,7 @@ import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
 import BcProcessorService from '../../utils/BcProcessorService';
 import Web3Service from '../../utils/Web3Service';
 import BottomNav from '../../components/shared/BottomNav';
+import { WalletStatuses } from '../../utils/WalletStatus';
 
 const AddDevice = ({ match }) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -78,7 +79,7 @@ const AddDevice = ({ match }) => {
   };
   return (
     <div className="View Pad">
-      {currentWallet.state === 'Deployed' && currentWallet.eth > 0 && !deviceAdded && (
+      {currentWallet.state === WalletStatuses.Deployed && currentWallet.eth > 0 && !deviceAdded && (
         <div className="AddDevice">
           <h3>Are you sure you want to add this new device?</h3>
           <p>{deviceAddr}</p>

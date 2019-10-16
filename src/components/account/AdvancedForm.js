@@ -7,6 +7,7 @@ import ExportKeyStore from './ExportKeyStore';
 import SendAccountTransaction from './SendAccountTransaction';
 import ConnectAccount from './ConnectAccount';
 import useModal from '../shared/useModal';
+import { WalletStatuses } from '../../utils/WalletStatus';
 
 const AdvancedForm = () => {
   const [loading] = useContext(LoaderContext);
@@ -20,7 +21,7 @@ const AdvancedForm = () => {
       <h2>Advanced</h2>
       <ConnectAccount />
       <hr />
-      {currentWallet.state === 'Deployed' && (
+      {currentWallet.state === WalletStatuses.Deployed && (
         <>
           <button
             className="Button--Primary"
