@@ -10,6 +10,7 @@ import Deploy from './Deploy'
 import UserTransactions from './UserTransactions';
 
 import ConnectAccount from './ConnectAccount';
+import { WalletStatuses } from '../../utils/WalletStatus';
 const UserBalance = ({toggle}) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
@@ -65,17 +66,17 @@ const UserBalance = ({toggle}) => {
                 Deposit
               </div>
               <div onClick={()=>window.open('https://uniswap.exchange/swap','_blank')}>Uniswap</div>
-              {currentWallet.state === 'Deployed' && (
+              {currentWallet.state === WalletStatuses.Deployed && (
               <div onClick={() => toggle('wrapForm')}>Wrap ETH</div>
             )}
-            {currentWallet.state === 'Deployed' && (
+            {currentWallet.state === WalletStatuses.Deployed && (
               <div onClick={() => toggle('allowanceForm')}>
                 Approve wETH
               </div>
             )}
             <Deploy />
             <ConnectAccount />
-            {currentWallet.state === 'Deployed' && (
+            {currentWallet.state === WalletStatuses.Deployed && (
               <div
                 className="Button--Primary"
                 onClick={() => toggle('sendEth')}
@@ -83,7 +84,7 @@ const UserBalance = ({toggle}) => {
                 Send ETH
               </div>
             )}
-            {currentWallet.state === 'Deployed' && (
+            {currentWallet.state === WalletStatuses.Deployed && (
               <div
                 className="Button--Primary"
                 onClick={() => toggle('sendWeth')}
@@ -91,7 +92,7 @@ const UserBalance = ({toggle}) => {
                 Send wETH
               </div>
             )}
-            {currentWallet.state === 'Deployed' && (
+            {currentWallet.state === WalletStatuses.Deployed && (
               <div
                 className="Button--Tertiary"
                 onClick={() => toggle('rageForm')}

@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 
 import useModal from '../shared/useModal';
 import Modal from '../shared/Modal';
-import CopyToClipboard from 'react-copy-to-clipboard';
 
 import {
   CurrentUserContext,
   LoaderContext,
-  CurrentWalletContext,
 } from '../../contexts/Store';
 
 import Loading from '../shared/Loading';
@@ -15,7 +13,6 @@ import './UserWallet.scss';
 import UserBalance from './UserBalances';
 import WithdrawWethForm from './WithdrawWethForm';
 import WithdrawEthForm from './WithdrawEthForm';
-import Deploy from './Deploy';
 import WrapEth from './WrapEth';
 import ApproveWeth from './ApproveWeth';
 import RageQuit from './RageQuit';
@@ -26,7 +23,6 @@ import StateModals from '../shared/StateModals';
 const UserWallet = ({ history }) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading] = useContext(LoaderContext);
-  const [currentWallet] = useContext(CurrentWalletContext);
   const { isShowing, toggle } = useModal();
   const  handleToggle = (modal)=>toggle(modal);
   return (
@@ -37,12 +33,12 @@ const UserWallet = ({ history }) => {
           <StateModals />
           <UserBalance toggle={handleToggle}/>
             
-            {/* <Modal
+            <Modal
               isShowing={isShowing.depositForm}
               hide={() => toggle('depositForm')}
             >
               <DepositForm className="FlexCenter" />
-            </Modal> */}
+            </Modal>
 
             <DeployDevices />
 

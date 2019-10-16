@@ -7,7 +7,7 @@ import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
 
 const Deploy = () => {
   const [currentUser] = useContext(CurrentUserContext);
-  const [currentWallet, setCurrentWallet] = useContext(CurrentWalletContext);
+  const [currentWallet] = useContext(CurrentWalletContext);
   const web3Service = new Web3Service();
 
   return (

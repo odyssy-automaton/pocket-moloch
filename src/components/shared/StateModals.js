@@ -7,7 +7,6 @@ import './StateModals.scss';
 import useModal from './useModal';
 
 import TwoButtonModal from './TwoButtonModal';
-import Web3Service from '../../utils/Web3Service';
 import Modal from './Modal';
 import DepositForm from '../account/DepositForm';
 import { WalletStatuses } from '../../utils/WalletStatus';
@@ -34,16 +33,18 @@ const StateModals = (props) => {
 
         switch (status) {
           case WalletStatuses.NotConnected:
-            open('deviceNotConnectedModal');
+              if (location.pathname !== '/account') {
+                open('deviceNotConnectedModal');
+              }
             break;
           case WalletStatuses.UnDeployedNeedsDevices:
             open('addDeviceModal');
             break;
-          case location.pathname !== '/account':
           case WalletStatuses.UnDeployed:
-            open('connectedUndeployed');
+            if (location.pathname !== '/account') {
+              open('connectedUndeployed');
+            }
             break;
-          case location.pathname !== '/account':
           case WalletStatuses.LowGas:
             open('depositForm');
             break;
@@ -90,10 +91,30 @@ const StateModals = (props) => {
         isShowing={isShowing.deviceNotConnectedModal}
         hide={() => toggle('deviceNotConnectedModal')}
       >
-        <p>This device does not have access. Would you like to link it with a primary account on anoter device?</p>
-        <button onClick={() => history.push('/account')}>Yes this</button>
-        <p>Or have you lost your primary device and you would like to set up a new one?</p>
-        <button onClick={() => history.push('/advanced')}>Yes lets do that.</button>
+        <p>
+          This device does not have access. Would you like to link it with a
+          primary account on anoter device?
+        </p>
+        <button
+          onClick={() => {
+            toggle('deviceNotConnectedModal');
+            history.push('/account');
+          }}
+        >
+          Yes this
+        </button>
+        <p>
+          Or have you lost your primary device and you would like to set up a
+          new one?
+        </p>
+        <button
+          onClick={() => {
+            toggle('deviceNotConnectedModal');
+            history.push('/advanced');
+          }}
+        >
+          Yes lets do that.
+        </button>
       </Modal>
       <TwoButtonModal
         isShowing={isShowing.newDeviceDetectedModal}

@@ -10,12 +10,12 @@ import Modal from '../../components/shared/Modal';
 import useModal from '../../components/shared/useModal';
 import ExportKeyStore from '../../components/account/ExportKeyStore';
 import SendAccountTransaction from '../../components/account/SendAccountTransaction';
-import ConnectAccount from '../../components/account/ConnectAccount';
 import WithdrawWethForm from '../../components/account/WithdrawWethForm';
 import WithdrawEthForm from '../../components/account/WithdrawEthForm';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import Web3Service from '../../utils/Web3Service';
+import { WalletStatuses } from '../../utils/WalletStatus';
 
 const Advanced = () => {
   const [loading] = useContext(LoaderContext);
@@ -27,11 +27,11 @@ const Advanced = () => {
 
   return (
     <>
-      {/* {loading && <Loading />} */}
+      {loading && <Loading />}
 
       <h2>Advanced</h2>
       <hr />
-      {currentWallet.state === 'Deployed' ? (
+      {currentWallet.state === WalletStatuses.Deployed ? (
         <>
           <button
             className="Button--Primary"

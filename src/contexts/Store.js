@@ -139,24 +139,23 @@ const Store = ({ children }) => {
       //     could i check earlier that there is no account info
       //     not with getConnectedDevices because it errors before account connected
       if (sdk && sdk.state.account) {
-        console.log('connected state', sdk.state);
+        //console.log('connected state', sdk.state);
 
         ethWei = (sdk && sdk.state.account.balance.real.toString()) || 0;
         eth = web3Service.fromWei(ethWei);
         // state.account.state undefined if still connecting?
-        // will be 'Created' or 'Delpoyed'
-        setLoading(false)
 
-        state = (sdk && sdk.state.account.state);
-        console.log('when connected?', sdk && sdk.state.account.state);
+        setLoading(false)
         
         // check acount devices on sdk
         accountDevices = await sdk.getConnectedAccountDevices();
-        
+        // will be 'Created' or 'Delpoyed'
+        state = (sdk && sdk.state.account.state);
+        //console.log('when connected?', sdk && sdk.state.account.state);
         // set delay to 10 seconds after sdk balance is updated
         setDelay(10000);
       } else {
-        console.log('not connected, try again', sdk);
+        //console.log('not connected, try again', sdk);
         state = WalletStatuses.Connecting;
 
         setNumTries(numTries + 1);
@@ -183,7 +182,6 @@ const Store = ({ children }) => {
       }
 
       const status = currentStatus(currentWallet, currentUser, state);
-      console.log('status 123', status);
       
       // set state
       setCurrentWallet({

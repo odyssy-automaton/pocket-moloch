@@ -6,10 +6,13 @@ const useModal = () => {
     rageForm: false,
     deviceNotConnectedModal: false,
     addDeviceModa: false,
-    newDeviceDetectedModal: false
+    newDeviceDetectedModal: false,
+    getQrCode: false,
   });
 
   function toggle(modalName) {
+    console.log('toggle', modalName);
+    
     setIsShowing({
       ...isShowing,
       ...{ [modalName]: !isShowing[modalName] },

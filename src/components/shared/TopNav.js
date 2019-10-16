@@ -8,7 +8,6 @@ import Brand from '../../assets/PokéMol__Logo.svg';
 import './TopNav.scss';
 import useModal from './useModal';
 import Modal from './Modal'
-import StateModals from './StateModals';
 
 const TopNav = (props) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -63,6 +62,7 @@ const TopNav = (props) => {
             <a
               className="Dropdown__Open--Item"
               onClick={() => toggle('signOutMsg')}
+              href="/"
             >
               {'<='} Sign out
             </a>
