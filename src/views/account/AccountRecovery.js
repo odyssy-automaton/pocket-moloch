@@ -12,6 +12,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 
 import QRCode from 'react-qr-code';
 import QrReader from 'react-qr-reader';
+import DeployDevices from '../../components/account/DeployDevices';
 
 const AccountRecovery = ({ history }) => {
   const [loading] = useContext(LoaderContext);
@@ -74,10 +75,17 @@ const AccountRecovery = ({ history }) => {
                 item.device.address === currentUser.sdk.state.deviceAddress,
             ),
           );
+          
+          // TODO: use currentWallet.accountDevices 
           setAccountDevices(
             _accountDevices.items.filter(
               (item) =>
-                item.device.address !== currentUser.sdk.state.deviceAddress,
+                {
+                  console.log(item);
+                  
+                  return item.device.address !== currentUser.sdk.state.deviceAddress;
+
+                }
             ),
           );
           getQr();
@@ -290,6 +298,7 @@ const AccountRecovery = ({ history }) => {
       </Modal>
       {(loading || waitingSdk) && <Loading />}
       <h2 className="Pad">Recovery Options</h2>
+      <DeployDevices />
       <button className="Button--Input Email Verified">
         <svg
           className="Icon"
@@ -305,6 +314,11 @@ const AccountRecovery = ({ history }) => {
         <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
       </button>
 
+      <button className="Button--Input Email Verified">
+        Export Paper Wallet
+        <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+      </button>
+
       {accountDevices.map((item) => (
         <button key={item.device.address} className={isThisDeviceAdded ? 'Button--Input Verified' : 'Button--Input'}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -312,7 +326,7 @@ const AccountRecovery = ({ history }) => {
           </svg>
           {Object.keys(parsedNamedDevices).find(
             (key) => parsedNamedDevices[key] === item.device.address,
-          ) || item.device.address}
+          ) || item.device.address}  type: {item.type} state {item.state}
           <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
         </button>
       ))}

@@ -55,7 +55,7 @@ const UserBalance = ({toggle}) => {
                   )}
                 </button>
               </CopyToClipboard>
-              <p className="Status">{currentWallet.state || 'Checking Status'}</p>
+              <p className="Status">account: {currentWallet.state || 'Checking Status'} device: 0x... state: ?</p>
           </div>
           <div className="ActionsDropdown">
             <div>Actions  <img src={Arrow} alt="arrow"/></div>
