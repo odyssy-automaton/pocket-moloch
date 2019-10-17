@@ -18,7 +18,6 @@ import ApproveWeth from './ApproveWeth';
 import RageQuit from './RageQuit';
 import DepositForm from './DepositForm';
 
-import DeployDevices from './DeployDevices';
 import StateModals from '../shared/StateModals';
 const UserWallet = ({ history }) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -39,10 +38,6 @@ const UserWallet = ({ history }) => {
             >
               <DepositForm className="FlexCenter" />
             </Modal>
-
-            <DeployDevices />
-
-           
 
             <Modal
               isShowing={isShowing.wrapForm}
