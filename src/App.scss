@@ -188,6 +188,11 @@ button,
   }
 }
 
+button.Tab {
+  background-color: transparent;
+  font-size: 1em;
+}
+
 .ButtonGroup {
   display: flex;
   flex-direction: row;

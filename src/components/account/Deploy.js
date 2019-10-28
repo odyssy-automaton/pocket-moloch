@@ -15,7 +15,8 @@ const Deploy = () => {
       {currentWallet.state !== 'Deployed' &&
         currentWallet.state !== 'Not Connected' &&
         currentWallet.nextState !== 'Deployed' && (
-          <div
+          <button
+            className="Button--Primary"
             onClick={() => {
               const sdk = currentUser.sdk;
               const bcprocessor = new BcProcessorService();
@@ -50,7 +51,7 @@ const Deploy = () => {
             }}
           >
             Deploy
-          </div>
+          </button>
         )}
     </>
   );

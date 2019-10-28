@@ -58,12 +58,14 @@ const UserBalance = ({toggle}) => {
       <div className="Wallet">
         <div className="Header">
           <div className="WalletInfo">
+            <p className={"Status " + (currentWallet.state != 'Deployed' ? 'Disconnected' : '')}>{currentWallet.state || 'Checking Status'}</p>
               <CopyToClipboard
                 onCopy={onCopy}
                 text={currentUser.attributes['custom:account_address']}
               >
                 <button className="Address Data">
-                  <p>
+                  
+                  <p className="Data">
                     {truncateAddr(currentUser.attributes['custom:account_address'])}
                   </p>{' '}
                   <svg
@@ -82,49 +84,50 @@ const UserBalance = ({toggle}) => {
                   )}
                 </button>
               </CopyToClipboard>
-              <p className="Status">account: {currentWallet.state || 'Checking Status'} device: 0x... state: ?</p>
           </div>
           <div className="ActionsDropdown">
-            <div>Actions  <img src={Arrow} alt="arrow"/></div>
+            <button>Actions  <img src={Arrow} alt="arrow"/></button>
             <div className="ActionsDropdownContent">
-              <div
+              <button
                 onClick={()=>toggle('depositForm')}
+                className="Button--Secondary"
               >
                 Deposit
-              </div>
+              </button>
               {currentWallet.state === WalletStatuses.Deployed && (
-              <div onClick={() => toggle('wrapForm')}>Wrap ETH</div>
+              <button onClick={() => toggle('wrapForm')}>Wrap ETH</button>
             )}
             {currentWallet.state === WalletStatuses.Deployed && (
-              <div onClick={() => toggle('allowanceForm')}>
+              <button className="Button--Primary" onClick={() => toggle('allowanceForm')}>
                 Approve wETH
-              </div>
+              </button>
             )}
             <Deploy />
             <ConnectAccount />
+            <button onClick={()=>window.open('https://uniswap.exchange/swap','_blank')}>Uniswap</button>
             {currentWallet.state === WalletStatuses.Deployed && (
-              <div
-                className="Button--Primary"
+              <button
+               className="Button--Secondary"
                 onClick={() => toggle('sendEth')}
               >
                 Send ETH
-              </div>
+              </button>
             )}
             {currentWallet.state === WalletStatuses.Deployed && (
-              <div
-                className="Button--Primary"
+              <button
+                className="Button--Secondary"
                 onClick={() => toggle('sendWeth')}
               >
-                Unwrap wETH
-              </div>
+                Send wETH
+              </button>
             )}
             {currentWallet.state === WalletStatuses.Deployed && (
-              <div
+              <button
                 className="Button--Tertiary"
                 onClick={() => toggle('rageForm')}
               >
                 Rage Quit (╯°□°）╯︵ ┻━┻
-              </div>
+              </button>
             )}
             {currentWallet.state === WalletStatuses.Deployed
             && 
@@ -134,9 +137,9 @@ const UserBalance = ({toggle}) => {
           </div>
         </div>
         <div className="SwitchHeader">
-          <div className={headerSwitch === 'Balances'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Balances')}>Balances</div>
-          <div className={headerSwitch === 'Transactions'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Transactions')}>Transactions</div>
-          <div className={headerSwitch === 'Devices'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Devices')}>Devices</div>
+          <button className={headerSwitch === 'Balances'? 'Tab SelectedElement':''} onClick={()=>setHeaderSwitch('Balances')}>Balances</button>
+          <button className={headerSwitch === 'Transactions'? 'Tab SelectedElement':''} onClick={()=>setHeaderSwitch('Transactions')}>Transactions</button>
+          <button className={headerSwitch === 'Accounts'? 'Tab SelectedElement':''} onClick={()=>setHeaderSwitch('Accounts')}>Accounts</button>
         </div>
         <div className="Contents">
         {headerSwitch === 'Balances' && 

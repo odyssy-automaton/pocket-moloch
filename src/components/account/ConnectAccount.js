@@ -81,21 +81,22 @@ const ConnectAccount = ({history, location}) => {
       {currentWallet.state !== WalletStatuses.Connected && currentWallet.state !== WalletStatuses.Deployed ? (
         <>
         {(location.pathname === '/connect-account') && !isShowing.getQrCode}
-        <div
+        <button
+          className="Button--Primary"
           onClick={() => {
             toggle('getQrCode');
             getQr();
           }}
         >
           Add This Device
-        </div>
+        </button>
         </>
       ) : (
         <>
 
-          <div onClick={() => history.push('/account-recovery')}>
+          <button onClick={() => history.push('/account-recovery')}>
             Approve a New Device
-          </div>
+          </button>
 
         </>
       )}
