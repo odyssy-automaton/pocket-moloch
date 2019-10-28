@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
+import { Auth } from 'aws-amplify';
 import { truncateAddr } from '../../utils/Helpers';
 import Arrow from '../../assets/DropArrow.svg'
 import './UserWallet.scss';
@@ -17,6 +18,33 @@ const UserBalance = ({toggle}) => {
   const [delay, setDelay] = useState(null);
   const [copied, setCopied] = useState(false);
   const [headerSwitch, setHeaderSwitch] = useState('Balances');
+  const [parsedNamedDevices, setParsedNamedDevices] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      if (currentUser && currentUser.sdk) {
+        try {
+          const user = await Auth.currentAuthenticatedUser();
+          const userAttributes = await Auth.userAttributes(user);
+          if (
+            userAttributes.find((item) => item.Name === 'custom:named_devices')
+          ) {
+            setParsedNamedDevices(
+              JSON.parse(
+                userAttributes.find(
+                  (item) => item.Name === 'custom:named_devices',
+                ).Value,
+              ),
+            );
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    })();
+    // eslint-disable-next-line
+  }, [currentUser]);
+
   const onCopy = () => {
     setDelay(2500)
     setCopied(true)
@@ -26,7 +54,6 @@ const UserBalance = ({toggle}) => {
     setCopied(false);
     setDelay(null);
   }, delay)
-
   return (
       <div className="Wallet">
         <div className="Header">
@@ -65,7 +92,6 @@ const UserBalance = ({toggle}) => {
               >
                 Deposit
               </div>
-              <div onClick={()=>window.open('https://uniswap.exchange/swap','_blank')}>Uniswap</div>
               {currentWallet.state === WalletStatuses.Deployed && (
               <div onClick={() => toggle('wrapForm')}>Wrap ETH</div>
             )}
@@ -89,7 +115,7 @@ const UserBalance = ({toggle}) => {
                 className="Button--Primary"
                 onClick={() => toggle('sendWeth')}
               >
-                Send wETH
+                Unwrap wETH
               </div>
             )}
             {currentWallet.state === WalletStatuses.Deployed && (
@@ -100,16 +126,20 @@ const UserBalance = ({toggle}) => {
                 Rage Quit (╯°□°）╯︵ ┻━┻
               </div>
             )}
+            {currentWallet.state === WalletStatuses.Deployed
+            && 
+              <div onClick={()=>window.open(`https://daohaus.club/dao/${process.env.REACT_APP_CONTRACT_ADDRESS}`,'_blank')}>Update delegate</div>
+            }
             </div>
           </div>
         </div>
         <div className="SwitchHeader">
           <div className={headerSwitch === 'Balances'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Balances')}>Balances</div>
           <div className={headerSwitch === 'Transactions'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Transactions')}>Transactions</div>
-          <div className={headerSwitch === 'Accounts'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Accounts')}>Accounts</div>
+          <div className={headerSwitch === 'Devices'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Devices')}>Devices</div>
         </div>
         <div className="Contents">
-        {headerSwitch === 'Balances' &&
+        {headerSwitch === 'Balances' && 
           <div className="Balances">
             <div className="Item">
               <p>Shares</p>
@@ -130,6 +160,20 @@ const UserBalance = ({toggle}) => {
           </div>}
           {headerSwitch==='Transactions' &&
           <UserTransactions />}
+          {headerSwitch==='Devices' && !!Object.keys(parsedNamedDevices).length &&
+          <div className="Balances">
+            <div className="Item">
+              <p>Primary key</p>
+              <p className="Data">{Object.keys(parsedNamedDevices).pop()}</p>
+            </div>
+            {Object.keys(parsedNamedDevices).slice(0,-1).map(item => 
+              <div className="Item" key={item}>
+                <p>Secondary key</p>
+                <p className="Data">{item}</p>
+              </div>
+            )}
+          </div>
+          }
         </div>
         {/* <div className="Wallet__Footer">
           <p className="Powered">&nbsp;Powered by <a href="http://abridged.io">Abridged</a></p>
