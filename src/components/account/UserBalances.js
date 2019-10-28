@@ -38,7 +38,7 @@ const UserBalance = ({toggle}) => {
               >
                 <button className="Address Data">
                   
-                  <p>
+                  <p className="Data">
                     {truncateAddr(currentUser.attributes['custom:account_address'])}
                   </p>{' '}
                   <svg
@@ -59,7 +59,7 @@ const UserBalance = ({toggle}) => {
               </CopyToClipboard>
           </div>
           <div className="ActionsDropdown">
-            <div>Actions  <img src={Arrow} alt="arrow"/></div>
+            <button>Actions  <img src={Arrow} alt="arrow"/></button>
             <div className="ActionsDropdownContent">
               <button
                 onClick={()=>toggle('depositForm')}
@@ -107,9 +107,9 @@ const UserBalance = ({toggle}) => {
           </div>
         </div>
         <div className="SwitchHeader">
-          <div className={headerSwitch === 'Balances'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Balances')}>Balances</div>
-          <div className={headerSwitch === 'Transactions'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Transactions')}>Transactions</div>
-          <div className={headerSwitch === 'Accounts'? 'SelectedElement':''} onClick={()=>setHeaderSwitch('Accounts')}>Accounts</div>
+          <button className={headerSwitch === 'Balances'? 'Tab SelectedElement':''} onClick={()=>setHeaderSwitch('Balances')}>Balances</button>
+          <button className={headerSwitch === 'Transactions'? 'Tab SelectedElement':''} onClick={()=>setHeaderSwitch('Transactions')}>Transactions</button>
+          <button className={headerSwitch === 'Accounts'? 'Tab SelectedElement':''} onClick={()=>setHeaderSwitch('Accounts')}>Accounts</button>
         </div>
         <div className="Contents">
         {headerSwitch === 'Balances' &&

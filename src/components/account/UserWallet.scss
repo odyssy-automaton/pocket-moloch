@@ -17,7 +17,6 @@
         justify-content: space-between;
         background-color: $primary-hover;
         .WalletInfo {
-
             .Address {
                 margin: 0;
                 padding: 0px;
@@ -104,6 +103,13 @@
     }
         .ActionsDropdown {
             color: $app-light;
+            button {
+                background-color: transparent;
+                img { 
+                    margin-left: 5px;
+                    vertical-align: middle; 
+                }
+            }
             &:hover {
                 position: relative;
                 .ActionsDropdownContent {
@@ -113,17 +119,20 @@
         }
     }
     .SwitchHeader {
-        height: 60px;
         width:100%;
         background-color: #911094;
         display: flex;
         justify-content: space-evenly;
-
-        div {
-            color: rgba(255, 255, 255, 0.46);
+        button {
+            color: $secondary;
+            background-color: transparent;
+            border-radius: 0px;
+            margin: 0;
+            border-bottom: 4px solid transparent;
+            padding: 15px 0px;
             &.SelectedElement{
                 color: #FFFFFF;
-                border-bottom: 2px solid #14D790;
+                border-bottom: 4px solid $secondary;
             }
         }
     }
@@ -211,7 +220,6 @@
 @media (min-width: $phone) {
     .UserWallet { max-width: 1200px; margin: 0 auto; }
     .Actions { flex-direction: column; }
-    .Wallet { width: 40%; float: left; }
-    .Actions { width: 40%; float: right;}
+    .Wallet { width: 50%; margin: 25px auto; position: relative; }
     .Transactions { width: 100%; clear: both; margin: 0 auto; margin-top: 75px; max-width: 1160px;  }
 }
