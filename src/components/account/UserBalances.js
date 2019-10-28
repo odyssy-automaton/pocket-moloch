@@ -31,11 +31,13 @@ const UserBalance = ({toggle}) => {
       <div className="Wallet">
         <div className="Header">
           <div className="WalletInfo">
+            <p className={"Status " + (currentWallet.state != 'Deployed' ? 'Disconnected' : '')}>{currentWallet.state || 'Checking Status'}</p>
               <CopyToClipboard
                 onCopy={onCopy}
                 text={currentUser.attributes['custom:account_address']}
               >
                 <button className="Address Data">
+                  
                   <p>
                     {truncateAddr(currentUser.attributes['custom:account_address'])}
                   </p>{' '}
@@ -55,50 +57,51 @@ const UserBalance = ({toggle}) => {
                   )}
                 </button>
               </CopyToClipboard>
-              <p className="Status">{currentWallet.state || 'Checking Status'}</p>
           </div>
           <div className="ActionsDropdown">
             <div>Actions  <img src={Arrow} alt="arrow"/></div>
             <div className="ActionsDropdownContent">
-              <div
+              <button
                 onClick={()=>toggle('depositForm')}
+                className="Button--Secondary"
               >
                 Deposit
-              </div>
-              <div onClick={()=>window.open('https://uniswap.exchange/swap','_blank')}>Uniswap</div>
+              </button>
+              
               {currentWallet.state === WalletStatuses.Deployed && (
-              <div onClick={() => toggle('wrapForm')}>Wrap ETH</div>
+              <button onClick={() => toggle('wrapForm')}>Wrap ETH</button>
             )}
             {currentWallet.state === WalletStatuses.Deployed && (
-              <div onClick={() => toggle('allowanceForm')}>
+              <button className="Button--Primary" onClick={() => toggle('allowanceForm')}>
                 Approve wETH
-              </div>
+              </button>
             )}
             <Deploy />
             <ConnectAccount />
+            <button onClick={()=>window.open('https://uniswap.exchange/swap','_blank')}>Uniswap</button>
             {currentWallet.state === WalletStatuses.Deployed && (
-              <div
-                className="Button--Primary"
+              <button
+               className="Button--Secondary"
                 onClick={() => toggle('sendEth')}
               >
                 Send ETH
-              </div>
+              </button>
             )}
             {currentWallet.state === WalletStatuses.Deployed && (
-              <div
-                className="Button--Primary"
+              <button
+                className="Button--Secondary"
                 onClick={() => toggle('sendWeth')}
               >
                 Send wETH
-              </div>
+              </button>
             )}
             {currentWallet.state === WalletStatuses.Deployed && (
-              <div
+              <button
                 className="Button--Tertiary"
                 onClick={() => toggle('rageForm')}
               >
                 Rage Quit (╯°□°）╯︵ ┻━┻
-              </div>
+              </button>
             )}
             </div>
           </div>
