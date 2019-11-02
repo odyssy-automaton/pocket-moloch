@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 
 import { LoaderContext, CurrentUserContext } from '../../contexts/Store';
 import Loading from '../../components/shared/Loading';
-import './AccountRecovery.scss';
+import './AccountList.scss';
 import Modal from '../../components/shared/Modal';
 import useModal from '../../components/shared/useModal';
 import useInterval from '../../utils/PollingUtil';
@@ -14,7 +14,7 @@ import QRCode from 'react-qr-code';
 import QrReader from 'react-qr-reader';
 import DeployDevices from '../../components/account/DeployDevices';
 
-const AccountRecovery = ({ history }) => {
+const AccountList = () => {
   const [loading] = useContext(LoaderContext);
   const [currentUser] = useContext(CurrentUserContext);
   const [isThisDeviceAdded, setIsThisDeviceAdded] = useState(true);
@@ -297,30 +297,8 @@ const AccountRecovery = ({ history }) => {
         </div>
       </Modal>
       {(loading || waitingSdk) && <Loading />}
-      <h2 className="Pad">Recovery Options</h2>
-      <DeployDevices />
       <button className="Button--Input Email Verified">
-        <svg
-          className="Icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-          <path d="M0 0h24v24H0z" fill="none" />
-        </svg>
-        Email
-        <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
-      </button>
-
-      <button className="Button--Input Email Verified">
-        Export Paper Wallet
-        <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
-      </button>
-
-      <button className="Button--Input Email Verified">
-        Manage Keysstore
+        Export Paper Wallet &nbsp;<small> required for lost password recovery</small>
         <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
       </button>
 
@@ -333,6 +311,8 @@ const AccountRecovery = ({ history }) => {
             (key) => parsedNamedDevices[key] === item.device.address,
           ) || item.device.address}  type: {item.type} state {item.state}
           <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+      <DeployDevices />
+        
         </button>
       ))}
       <button
@@ -374,16 +354,8 @@ const AccountRecovery = ({ history }) => {
           <path d="M0 0h24v24H0z" fill="none" />
         </svg>
       </button>
-      {accountDevices.length === 0 ? (
-        <p><strong>
-          You need to add at least one more device or browser with access to use
-          as a recovery option.
-        </strong></p>
-      ) : (
-        <button onClick={() => history.push('/account')}>Continue</button>
-      )}
     </div>
   );
 };
 
-export default AccountRecovery;
+export default AccountList;

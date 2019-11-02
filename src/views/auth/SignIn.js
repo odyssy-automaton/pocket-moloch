@@ -58,10 +58,24 @@ const SignIn = ({ history }) => {
             // if account address exisit on aws aut connect account to sdk
             if (user.attributes['custom:account_address'] !== '0x0') {
               try {
-                await sdk.initialize();
-                await sdk.connectAccount(
+
+                const key = web3Service.decryptKeyStore(
+                  user.attributes['custom:encrypted_pk2'],
+                  values.password,
+                );
+                console.log('key', key);
+  
+                const options = {
+                  device: { privateKey: key.privateKey },
+                };
+  
+                const init = await sdk.initialize(options)
+
+                console.log('initialized', init);
+                sdk.connectAccount(
                   user.attributes['custom:account_address'],
                 );
+
                 //currentUserInfo returns the correct attributes
                 const attributes = await Auth.currentUserInfo();
                 const realuser = {
@@ -75,6 +89,7 @@ const SignIn = ({ history }) => {
                 console.log(err); // {"error":"account device not found"}
               }
             } else {
+              // first time logging in
               await sdk.initialize();
               const uuid = shortid.generate();
               const ensLabel = `${encodeURI(user.username)}-${uuid}`;
