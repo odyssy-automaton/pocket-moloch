@@ -29,6 +29,9 @@
     }
     .Dropdown__Open {
         width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
     }
 
 }
@@ -42,6 +45,8 @@
     left: 0;
     width: calc(100% + 30px);
     z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
     .Item {
         display: flex;
         align-content: center;

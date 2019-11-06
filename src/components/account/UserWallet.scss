@@ -8,9 +8,12 @@
     position: relative;
     top: -2px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    background-color: $app-light;
     .Header {
         height: 98px;
         border-bottom: 1px solid #efefef;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
         display: flex;
         flex-direction: row;
         align-content: center;
@@ -119,15 +122,17 @@
         }
     }
     .SwitchHeader {
-        width:100%;
+        width: calc(100% - 30px);
         background-color: #911094;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        padding: 0px 15px;
         button {
             color: $secondary;
             background-color: transparent;
             border-radius: 0px;
             margin: 0;
+            margin-right: 25px;
             border-bottom: 4px solid transparent;
             padding: 15px 0px;
             &.SelectedElement{
@@ -137,6 +142,7 @@
         }
     }
     .Contents {
+        min-height: 300px;
     }
     &__Footer {
         .Powered { 
@@ -149,6 +155,7 @@
 }
 
 .Balances {
+    min-height: 300px;
     .Item {
         display: flex;
         align-content: center;
@@ -172,6 +179,7 @@
 }
 
 .Transactions {
+    min-height: 300px;
     .Item {
         display: flex;
         align-content: center;
@@ -213,13 +221,13 @@
     flex-direction: column;
     padding: 0px 25px;
     margin-bottom: 50px;
-    button { margin: 10px 0px;}
+    button { margin: 10px 0px; }
 }
 
 
 @media (min-width: $phone) {
     .UserWallet { max-width: 1200px; margin: 0 auto; }
     .Actions { flex-direction: column; }
-    .Wallet { width: 50%; margin: 25px auto; position: relative; }
-    .Transactions { width: 100%; clear: both; margin: 0 auto; margin-top: 75px; max-width: 1160px;  }
+    .Wallet { width: 60%; margin: 25px auto; position: relative; }
+    .Transactions { width: 100%; clear: both; margin: 0 auto; max-width: 1160px;  }
 }

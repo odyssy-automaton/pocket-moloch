@@ -332,6 +332,27 @@ button.Tab {
   width: 36px;
 }
 
+.Note {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 0px 5px;
+  cursor: pointer;
+  &.Allowance:hover:after {
+    content: "Your allowance is lower than your balance. Consider giving it a raise.";
+    font-family: $base-font;
+    font-size: 0.5em;
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+  &.Gas:hover:after {
+    content: "Your Eth is really low. Consider topping it off.";
+    font-family: $base-font;
+    font-size: 0.5em;
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+}
+
 // Forms
 .Form {
   padding: $base-padding;

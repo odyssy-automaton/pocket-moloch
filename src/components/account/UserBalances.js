@@ -150,7 +150,11 @@ const UserBalance = ({toggle}) => {
             </div>
             <div className="Item">
               <p>ETH</p>
-              <p className="Data">{currentWallet.eth}</p>
+              <p className="Data">{currentWallet.eth}
+              { currentWallet.eth < 0.02 && (
+              <span className="Danger Note Gas">!</span>
+              )}
+              </p>
             </div>
             <div className="Item">
               <p>wETH</p>
@@ -158,7 +162,10 @@ const UserBalance = ({toggle}) => {
             </div>
             <div className="Item">
               <p>wETH Allowance</p>
-              <p className="Data">{currentWallet.allowance}</p>
+              <p className="Data">{currentWallet.allowance} 
+              { currentWallet.weth > currentWallet.allowance && (
+                  <span className="Danger Note Allowance">!</span>
+              )}</p>
             </div>
           </div>}
           {headerSwitch==='Transactions' &&
@@ -177,10 +184,9 @@ const UserBalance = ({toggle}) => {
             )}
           </div>
           }
-        </div>
-        {/* <div className="Wallet__Footer">
+        </div><div className="Wallet__Footer">
           <p className="Powered">&nbsp;Powered by <a href="http://abridged.io">Abridged</a></p>
-        </div> */}
+        </div>
       </div>
   );
 };
