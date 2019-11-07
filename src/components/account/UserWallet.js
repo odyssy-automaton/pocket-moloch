@@ -15,7 +15,7 @@ import WithdrawWethForm from './WithdrawWethForm';
 import WithdrawEthForm from './WithdrawEthForm';
 import WrapEth from './WrapEth';
 import ApproveWeth from './ApproveWeth';
-import RageQuit from './RageQuit';
+// import RageQuit from './RageQuit';
 import DepositForm from './DepositForm';
 
 import StateModals from '../shared/StateModals';
