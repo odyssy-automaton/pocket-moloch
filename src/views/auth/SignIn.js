@@ -16,18 +16,20 @@ import { CurrentUserContext } from '../../contexts/Store';
 import Loading from '../../components/shared/Loading';
 import Web3Service from '../../utils/Web3Service';
 
-
 const sdkEnv = getSdkEnvironment(SdkEnvironmentNames[`${config.SDK_ENV}`]); // kovan env by default
 
-const SignIn = ({ history }) => {
+const SignIn = (props) => {
+  const { history } = props;
   const [, setCurrentUser] = useContext(CurrentUserContext);
   const [authError, setAuthError] = useState();
   const [pseudonymTouch, setPseudonymTouch] = useState(false);
   const [passwordTouch, setPasswordTouch] = useState(false);
 
+  let historyState = history.location.state;
+
   return (
     <div>
-      
+      {historyState.msg && <p>{historyState.msg}</p>}
       <Formik
         initialValues={{ username: '', password: '' }}
         validate={(values) => {
@@ -58,23 +60,20 @@ const SignIn = ({ history }) => {
             // if account address exisit on aws aut connect account to sdk
             if (user.attributes['custom:account_address'] !== '0x0') {
               try {
-
                 const key = web3Service.decryptKeyStore(
                   user.attributes['custom:encrypted_pk2'],
                   values.password,
                 );
                 console.log('key', key);
-  
+
                 const options = {
                   device: { privateKey: key.privateKey },
                 };
-  
-                const init = await sdk.initialize(options)
+
+                const init = await sdk.initialize(options);
 
                 console.log('initialized', init);
-                sdk.connectAccount(
-                  user.attributes['custom:account_address'],
-                );
+                sdk.connectAccount(user.attributes['custom:account_address']);
 
                 //currentUserInfo returns the correct attributes
                 const attributes = await Auth.currentUserInfo();
@@ -99,7 +98,9 @@ const SignIn = ({ history }) => {
               // create keystore
               const network = config.SDK_ENV.toLowerCase();
               const aValue = JSON.parse(
-                localStorage.getItem(`@archanova:${network}:device:private_key`),
+                localStorage.getItem(
+                  `@archanova:${network}:device:private_key`,
+                ),
               );
 
               const store = await web3Service.getKeyStore(
@@ -111,7 +112,9 @@ const SignIn = ({ history }) => {
                 'custom:account_address': account.address,
                 'custom:device_address': accountDevices.items[0].device.address,
                 'custom:ens_name': ensLabel,
-                'custom:named_devices': JSON.stringify({'OG device': accountDevices.items[0].device.address}),
+                'custom:named_devices': JSON.stringify({
+                  'OG device': accountDevices.items[0].device.address,
+                }),
                 'custom:encrypted_pk2': JSON.stringify(store),
               });
               const jsonse = JSON.stringify(
@@ -148,9 +151,9 @@ const SignIn = ({ history }) => {
               setSubmitting(false);
 
               history.push({
-  pathname: '/',
-  state: { signUpModal: true }
-});
+                pathname: '/',
+                state: { signUpModal: true },
+              });
             }
           } catch (err) {
             setAuthError(err);
@@ -167,49 +170,59 @@ const SignIn = ({ history }) => {
           return (
             <Form className="Form">
               <h2>Sign in to an existing account</h2>
-              <Link to="/sign-up">
-                Create a new account =>
-              </Link>
-              {authError &&
-                <div className="Form__auth-error"><p className="Danger">{authError.message}</p></div>
-              }
+              <Link to="/sign-up">Create a new account =></Link>
+              {authError && (
+                <div className="Form__auth-error">
+                  <p className="Danger">{authError.message}</p>
+                </div>
+              )}
               <Field name="username">
-              {({ field, form }) => (
-                <div
-                  className={
-                    field.value
-                      ? 'Field HasValue'
-                      : 'Field '
-                  }
-                >
-                  <label>Pseudonym</label>
-                  <input type="text" {...field} onInput={()=>setPseudonymTouch(true)} />
-                </div>
-              )}
+                {({ field, form }) => (
+                  <div className={field.value ? 'Field HasValue' : 'Field '}>
+                    <label>Pseudonym</label>
+                    <input
+                      type="text"
+                      {...field}
+                      onInput={() => setPseudonymTouch(true)}
+                    />
+                  </div>
+                )}
               </Field>
-                <ErrorMessage name="username" render={msg => <div className="Error">{msg}</div>} />
+              <ErrorMessage
+                name="username"
+                render={(msg) => <div className="Error">{msg}</div>}
+              />
               <Field type="password" name="password">
-              {({ field, form }) => (
-                <div
-                  className={
-                    field.value
-                      ? 'Field HasValue'
-                      : 'Field '
-                  }
-                >
-                  <label>Password</label>
-                  <input type="password" {...field} onInput={()=>setPasswordTouch(true)} />
-                </div>
-              )}
+                {({ field, form }) => (
+                  <div className={field.value ? 'Field HasValue' : 'Field '}>
+                    <label>Password</label>
+                    <input
+                      type="password"
+                      {...field}
+                      onInput={() => setPasswordTouch(true)}
+                    />
+                  </div>
+                )}
               </Field>
-              <ErrorMessage name="password" render={msg => <div className="Error">{msg}</div>} />
+              <ErrorMessage
+                name="password"
+                render={(msg) => <div className="Error">{msg}</div>}
+              />
               <div className="ButtonGroup">
-                <button type="submit" className={(Object.keys(errors).length<1 && pseudonymTouch && passwordTouch)?"":"Disabled"}  disabled={isSubmitting}>
+                <button
+                  type="submit"
+                  className={
+                    Object.keys(errors).length < 1 &&
+                    pseudonymTouch &&
+                    passwordTouch
+                      ? ''
+                      : 'Disabled'
+                  }
+                  disabled={isSubmitting}
+                >
                   Sign In
                 </button>
-                <Link to="/forgot-password">
-                  Forgot Password?
-                </Link>
+                <Link to="/forgot-password">Forgot Password?</Link>
               </div>
             </Form>
           );
