@@ -9,7 +9,7 @@ import Arrow from '../../assets/DropArrow.svg';
 import useInterval from '../../utils/PollingUtil';
 import Deploy from './Deploy';
 import UserTransactions from './UserTransactions';
-import AccountList from '../../views/account/AccountList';
+import AccountList from './AccountList';
 
 import './UserWallet.scss';
 
