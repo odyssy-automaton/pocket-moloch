@@ -12,6 +12,7 @@ import UserTransactions from './UserTransactions';
 
 import ConnectAccount from './ConnectAccount';
 import { WalletStatuses } from '../../utils/WalletStatus';
+import AccountList from '../../views/account/AccountList';
 const UserBalance = ({toggle}) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
@@ -121,14 +122,6 @@ const UserBalance = ({toggle}) => {
                 Send wETH
               </button>
             )}
-            {currentWallet.state === WalletStatuses.Deployed && (
-              <button
-                className="Button--Tertiary"
-                onClick={() => toggle('rageForm')}
-              >
-                Rage Quit (╯°□°）╯︵ ┻━┻
-              </button>
-            )}
             {currentWallet.state === WalletStatuses.Deployed
             && 
               <div onClick={()=>window.open(`https://daohaus.club/dao/${process.env.REACT_APP_CONTRACT_ADDRESS}`,'_blank')}>Update delegate</div>
@@ -170,19 +163,8 @@ const UserBalance = ({toggle}) => {
           </div>}
           {headerSwitch==='Transactions' &&
           <UserTransactions />}
-          {headerSwitch==='Devices' && !!Object.keys(parsedNamedDevices).length &&
-          <div className="Balances">
-            <div className="Item">
-              <p>Primary key</p>
-              <p className="Data">{Object.keys(parsedNamedDevices).pop()}</p>
-            </div>
-            {Object.keys(parsedNamedDevices).slice(0,-1).map(item => 
-              <div className="Item" key={item}>
-                <p>Secondary key</p>
-                <p className="Data">{item}</p>
-              </div>
-            )}
-          </div>
+          {headerSwitch==='Accounts' && !!Object.keys(parsedNamedDevices).length &&
+           <AccountList/>
           }
         </div><div className="Wallet__Footer">
           <p className="Powered">&nbsp;Powered by <a href="http://abridged.io">Abridged</a></p>

@@ -74,9 +74,6 @@ const TopNav = (props) => {
               <div className="IconWarning">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
               </div>
-              <p>This DAO uses contract wallets which are owned by your device keys. If you sign out of this device, you will no longer be able to access your wallet from this device.</p>
-              <p>Make sure you have added at least one secondary device to access your wallet. With another approved device, you can always reapprove this device again.</p>
-              <p>If you do choose to sign out and have not added any other device keys, you will not be able to access your wallet in the future. EVER!</p>
               <Link
                 className="AltOption"
                 to="/sign-out"
@@ -85,7 +82,7 @@ const TopNav = (props) => {
                   toggleElement();
                 }}
               >
-                Yes, sign me out and remove this device
+                Yes, sign me out.
               </Link>
             </Modal>
           </div>

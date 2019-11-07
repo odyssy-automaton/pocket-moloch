@@ -66,13 +66,6 @@ const UserWallet = ({ history }) => {
               <WithdrawWethForm />
             </Modal>
 
-            
-            <Modal
-              isShowing={isShowing.rageForm}
-              hide={() => toggle('rageForm')}
-            >
-              <RageQuit />
-            </Modal>
             {/*
             <Link className="AltOption" to="/advanced">
               Advanced
