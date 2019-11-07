@@ -13,7 +13,6 @@ import SignUp from './views/auth/SignUp';
 import SignIn from './views/auth/SignIn';
 import Confirm from './views/auth/Confirm';
 import SignOut from './views/auth/SignOut';
-import AddDevice from './views/addDevice/AddDevice';
 import ForgotPassword from './views/auth/ForgotPassword';
 import ForgotPasswordConfirm from './views/auth/ForgotPasswordConfirm';
 import AccountRecovery from './views/account/AccountRecovery';
