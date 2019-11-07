@@ -11,7 +11,6 @@ const SignUp = ({ history }) => {
 
   return (
     <div>
-      <h2 className="Pad">Create your account</h2>
       <Formik
         initialValues={{ username: '', email: '', password: '', passwordConfirm: '', }}
         validate={(values) => {
@@ -70,6 +69,7 @@ const SignUp = ({ history }) => {
 
           return (
             <Form className="Form">
+              <h2 className="Pad">Create your account</h2>
               {authError &&
                 <div className="Form__auth-error">{authError.message}</div>}
               <Field name="username">

@@ -57,6 +57,15 @@ const UserBalance = ({toggle}) => {
   }, delay)
   return (
       <div className="Wallet">
+        { currentWallet.state != 'Deployed' && (
+        <div className="WalletOverlay FlexCenter">
+          <div className="Contents FlexCenter">
+            <h2>Account almost ready</h2>
+            <p>You still need to <span className="StrikeThrough">(1) Send some Eth to</span> (2) Deploy the wallet.</p>
+            <button>Continue Setup</button>
+          </div>
+        </div>
+        )}
         <div className="Header">
           <div className="WalletInfo">
             <p className={"Status " + (currentWallet.state != 'Deployed' ? 'Disconnected' : '')}>{currentWallet.state || 'Checking Status'}</p>

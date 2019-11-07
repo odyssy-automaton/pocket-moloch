@@ -43,7 +43,7 @@ const ResendCode = ({history}) => {
               }
               {resendSuccess ? 
               <>
-              <h2 className="Pad">We sent the code to your email</h2>
+                <h2>We sent the code to your email</h2>
                 <img src={GreenCheck} alt='check svg'/>
                 <button type="button" onClick={()=>history.push({
   pathname: '/confirm',
@@ -64,7 +64,7 @@ const ResendCode = ({history}) => {
                       : 'Field '
                   }
                 >
-                  <label>Username</label>
+                  <label>Pseudonym</label>
                   <input type="text" {...field} onInput={()=>setFocused(true)}/>
                 </div>
               )}

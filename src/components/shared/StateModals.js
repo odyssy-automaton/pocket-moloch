@@ -8,7 +8,7 @@ import useModal from './useModal';
 
 import TwoButtonModal from './TwoButtonModal';
 import Modal from './Modal';
-import DepositForm from '../account/DepositForm';
+import DepositFormInitial from '../account/DepositFormInitial';
 import { WalletStatuses } from '../../utils/WalletStatus';
 import Deploy from '../account/Deploy';
 
@@ -72,7 +72,7 @@ const StateModals = (props) => {
         isShowing={isShowing.depositForm}
         hide={() => toggle('depositForm')}
       >
-        <DepositForm className="FlexCenter" />
+        <DepositFormInitial className="FlexCenter" />
       </Modal>
       <TwoButtonModal
         isShowing={isShowing.signUpModal}
