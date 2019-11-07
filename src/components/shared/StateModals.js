@@ -8,8 +8,9 @@ import useModal from './useModal';
 
 import TwoButtonModal from './TwoButtonModal';
 import Modal from './Modal';
-import DepositForm from '../account/DepositForm';
+import DepositFormInitial from '../account/DepositFormInitial';
 import { WalletStatuses } from '../../utils/WalletStatus';
+import Deploy from '../account/Deploy';
 
 const StateModals = (props) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -23,10 +24,13 @@ const StateModals = (props) => {
     if (!currentUser) {
       console.log('no user', currentUser);
       return () => false;
-    } else if (history.location.state && history.location.state.signUpModal) {
-      // user just signed up
-      open('signUpModal');
-    } else {
+    } 
+    // remove this and go stright to deploy
+    // else if (history.location.state && history.location.state.signUpModal) {
+    //   // user just signed up
+    //   open('signUpModal');
+    // } 
+    else {
       (async () => {
         console.log('currentWallet.status check', currentWallet.status);
         const status = currentWallet.status;
@@ -68,7 +72,7 @@ const StateModals = (props) => {
         isShowing={isShowing.depositForm}
         hide={() => toggle('depositForm')}
       >
-        <DepositForm className="FlexCenter" />
+        <DepositFormInitial className="FlexCenter" />
       </Modal>
       <TwoButtonModal
         isShowing={isShowing.signUpModal}
@@ -77,16 +81,25 @@ const StateModals = (props) => {
         text="You need to add at least one more recovery option"
         handleConfirm={() => history.push('/account-recovery')}
       />
-      <TwoButtonModal
+      <Modal
+        isShowing={isShowing.connectedUndeployed}
+        hide={() => toggle('connectedUndeployed')}
+      >
+<p>
+You are ready to deploy your account
+        </p>
+        <Deploy/>
+      </Modal>
+      {/* <TwoButtonModal
         isShowing={isShowing.connectedUndeployed}
         hide={() => toggle('connectedUndeployed')}
         title="You are ready to deploy your account"
-        text="You need to add some gas and deploy"
+        text="Lets Deploy"
         handleConfirm={() => {
           toggle('connectedUndeployed');
           history.push('/account');
         }}
-      />
+      /> */}
       <Modal
         isShowing={isShowing.deviceNotConnectedModal}
         hide={() => toggle('deviceNotConnectedModal')}

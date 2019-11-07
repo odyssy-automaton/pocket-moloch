@@ -356,6 +356,8 @@ button.Tab {
 // Forms
 .Form {
   padding: $base-padding;
+  max-width: 340px;
+  margin: 0 auto;
   .Error {
     color: red;
     font-size: 13px;

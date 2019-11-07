@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Auth } from 'aws-amplify';
 
@@ -65,7 +65,7 @@ const Confirm = ({ history }) => {
               </button>
               </> :
               <>
-              <h2 className="Pad">Confirm your email</h2>
+              <h2>Confirm your Email</h2>
               <p>We sent a Confirmation Code to your email address. Enter it here to continue.</p>
               {!historyState &&
               <>
@@ -78,7 +78,7 @@ const Confirm = ({ history }) => {
                       : 'Field '
                   }
                 >
-                  <label>Username</label>
+                  <label>Psuedonym</label>
                   <input type="text" {...field}/>
                 </div>
               )}
@@ -102,10 +102,12 @@ const Confirm = ({ history }) => {
               </Field>
               <ErrorMessage name="authCode"  render={(msg) => <div className="Error">{msg}</div>}
               />
-              <p style={{color:'#d756d9'}} onClick={()=>history.push('/resend-code')}>Didn't get the code? Click here!</p>
-              <button type="submit" className={(Object.keys(errors).length<1 && focused)?"":"Disabled"} disabled={isSubmitting}>
-                Submit
-              </button>
+              <div className="ButtonGroup">
+                <button type="submit" className={(Object.keys(errors).length<1 && focused)?"":"Disabled"} disabled={isSubmitting}>
+                  Submit
+                </button>
+                <Link style={{color:'#d756d9'}} onClick={()=>history.push('/resend-code')}>Resend Code</Link>
+              </div>
               </>}
             </Form>
           );
