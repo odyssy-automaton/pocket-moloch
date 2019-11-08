@@ -1,7 +1,8 @@
 import React, { useContext, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { CurrentUserContext } from '../../contexts/Store';
+import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
+import { WalletStatuses } from '../../utils/WalletStatus';
 import BcProcessorService from '../../utils/BcProcessorService';
 import IconProcessing from './IconProcessing';
 
@@ -12,6 +13,7 @@ const BcToast = () => {
   const bcprocessor = new BcProcessorService();
 
   const [currentUser] = useContext(CurrentUserContext);
+  const [currentWallet] = useContext(CurrentWalletContext);
 
   const [isElementOpen, setElementOpen] = React.useState(false);
   const toggleElement = () => setElementOpen(!isElementOpen);
@@ -84,6 +86,7 @@ const BcToast = () => {
           onClick={toggleElement}
         />
         <div className="Processor">
+          {currentWallet.state === WalletStatuses.Deployed ? (
           <button className="Processor__Button" onClick={toggleElement}>
             {pendingLength() ? (
               <IconProcessing />
@@ -93,6 +96,13 @@ const BcToast = () => {
               </div>
             )}
           </button>
+          ):(
+            <Link className="Processor__Button" to="/account">
+              <div className="BcStatic">
+                <div className="BcStatic__Inner WarningIcon" />
+              </div>
+            </Link>
+          )}
           <div className={isElementOpen ? 'Dropdown__Open' : 'Dropdown'}>
             <div className="Toast">
               {renderList()}

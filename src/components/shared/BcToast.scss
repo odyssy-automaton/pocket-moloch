@@ -90,10 +90,29 @@
         border-radius: 50%;
         background-color: $secondary;
         transition: all .15s linear;
+        &:hover { 
+            background-color: $secondary-hover; 
+        }
+        &.WarningIcon {
+            background-color: $danger;
+            position: relative;
+            &:after {
+                content: "!";
+                font-family: $base-font;
+                font-size: .85em;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-weight: 900;
+            }
+            &:hover { 
+                background-color: $danger-hover; 
+            }
+        }
     }
-    &:hover &__Inner { 
-        background-color: $secondary-hover; 
-    }
+    
 }
 
 .Dropdown__Footer {
