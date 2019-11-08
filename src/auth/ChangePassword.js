@@ -65,16 +65,21 @@ const ChangePassword = (props) => {
             console.log(data);
             // create keystore
             const network = config.SDK_ENV.toLowerCase();
-            const aValue = JSON.parse(
+            const keyValue = JSON.parse(
               localStorage.getItem(`@archanova:${network}:device:private_key`),
             );
 
+            const deviceValue = JSON.parse(
+              localStorage.getItem(`@archanova:${network}:account_device`),
+            );
+
             const store = await web3Service.getKeyStore(
-              '0x' + aValue.data,
+              '0x' + keyValue.data,
               values.newPassword,
             );
             await Auth.updateUserAttributes(user, {
               'custom:encrypted_pk2': JSON.stringify(store),
+              'custom:device_address': deviceValue.device.address,
             });
             setSubmitting(false);
             setAuthSuccess(true);
