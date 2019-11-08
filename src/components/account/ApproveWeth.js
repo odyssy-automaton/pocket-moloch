@@ -25,14 +25,13 @@ const ApproveWeth = () => {
   return (
     <>
       {loading && <Loading />}
-      <h2>Set wETH Allowance</h2>
+      <h2>Set Token Allowance</h2>
       <p>
-        Enter the amount you would like to raise your wETH allowance to. Your
-        setting here will override any previous setting.
+        This app would like to use your token for making proposals.
       </p>
       <Formik
         initialValues={{
-          amount: '',
+          amount: currentWallet.weth,
           addr: currentUser.attributes['custom:account_address'],
         }}
         validate={(values) => {
@@ -100,24 +99,6 @@ const ApproveWeth = () => {
       >
         {({ isSubmitting }) => (
           <Form className="Form">
-            <Field name="amount">
-              {({ field, form }) => (
-                <div className={field.value ? 'Field HasValue' : 'Field '}>
-                  <label>Amount</label>
-                  <input
-                    min="0"
-                    type="number"
-                    inputMode="numeric"
-                    step="any"
-                    {...field}
-                  />
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="amount"
-              render={(msg) => <div className="Error">{msg}</div>}
-            />
             <button type="submit" disabled={isSubmitting}>
               Approve
             </button>

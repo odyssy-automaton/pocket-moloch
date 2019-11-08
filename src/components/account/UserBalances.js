@@ -116,14 +116,6 @@ const UserBalance = (props) => {
               >
                 Deposit
               </button>
-              {currentWallet.state === WalletStatuses.Deployed && (
-                <button
-                  className="Button--Primary"
-                  onClick={() => toggleActions('allowanceForm')}
-                >
-                  Approve Token
-                </button>
-              )}
               {currentWallet.state !== WalletStatuses.Deployed && <Deploy />}
               {currentWallet.state === WalletStatuses.Deployed && (
                 <button
@@ -197,16 +189,17 @@ const UserBalance = (props) => {
             </div>
             <div className="Item">
               <p>wETH</p>
-              <p className="Data">{currentWallet.weth}</p>
-            </div>
-            <div className="Item">
-              <p>wETH Allowance</p>
-              <p className="Data">
-                {currentWallet.allowance}
-                {currentWallet.weth > currentWallet.allowance && (
-                  <span className="Danger Note Allowance">!</span>
-                )}
-              </p>
+              <p className="Data">{currentWallet.weth}
+              {currentWallet.weth > currentWallet.allowance && (
+                  <span className="Danger Note Allowance">
+                    <button
+                      className="Button--Primary"
+                      onClick={() => toggleActions('allowanceForm')}
+                    >
+                      Unlock Token
+                    </button>
+                  </span>
+                )}</p>
             </div>
           </div>
         )}
