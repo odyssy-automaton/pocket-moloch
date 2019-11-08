@@ -8,6 +8,7 @@ const useModal = () => {
     addDeviceModa: false,
     newDeviceDetectedModal: false,
     getQrCode: false,
+    changePassword: false,
   });
 
   function toggle(modalName) {
@@ -22,7 +23,7 @@ const useModal = () => {
   function open(modalName) {
     const closeModals = {};
     for (const modal in isShowing) {
-      closeModals['modal'] = false;
+      closeModals[modal] = false;
     }
     
     setIsShowing({
