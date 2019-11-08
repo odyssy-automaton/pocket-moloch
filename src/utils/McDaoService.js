@@ -1,7 +1,6 @@
 import DaoAbi from '../contracts/mcdao.json';
 import Web3Service from '../utils/Web3Service';
 import config from '../config';
-import { addressToToken } from './TokenService.js';
 
 export default class McDaoService {
   contractAddr;

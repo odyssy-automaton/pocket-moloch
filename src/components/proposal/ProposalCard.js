@@ -1,22 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withApollo } from 'react-apollo';
 
-import StackedVote from './StackedVote';
-import Web3Service from '../../utils/Web3Service';
 import {
   getProposalCountdownText,
   titleMaker,
 } from '../../utils/ProposalHelper';
-
 import { GET_METADATA } from '../../utils/Queries';
-import { withApollo } from 'react-apollo';
+import Web3Service from '../../utils/Web3Service';
+import StackedVote from './StackedVote';
+import ValueDisplay from '../shared/ValueDisplay';
 
 import './ProposalCard.scss';
 
 const web3Service = new Web3Service();
 
 const ProposalCard = ({ proposal, client }) => {
-  const { periodDuration } = client.cache.readQuery({ query: GET_METADATA });
+  const { periodDuration } = client.cache.readQuery({
+    query: GET_METADATA,
+  });
   const countDown = getProposalCountdownText(proposal, periodDuration);
   const title = titleMaker(proposal);
 
@@ -43,7 +45,7 @@ const ProposalCard = ({ proposal, client }) => {
         <div className="Tribute">
           <h5>Tribute</h5>
           <h2 className="Data">
-            Ξ {web3Service.fromWei(proposal.tokenTribute)}
+            <ValueDisplay value={web3Service.fromWei(proposal.tokenTribute)} />
           </h2>
         </div>
       </div>

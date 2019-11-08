@@ -13,5 +13,6 @@ export const GET_METADATA = gql`
     guildBankValue @client
     shareValue @client
     approvedToken @client
+    tokenSymbol @client
   }
 `;

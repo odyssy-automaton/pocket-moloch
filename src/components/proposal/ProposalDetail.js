@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import ReactPlayer from 'react-player';
+import { withApollo } from 'react-apollo';
 
-import Web3Service from '../../utils/Web3Service';
 import { GetMetaData } from '../../utils/ProposalService';
-import VoteControl from './VoteControl';
 import {
   getProposalCountdownText,
   titleMaker,
 } from '../../utils/ProposalHelper';
-
 import { CurrentUserContext } from '../../contexts/Store';
 import { GET_METADATA } from '../../utils/Queries';
-import { withApollo } from 'react-apollo';
+import Web3Service from '../../utils/Web3Service';
+import VoteControl from './VoteControl';
+import ValueDisplay from '../shared/ValueDisplay';
 
 import './ProposalDetail.scss';
 
@@ -26,7 +26,9 @@ const ProposalDetail = ({
 }) => {
   const [s3Data, setS3Data] = useState({});
   const [currentUser] = useContext(CurrentUserContext);
-  const { periodDuration } = client.cache.readQuery({ query: GET_METADATA });
+  const { periodDuration } = client.cache.readQuery({
+    query: GET_METADATA,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,7 +74,11 @@ const ProposalDetail = ({
         <div className="Tribute">
           <h5>Tribute</h5>
           <h2 className="Data">
-            Ξ {web3Service && web3Service.fromWei(proposal.tokenTribute)}
+            {web3Service && (
+              <ValueDisplay
+                value={web3Service.fromWei(proposal.tokenTribute)}
+              />
+            )}
           </h2>
         </div>
       </div>

@@ -6,11 +6,12 @@ import Routes from './Routes';
 import Header from './components/header/Header';
 import Loading from './components/shared/Loading';
 import McDaoService from './utils/McDaoService';
-import WethService from './utils/WethService';
+// import WethService from './utils/WethService';
 import Web3Service from './utils/Web3Service';
+import TokenService from './utils/TokenService';
 
 const mcDao = new McDaoService();
-const weth = new WethService();
+// const weth = new WethService();
 const web3 = new Web3Service();
 
 const App = ({ client }) => {
@@ -28,7 +29,10 @@ const App = ({ client }) => {
       const processingReward = await mcDao.getProcessingReward();
       const proposalDeposit = await mcDao.getProposalDeposit();
       const approvedToken = await mcDao.approvedToken();
-      const guildBankValue = await weth.balanceOf(guildBankAddr);
+
+      const tokenService = new TokenService(approvedToken);
+      const guildBankValue = await tokenService.balanceOf(guildBankAddr);
+      const tokenSymbol = await tokenService.getSymbol();
 
       client.writeData({
         data: {
@@ -36,6 +40,7 @@ const App = ({ client }) => {
           totalShares: parseInt(totalShares),
           guildBankAddr,
           approvedToken,
+          tokenSymbol,
           gracePeriodLength: parseInt(gracePeriodLength),
           votingPeriodLength: parseInt(votingPeriodLength),
           periodDuration: parseInt(periodDuration),

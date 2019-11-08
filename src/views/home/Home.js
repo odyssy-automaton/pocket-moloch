@@ -18,7 +18,6 @@ import './Home.scss';
 const Home = ({ client }) => {
   const [vizData, setVizData] = useState([]);
   const [chartView, setChartView] = useState('bank');
-  const [tokenSymbol, setTokenSymbol] = useState();
 
   const { guildBankAddr, approvedToken } = client.cache.readQuery({
     query: GET_METADATA,
@@ -29,9 +28,6 @@ const Home = ({ client }) => {
       const web3Service = new Web3Service();
       const tokenService = new TokenService(approvedToken);
       const mcDao = new McDaoService();
-
-      const symbol = await tokenService.getSymbol();
-      setTokenSymbol(symbol);
 
       if (guildBankAddr) {
         const events = await mcDao.getAllEvents();
@@ -162,8 +158,7 @@ const Home = ({ client }) => {
                   <h5>Bank</h5>
                   <h2>
                     <ValueDisplay
-                      tokenSymbol={tokenSymbol}
-                      value={data.guildBankValue}
+                      value={parseFloat(data.guildBankValue).toFixed(4)}
                     />
                   </h2>
                 </div>
@@ -185,10 +180,7 @@ const Home = ({ client }) => {
                   >
                     <h5>Share Value</h5>
                     <h3>
-                      <ValueDisplay
-                        tokenSymbol={tokenSymbol}
-                        value={data.shareValue.toFixed(4)}
-                      />
+                      <ValueDisplay value={data.shareValue.toFixed(4)} />
                     </h3>
                   </div>
                 </div>
