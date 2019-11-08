@@ -124,7 +124,7 @@ const UserBalance = (props) => {
                   Approve Token
                 </button>
               )}
-              <Deploy />
+              {currentWallet.state !== WalletStatuses.Deployed && <Deploy />}
               {currentWallet.state === WalletStatuses.Deployed && (
                 <button
                   className="Button--Secondary"

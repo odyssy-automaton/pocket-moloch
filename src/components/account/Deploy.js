@@ -1,20 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import BcProcessorService from '../../utils/BcProcessorService';
 import Web3Service from '../../utils/Web3Service';
 import { ethToWei } from '@netgum/utils'; // returns BN
 
+import Loading from '../shared/Loading';
+
 import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
 
-const Deploy = () => {
+const Deploy = (props) => {
+  const { history } = props;
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
+  const [loading, setloading] = useState(false);
+
   const web3Service = new Web3Service();
 
   return (
     <>
+      {loading && currentWallet.state !== 'Deployed' && <Loading />}
       {currentWallet.state !== 'Deployed' &&
         currentWallet.state !== 'Not Connected' &&
-        currentWallet.nextState !== 'Deployed' && (
+        currentWallet.nextState !== 'Deployed' &&
+        !loading && (
           <button
             className="Button--Primary"
             onClick={() => {
@@ -38,6 +47,7 @@ const Deploy = () => {
                     .deployAccount(estimated)
                     .then((data) => {
                       console.log('deployed', data);
+                      setloading(true);
                       bcprocessor.setTx(
                         data,
                         currentUser.attributes['custom:account_address'],
@@ -53,8 +63,13 @@ const Deploy = () => {
             Deploy
           </button>
         )}
+      {currentWallet.state === 'Deployed' && (
+        <button onClick={() => history.push('/account')}>
+          Yay Deployed, continue to your account.
+        </button>
+      )}
     </>
   );
 };
 
-export default Deploy;
+export default withRouter(Deploy);

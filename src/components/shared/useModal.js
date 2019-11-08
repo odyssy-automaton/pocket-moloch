@@ -12,7 +12,7 @@ const useModal = () => {
 
   function toggle(modalName) {
     console.log('toggle', modalName);
-    
+
     setIsShowing({
       ...isShowing,
       ...{ [modalName]: !isShowing[modalName] },
@@ -20,8 +20,13 @@ const useModal = () => {
   }
 
   function open(modalName) {
+    const closeModals = {};
+    for (const modal in isShowing) {
+      closeModals['modal'] = false;
+    }
+    
     setIsShowing({
-      ...isShowing,
+      ...closeModals,
       ...{ [modalName]: true },
     });
   }

@@ -11,6 +11,7 @@ export const WalletStatuses = {
   UnDeployedNeedsDevices: 'Not Deployed Needs Devices',
   UnDeployed: 'Not Deployed',
   LowGas: 'Low Gas',
+  LowGasForDeploy: 'Low Gas For Deploy',
   DeployedNeedsDevices: 'Deployed Needs Devices',
   DeployedNewDevice: 'Deployed New Device',
   Deployed: 'Deployed',
@@ -31,13 +32,14 @@ export const currentStatus = (currentWallet, currentUser, state = null) => {
   }
 
   // UnDeployed user needs to deploy wallet
-  
+
   if (
     _accountDevices &&
     _accountDevices.items.length >= minDevices &&
     _state === 'Created' &&
-    (web3Service.fromWei(currentUser.sdk.state.account.balance.real.toString()) >=
-    minDeployEth)
+    web3Service.fromWei(
+      currentUser.sdk.state.account.balance.real.toString(),
+    ) >= minDeployEth
   ) {
     return WalletStatuses.UnDeployed;
   }
@@ -46,7 +48,16 @@ export const currentStatus = (currentWallet, currentUser, state = null) => {
   if (
     _state === 'Created' &&
     web3Service.fromWei(currentUser.sdk.state.account.balance.real.toString()) <
-      0.001
+      minDeployEth
+  ) {
+    return WalletStatuses.LowGasForDeploy;
+  }
+
+  // LowGas user needs to add gas
+  if (
+    _state === 'Deployed' &&
+    web3Service.fromWei(currentUser.sdk.state.account.balance.real.toString()) <
+      .01
   ) {
     return WalletStatuses.LowGas;
   }
