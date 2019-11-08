@@ -12,5 +12,6 @@ export const GET_METADATA = gql`
     proposalDeposit @client
     guildBankValue @client
     shareValue @client
+    approvedToken @client
   }
 `;

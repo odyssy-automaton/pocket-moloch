@@ -1,32 +1,37 @@
-// import React, { useContext } from 'react';
 import React, { useEffect, useState } from 'react';
 import { Query } from 'react-apollo';
-import { ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { withApollo } from 'react-apollo';
+import { ResponsiveContainer, AreaChart, Area } from 'recharts';
 
+import { GET_METADATA } from '../../utils/Queries';
+import TokenService from '../../utils/TokenService';
+import StateModals from '../../components/shared/StateModals';
 import McDaoService from '../../utils/McDaoService';
 import Web3Service from '../../utils/Web3Service';
 import BottomNav from '../../components/shared/BottomNav';
 import ErrorMessage from '../../components/shared/ErrorMessage';
 import Loading from '../../components/shared/Loading';
-import { GET_METADATA } from '../../utils/Queries';
+import ValueDisplay from '../../components/shared/ValueDisplay';
 
 import './Home.scss';
-import WethService from '../../utils/WethService';
-import StateModals from '../../components/shared/StateModals';
 
-const Home = ({ client, history }) => {
+const Home = ({ client }) => {
   const [vizData, setVizData] = useState([]);
   const [chartView, setChartView] = useState('bank');
+  const [tokenSymbol, setTokenSymbol] = useState();
 
-  const { guildBankAddr } = client.cache.readQuery({ query: GET_METADATA });
+  const { guildBankAddr, approvedToken } = client.cache.readQuery({
+    query: GET_METADATA,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       const web3Service = new Web3Service();
-      const wethService = new WethService();
-
+      const tokenService = new TokenService(approvedToken);
       const mcDao = new McDaoService();
+
+      const symbol = await tokenService.getSymbol();
+      setTokenSymbol(symbol);
 
       if (guildBankAddr) {
         const events = await mcDao.getAllEvents();
@@ -42,7 +47,9 @@ const Home = ({ client, history }) => {
           const indexes = [];
           for (let x = 0; x <= blockIntervals; x++) {
             const atBlock = firstBlock + Math.floor(dataLength) * x;
-            balancePromises.push(wethService.balanceOf(guildBankAddr, atBlock));
+            balancePromises.push(
+              tokenService.balanceOf(guildBankAddr, atBlock),
+            );
             indexes.push(x);
           }
           const balanceData = await Promise.all(balancePromises);
@@ -72,7 +79,6 @@ const Home = ({ client, history }) => {
         }
 
         if (chartView === 'value') {
-          //const valuePromises = [];
           const sharePromises = [];
           const balancePromises = [];
 
@@ -80,7 +86,9 @@ const Home = ({ client, history }) => {
           for (let x = 0; x <= blockIntervals; x++) {
             const atBlock = firstBlock + Math.floor(dataLength) * x;
             sharePromises.push(mcDao.getTotalShares(atBlock));
-            balancePromises.push(wethService.balanceOf(guildBankAddr, atBlock));
+            balancePromises.push(
+              tokenService.balanceOf(guildBankAddr, atBlock),
+            );
             indexes.push(x);
           }
           const shareData = await Promise.all(sharePromises);
@@ -97,7 +105,7 @@ const Home = ({ client, history }) => {
     };
 
     fetchData();
-  }, [guildBankAddr, chartView]);
+  }, [guildBankAddr, chartView, approvedToken]);
 
   return (
     <Query query={GET_METADATA} pollInterval={30000}>
@@ -110,7 +118,6 @@ const Home = ({ client, history }) => {
             <StateModals />
 
             <div className="Home">
-              
               <div className="Intro">
                 <h1>PokéMol DAO</h1>
                 <p>Put a Moloch in Your Pocket</p>
@@ -153,7 +160,12 @@ const Home = ({ client, history }) => {
                   className={'Bank' + (chartView === 'bank' ? ' Selected' : '')}
                 >
                   <h5>Bank</h5>
-                  <h2>Ξ {data.guildBankValue}</h2>
+                  <h2>
+                    <ValueDisplay
+                      tokenSymbol={tokenSymbol}
+                      value={data.guildBankValue}
+                    />
+                  </h2>
                 </div>
                 <div className="Row">
                   <div
@@ -172,7 +184,12 @@ const Home = ({ client, history }) => {
                     }
                   >
                     <h5>Share Value</h5>
-                    <h3>Ξ {data.shareValue.toFixed(4)}</h3>
+                    <h3>
+                      <ValueDisplay
+                        tokenSymbol={tokenSymbol}
+                        value={data.shareValue.toFixed(4)}
+                      />
+                    </h3>
                   </div>
                 </div>
               </div>

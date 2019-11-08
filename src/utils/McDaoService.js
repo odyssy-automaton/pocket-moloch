@@ -1,6 +1,7 @@
 import DaoAbi from '../contracts/mcdao.json';
 import Web3Service from '../utils/Web3Service';
 import config from '../config';
+import { addressToToken } from './TokenService.js';
 
 export default class McDaoService {
   contractAddr;
@@ -100,6 +101,15 @@ export default class McDaoService {
     }
     let guildBank = await this.contract.methods.guildBank().call();
     return guildBank;
+  }
+
+  async approvedToken() {
+    if (!this.contract) {
+      await this.initContract();
+    }
+
+    let tokenAddress = await this.contract.methods.approvedToken().call();
+    return tokenAddress;
   }
 
   async members(account) {

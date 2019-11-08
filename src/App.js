@@ -27,6 +27,7 @@ const App = ({ client }) => {
       const periodDuration = await mcDao.getPeriodDuration();
       const processingReward = await mcDao.getProcessingReward();
       const proposalDeposit = await mcDao.getProposalDeposit();
+      const approvedToken = await mcDao.approvedToken();
       const guildBankValue = await weth.balanceOf(guildBankAddr);
 
       client.writeData({
@@ -34,6 +35,7 @@ const App = ({ client }) => {
           currentPeriod: parseInt(currentPeriod),
           totalShares: parseInt(totalShares),
           guildBankAddr,
+          approvedToken,
           gracePeriodLength: parseInt(gracePeriodLength),
           votingPeriodLength: parseInt(votingPeriodLength),
           periodDuration: parseInt(periodDuration),
