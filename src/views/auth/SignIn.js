@@ -29,7 +29,7 @@ const SignIn = (props) => {
 
   return (
     <div>
-      {historyState.msg && <p>{historyState.msg}</p>}
+      {historyState && historyState.msg && <p>{historyState.msg}</p>}
       <Formik
         initialValues={{ username: '', password: '' }}
         validate={(values) => {
