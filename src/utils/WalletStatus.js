@@ -1,6 +1,7 @@
 import Web3Service from './Web3Service';
 const web3Service = new Web3Service();
 const minDevices = 1; // first device and extention
+const minDeployEth = 0.05; // first device and extention
 
 export const WalletStatuses = {
   Unknown: 'Unknown',
@@ -36,7 +37,7 @@ export const currentStatus = (currentWallet, currentUser, state = null) => {
     _accountDevices.items.length >= minDevices &&
     _state === 'Created' &&
     (web3Service.fromWei(currentUser.sdk.state.account.balance.real.toString()) >=
-      0.1)
+    minDeployEth)
   ) {
     return WalletStatuses.UnDeployed;
   }
