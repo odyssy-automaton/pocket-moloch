@@ -68,6 +68,19 @@ const UserBalance = (props) => {
 
   return (
     <div className="Wallet">
+      { currentWallet.state !== WalletStatuses.Deployed && (
+        <div className="WalletOverlay FlexCenter">
+          <div className="Contents FlexCenter">
+            <h2>Account almost ready</h2>
+            <p>You still need to{' '} 
+              <span className={
+              ((currentWallet.state !== WalletStatuses.Deployed) && (currentWallet.eth > 0) ? 'Strikethrough' : '')
+              }>
+              (1) Send some Eth</span> (2) Deploy the wallet.</p>
+            <button>Continue</button>
+          </div>
+        </div>
+      )}
       <div className="Header">
         <div className="WalletInfo">
           <p
@@ -76,7 +89,7 @@ const UserBalance = (props) => {
               (currentWallet.state !== 'Deployed' ? 'Disconnected' : '')
             }
           >
-            {currentWallet.state || 'Checking Status'}
+            {currentWallet.state || 'Connecting'}
           </p>
           <CopyToClipboard
             onCopy={onCopy}
