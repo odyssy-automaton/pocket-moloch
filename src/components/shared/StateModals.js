@@ -17,7 +17,7 @@ const StateModals = (props) => {
   const [currentWallet] = useContext(CurrentWalletContext);
 
   // Toggle functions
-  const { isShowing, toggle, open } = useModal();
+  const { isShowing, toggle, open, openOnce } = useModal();
   const { location } = props;
 
   useEffect(() => {
@@ -31,14 +31,14 @@ const StateModals = (props) => {
 
         switch (status) {
           case WalletStatuses.UnDeployed:
-            open('connectedUndeployed');
+            openOnce('connectedUndeployed');
             break;
           case WalletStatuses.LowGasForDeploy:
-            open('depositFormInitial');
+            openOnce('depositFormInitial');
             break;
           case WalletStatuses.LowGas:
-              open('depositForm');
-              break;
+            openOnce('depositForm');
+            break;
           default:
             break;
         }
