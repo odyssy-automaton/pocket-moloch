@@ -153,7 +153,7 @@ const Home = ({ client, history }) => {
                   className={'Bank' + (chartView === 'bank' ? ' Selected' : '')}
                 >
                   <h5>Bank</h5>
-                  <h2>Ξ {data.guildBankValue}</h2>
+                  <h2>Ξ {parseFloat(data.guildBankValue).toFixed(4)}</h2>
                 </div>
                 <div className="Row">
                   <div

@@ -6,6 +6,7 @@ const useModal = () => {
 
   const [isShowing, setIsShowing] = useState({
     depositForm: false,
+    depositFormInitial: false,
     rageForm: false,
     deviceNotConnectedModal: false,
     addDeviceModa: false,

@@ -12,6 +12,7 @@ import UserTransactions from './UserTransactions';
 import AccountList from './AccountList';
 
 import './UserWallet.scss';
+import DepositFormInitial from './DepositFormInitial';
 
 const UserBalance = (props) => {
   const { toggle } = props;
@@ -68,16 +69,26 @@ const UserBalance = (props) => {
 
   return (
     <div className="Wallet">
-      { currentWallet.state !== WalletStatuses.Deployed && (
+      {currentWallet.state !== WalletStatuses.Deployed && (
         <div className="WalletOverlay FlexCenter">
           <div className="Contents FlexCenter">
             <h2>Account almost ready</h2>
-            <p>You still need to{' '} 
-              <span className={
-              ((currentWallet.state !== WalletStatuses.Deployed) && (currentWallet.eth > 0) ? 'Strikethrough' : '')
-              }>
-              (1) Send some Eth</span> (2) Deploy the wallet.</p>
-            <button>Continue</button>
+            <p>
+              You still need to{' '}
+              <span
+                className={
+                  currentWallet.state !== WalletStatuses.Deployed &&
+                  currentWallet.eth > 0
+                    ? 'Strikethrough'
+                    : ''
+                }
+              >
+                (1) Send some Eth
+              </span>{' '}
+              (2) Deploy the wallet.
+            </p>
+            {currentWallet.eth < 0.01 && <DepositFormInitial />}
+            {currentWallet.eth > 0.01 && <Deploy />}
           </div>
         </div>
       )}
@@ -202,8 +213,9 @@ const UserBalance = (props) => {
             </div>
             <div className="Item">
               <p>wETH</p>
-              <p className="Data">{currentWallet.weth}
-              {currentWallet.weth > currentWallet.allowance && (
+              <p className="Data">
+                {currentWallet.weth}
+                {currentWallet.weth > currentWallet.allowance && (
                   <span className="Danger Note Allowance">
                     <button
                       className="Button--Primary"
@@ -212,7 +224,8 @@ const UserBalance = (props) => {
                       Unlock Token
                     </button>
                   </span>
-                )}</p>
+                )}
+              </p>
             </div>
           </div>
         )}
