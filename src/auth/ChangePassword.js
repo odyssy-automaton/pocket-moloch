@@ -61,7 +61,6 @@ const ChangePassword = () => {
               values.newPassword,
             );
 
-            console.log(data);
             // create keystore
             const network = config.SDK_ENV.toLowerCase();
             const keyValue = JSON.parse(

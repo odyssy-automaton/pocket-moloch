@@ -64,7 +64,6 @@ const SignIn = (props) => {
                   user.attributes['custom:encrypted_pk2'],
                   values.password,
                 );
-                console.log('key', key);
 
                 const options = {
                   device: { privateKey: key.privateKey },
@@ -72,7 +71,6 @@ const SignIn = (props) => {
 
                 const init = await sdk.initialize(options);
 
-                console.log('initialized', init);
                 sdk.connectAccount(user.attributes['custom:account_address']);
 
                 //currentUserInfo returns the correct attributes

@@ -34,20 +34,15 @@ const DeployDevices = () => {
                 });
 
               if (!extimatedTxs.length) {
-                console.log('all devices deployed');
                 return false;
               }
 
               const resolvedEstimates = await Promise.all(extimatedTxs);
-              console.log('resolvedEstimates', resolvedEstimates);
 
               const totalGas = resolvedEstimates.reduce((total, estimated) => {
-                console.log('total', total, estimated);
-
                 total.totalCost = total.totalCost.add(estimated.totalCost);
                 return total;
               });
-              console.log('total gas', totalGas);
               if (ethToWei(currentWallet.eth).lt(totalGas)) {
                 alert(
                   `you need more gas, at least: ${web3Service.fromWei(
@@ -78,7 +73,6 @@ const DeployDevices = () => {
                 const data = await sdk.submitAccountTransaction(
                   resolvedEstimates[0],
                 );
-                console.log('data', data);
                 bcprocessor.setTx(
                   data,
                   currentUser.attributes['custom:account_address'],

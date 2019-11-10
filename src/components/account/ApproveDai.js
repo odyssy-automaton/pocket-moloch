@@ -8,7 +8,11 @@ import BcProcessorService from '../../utils/BcProcessorService';
 import McDaoService from '../../utils/McDaoService';
 import Loading from '../shared/Loading';
 
-import { CurrentUserContext, CurrentWalletContext, LoaderContext } from '../../contexts/Store';
+import {
+  CurrentUserContext,
+  CurrentWalletContext,
+  LoaderContext,
+} from '../../contexts/Store';
 import useModal from '../shared/useModal';
 
 const ApproveDai = () => {
@@ -63,7 +67,7 @@ const ApproveDai = () => {
               data,
             );
 
-            console.log(estimated);
+            // console.log(estimated);
             if (ethToWei(currentWallet.eth).lt(estimated.totalCost)) {
               alert(
                 `you need more gas, at least: ${web3Service.fromWei(
@@ -98,19 +102,22 @@ const ApproveDai = () => {
           <Form className="Form">
             <Field name="amount">
               {({ field, form }) => (
-                <div
-                  className={
-                    field.value
-                      ? 'Field HasValue'
-                      : 'Field '
-                  }
-                >
+                <div className={field.value ? 'Field HasValue' : 'Field '}>
                   <label>Amount</label>
-                  <input min="0" type="number" inputMode="numeric" step="any" {...field} />
+                  <input
+                    min="0"
+                    type="number"
+                    inputMode="numeric"
+                    step="any"
+                    {...field}
+                  />
                 </div>
               )}
             </Field>
-            <ErrorMessage name="amount" render={msg => <div className="Error">{msg}</div>} />
+            <ErrorMessage
+              name="amount"
+              render={(msg) => <div className="Error">{msg}</div>}
+            />
             <button type="submit" disabled={isSubmitting}>
               Approve
             </button>

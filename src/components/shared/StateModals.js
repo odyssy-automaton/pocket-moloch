@@ -21,11 +21,9 @@ const StateModals = () => {
 
   useEffect(() => {
     if (!currentUser) {
-      console.log('no user', currentUser);
       return () => false;
     } else {
       (async () => {
-        console.log('currentWallet.status check', currentWallet.status);
         const status = currentWallet.status;
 
         switch (status) {

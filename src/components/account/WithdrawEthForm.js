@@ -56,7 +56,6 @@ const WithdrawEthForm = () => {
               null,
             );
 
-            console.log(estimated);
             if (ethToWei(currentWallet.eth).lt(estimated.totalCost)) {
               alert(
                 `you need more gas, at least: ${web3Service.fromWei(
