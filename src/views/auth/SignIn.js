@@ -69,7 +69,7 @@ const SignIn = (props) => {
                   device: { privateKey: key.privateKey },
                 };
 
-                const init = await sdk.initialize(options);
+                await sdk.initialize(options);
 
                 sdk.connectAccount(user.attributes['custom:account_address']);
 

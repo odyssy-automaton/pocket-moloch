@@ -55,7 +55,7 @@ const ChangePassword = () => {
           try {
             const user = await Auth.currentAuthenticatedUser();
 
-            const data = await Auth.changePassword(
+            await Auth.changePassword(
               user,
               values.oldPassword,
               values.newPassword,
