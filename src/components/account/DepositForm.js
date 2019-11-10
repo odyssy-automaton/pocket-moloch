@@ -8,6 +8,7 @@ const DepositForm = () => {
   const [currentUser] = useContext(CurrentUserContext);
   const [delay, setDelay] = useState(null);
   const [copied, setCopied] = useState(false);
+
   const onCopy = () => {
     setDelay(2500);
     setCopied(true);

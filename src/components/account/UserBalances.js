@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { Auth } from 'aws-amplify';
 
 import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
 import { WalletStatuses } from '../../utils/WalletStatus';
@@ -13,6 +12,7 @@ import AccountList from './AccountList';
 
 import './UserWallet.scss';
 import DepositFormInitial from './DepositFormInitial';
+import ChangePassword from '../../auth/ChangePassword';
 
 const UserBalance = (props) => {
   const { toggle } = props;
@@ -23,24 +23,24 @@ const UserBalance = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
   const [headerSwitch, setHeaderSwitch] = useState('Balances');
   const [parsedNamedDevices, setParsedNamedDevices] = useState({});
+  const [keystoreExists, setKeystoreExists] = useState(false);
 
   useEffect(() => {
     (async () => {
       if (currentUser && currentUser.sdk) {
         try {
-          const user = await Auth.currentAuthenticatedUser();
-          const userAttributes = await Auth.userAttributes(user);
+          const userAttributes = currentUser.attributes;
+          
           if (
-            userAttributes.find((item) => item.Name === 'custom:named_devices')
+            userAttributes['custom:named_devices']
           ) {
             setParsedNamedDevices(
               JSON.parse(
-                userAttributes.find(
-                  (item) => item.Name === 'custom:named_devices',
-                ).Value,
-              ),
-            );
+                userAttributes['custom:named_devices']
+                )
+              )
           }
+          setKeystoreExists(!!(userAttributes['custom:encrypted_pk2']))
         } catch (error) {
           console.error(error);
         }
@@ -89,6 +89,15 @@ const UserBalance = (props) => {
             </p>
             {currentWallet.eth < 0.01 && <DepositFormInitial />}
             {currentWallet.eth > 0.01 && <Deploy />}
+            {!keystoreExists && <p>must upgrade</p>}
+          </div>
+        </div>
+      )}
+      {currentWallet.state === WalletStatuses.Deployed && !keystoreExists && (
+        <div className="WalletOverlay FlexCenter">
+          <div className="Contents FlexCenter">
+            <h2>Please upgrade your account.</h2>
+            {!keystoreExists && <ChangePassword/>}
           </div>
         </div>
       )}
