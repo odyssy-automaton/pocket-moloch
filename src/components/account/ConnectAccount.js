@@ -14,7 +14,7 @@ import useInterval from '../../utils/PollingUtil';
 import useModal from '../shared/useModal';
 import { WalletStatuses } from '../../utils/WalletStatus';
 
-const ConnectAccount = ({history, location}) => {
+const ConnectAccount = ({ history, location }) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
   //const [loading] = useContext(LoaderContext);
@@ -50,21 +50,19 @@ const ConnectAccount = ({history, location}) => {
   };
 
   useEffect(() => {
-    if(currentWallet.state === WalletStatuses.NotConnected){
-    console.log('currentWallet.state >>>', currentWallet.state);
-
+    if (currentWallet.state === WalletStatuses.NotConnected) {
       toggle('getQrCode');
       getQr();
     } else if (location.pathname === '/connect-account') {
-      history.push('/account-recovery')
+      history.push('/account-recovery');
     }
 
-// eslint-disable-next-line
-  }, [])
+    // eslint-disable-next-line
+  }, []);
 
   // useEffect(()=>{
   //   console.log('currentWallet.state >>>', currentWallet.state);
-    
+
   //   if(currentWallet.state === WalletStatuses.Connected){
   //     history.push('/account')
   //   }
@@ -78,26 +76,25 @@ const ConnectAccount = ({history, location}) => {
         </div>
       )}
       {/* {location.pathname} */}
-      {currentWallet.state !== WalletStatuses.Connected && currentWallet.state !== WalletStatuses.Deployed ? (
+      {currentWallet.state !== WalletStatuses.Connected &&
+      currentWallet.state !== WalletStatuses.Deployed ? (
         <>
-        {(location.pathname === '/connect-account') && !isShowing.getQrCode}
-        <button
-          className="Button--Primary"
-          onClick={() => {
-            toggle('getQrCode');
-            getQr();
-          }}
-        >
-          Add This Device
-        </button>
+          {location.pathname === '/connect-account' && !isShowing.getQrCode}
+          <button
+            className="Button--Primary"
+            onClick={() => {
+              toggle('getQrCode');
+              getQr();
+            }}
+          >
+            Add This Device
+          </button>
         </>
       ) : (
         <>
-
           <button onClick={() => history.push('/account-recovery')}>
             Approve a New Device
           </button>
-
         </>
       )}
 
@@ -114,21 +111,20 @@ const ConnectAccount = ({history, location}) => {
             <div className="QR">
               <QRCode value={qrCode} />
               <CopyToClipboard onCopy={onCopy} text={deviceAddr}>
-              <button className="Address">
-              Copy Device Address
-              <svg
-                className="IconRight"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm-1 4H8c-1.1 0-1.99.9-1.99 2L6 21c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V11l-6-6zM8 21V7h6v5h5v9H8z" />
-              </svg>
-            </button>
-          </CopyToClipboard>
-             
+                <button className="Address">
+                  Copy Device Address
+                  <svg
+                    className="IconRight"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path fill="none" d="M0 0h24v24H0V0z" />
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm-1 4H8c-1.1 0-1.99.9-1.99 2L6 21c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V11l-6-6zM8 21V7h6v5h5v9H8z" />
+                  </svg>
+                </button>
+              </CopyToClipboard>
             </div>
           )}
         </div>

@@ -55,13 +55,12 @@ const ChangePassword = () => {
           try {
             const user = await Auth.currentAuthenticatedUser();
 
-            const data = await Auth.changePassword(
+            await Auth.changePassword(
               user,
               values.oldPassword,
               values.newPassword,
             );
 
-            console.log(data);
             // create keystore
             const network = config.SDK_ENV.toLowerCase();
             const keyValue = JSON.parse(

@@ -75,18 +75,16 @@ const AccountRecovery = ({ history }) => {
                 item.device.address === currentUser.sdk.state.deviceAddress,
             ),
           );
-          
-          // TODO: use currentWallet.accountDevices 
-          setAccountDevices(
-            _accountDevices.items.filter(
-              (item) =>
-                {
-                  console.log(item);
-                  
-                  return item.device.address !== currentUser.sdk.state.deviceAddress;
 
-                }
-            ),
+          // TODO: use currentWallet.accountDevices
+          setAccountDevices(
+            _accountDevices.items.filter((item) => {
+              console.log(item);
+
+              return (
+                item.device.address !== currentUser.sdk.state.deviceAddress
+              );
+            }),
           );
           getQr();
           const user = await Auth.currentAuthenticatedUser();
@@ -141,8 +139,6 @@ const AccountRecovery = ({ history }) => {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
-              console.log('writeQrCod', writeQrCode);
-              
               try {
                 if (
                   accountDevices.some(
@@ -311,40 +307,95 @@ const AccountRecovery = ({ history }) => {
           <path d="M0 0h24v24H0z" fill="none" />
         </svg>
         Email
-        <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+        <svg
+          className="AddItem"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
+          <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+        </svg>
       </button>
 
       <button className="Button--Input Email Verified">
         Export Paper Wallet
-        <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+        <svg
+          className="AddItem"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
+          <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+        </svg>
       </button>
 
       <button className="Button--Input Email Verified">
         Manage Keysstore
-        <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+        <svg
+          className="AddItem"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
+          <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+        </svg>
       </button>
 
-      {accountDevices.filter((item) => item.type !== 'Extension').map((item) => (
-        <button key={item.device.address} className={isThisDeviceAdded ? 'Button--Input Verified' : 'Button--Input'}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M17,1H7A2,2,0,0,0,5,3V21a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V3A2,2,0,0,0,17,1Zm0,18H7V5H17Z" />
-          </svg>
-          {Object.keys(parsedNamedDevices).find(
-            (key) => parsedNamedDevices[key] === item.device.address,
-          ) || item.device.address}  type: {item.type} state {item.state}
-          <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
-        </button>
-      ))}
+      {accountDevices
+        .filter((item) => item.type !== 'Extension')
+        .map((item) => (
+          <button
+            key={item.device.address}
+            className={
+              isThisDeviceAdded ? 'Button--Input Verified' : 'Button--Input'
+            }
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M17,1H7A2,2,0,0,0,5,3V21a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V3A2,2,0,0,0,17,1Zm0,18H7V5H17Z" />
+            </svg>
+            {Object.keys(parsedNamedDevices).find(
+              (key) => parsedNamedDevices[key] === item.device.address,
+            ) || item.device.address}{' '}
+            type: {item.type} state {item.state}
+            <svg
+              className="AddItem"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
+              <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+            </svg>
+          </button>
+        ))}
       <button
         onClick={isThisDeviceAdded ? null : () => toggle('getreadQrCode')}
-        className={isThisDeviceAdded ? 'Button--Input Verified' : 'Button--Input'}
+        className={
+          isThisDeviceAdded ? 'Button--Input Verified' : 'Button--Input'
+        }
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M17,1H7A2,2,0,0,0,5,3V21a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V3A2,2,0,0,0,17,1Zm0,18H7V5H17Z" />
         </svg>
         {isThisDeviceAdded ? 'This device' : 'Add this device'}
         {isThisDeviceAdded ? (
-          <svg className="AddItem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+          <svg
+            className="AddItem"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
+            <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+          </svg>
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -359,7 +410,7 @@ const AccountRecovery = ({ history }) => {
         )}
       </button>
       <button className="Button--Input" onClick={() => setshowQrreader(true)}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M17,1H7A2,2,0,0,0,5,3V21a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V3A2,2,0,0,0,17,1Zm0,18H7V5H17Z" />
         </svg>
         Add another Device
@@ -375,10 +426,12 @@ const AccountRecovery = ({ history }) => {
         </svg>
       </button>
       {accountDevices.length === 0 ? (
-        <p><strong>
-          You need to add at least one more device or browser with access to use
-          as a recovery option.
-        </strong></p>
+        <p>
+          <strong>
+            You need to add at least one more device or browser with access to
+            use as a recovery option.
+          </strong>
+        </p>
       ) : (
         <button onClick={() => history.push('/account')}>Continue</button>
       )}

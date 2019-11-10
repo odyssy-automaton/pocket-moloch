@@ -16,8 +16,6 @@ const useModal = () => {
   });
 
   function toggle(modalName) {
-    console.log('toggle', modalName);
-
     setIsShowing({
       ...isShowing,
       ...{ [modalName]: !isShowing[modalName] },
@@ -29,7 +27,7 @@ const useModal = () => {
     for (const modal in isShowing) {
       closeModals[modal] = false;
     }
-    
+
     setIsShowing({
       ...closeModals,
       ...{ [modalName]: true },
@@ -39,11 +37,11 @@ const useModal = () => {
   function openOnce(modalName) {
     const closeModals = {};
 
-    if(!hasOpened[modalName]) {
+    if (!hasOpened[modalName]) {
       setHasOpened({
         ...hasOpened,
         ...{ [modalName]: true },
-      })
+      });
       for (const modal in isShowing) {
         closeModals[modal] = false;
       }
@@ -52,7 +50,6 @@ const useModal = () => {
         ...{ [modalName]: true },
       });
     }
-
   }
 
   return {

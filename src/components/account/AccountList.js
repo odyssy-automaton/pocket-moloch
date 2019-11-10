@@ -32,8 +32,6 @@ const AccountList = () => {
 
           setAccountDevices(
             _accountDevices.items.filter((item) => {
-              console.log(item);
-
               return (
                 item.device.address !== currentUser.sdk.state.deviceAddress
               );
@@ -80,7 +78,10 @@ const AccountList = () => {
         </svg>
       </button>
 
-      <button className="Button--Input Email Verified" onClick={() => toggle('changePassword')}>
+      <button
+        className="Button--Input Email Verified"
+        onClick={() => toggle('changePassword')}
+      >
         Upgrade Wallet &nbsp;
         <small> Change password </small>
         <svg

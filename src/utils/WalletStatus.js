@@ -20,7 +20,6 @@ export const WalletStatuses = {
 export const currentStatus = (currentWallet, currentUser, state = null) => {
   const _accountDevices = currentWallet.accountDevices;
   const _state = state || currentWallet.state || '';
-  console.log('_accountDevices', _accountDevices);
   // NotConnected user should see signup flow
   if (_state === WalletStatuses.NotConnected) {
     return WalletStatuses.NotConnected;
@@ -57,7 +56,7 @@ export const currentStatus = (currentWallet, currentUser, state = null) => {
   if (
     _state === 'Deployed' &&
     web3Service.fromWei(currentUser.sdk.state.account.balance.real.toString()) <
-      .01
+      0.01
   ) {
     return WalletStatuses.LowGas;
   }

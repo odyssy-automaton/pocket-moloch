@@ -46,7 +46,7 @@ const Deploy = (props) => {
                   sdk
                     .deployAccount(estimated)
                     .then((data) => {
-                      console.log('deployed', data);
+                      // console.log('deployed', data);
                       setloading(true);
                       bcprocessor.setTx(
                         data,
