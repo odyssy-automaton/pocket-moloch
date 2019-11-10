@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Web3Service from '../../utils/Web3Service';
 import BcProcessorService from '../../utils/BcProcessorService';
 import { ethToWei } from '@netgum/utils'; // returns BN
@@ -9,15 +9,13 @@ import {
   LoaderContext,
   CurrentWalletContext,
 } from '../../contexts/Store';
-import useModal from '../shared/useModal';
 import Loading from '../shared/Loading';
 
 const WithdrawEthForm = () => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading, setLoading] = useContext(LoaderContext);
   const [currentWallet] = useContext(CurrentWalletContext);
-
-  const { toggle } = useModal();
+  const [formSuccess, setFormSuccess] = useState(false);
 
   return (
     <>
@@ -83,46 +81,50 @@ const WithdrawEthForm = () => {
           resetForm();
           setLoading(false);
           setSubmitting(false);
-          toggle('ethWithdrawForm');
+          setFormSuccess(true);
         }}
       >
-        {({ isSubmitting }) => (
-          <Form className="Form">
-            <Field name="amount">
-              {({ field, form }) => (
-                <div className={field.value ? 'Field HasValue' : 'Field '}>
-                  <label>Amount</label>
-                  <input
-                    min="0"
-                    type="number"
-                    inputMode="numeric"
-                    step="any"
-                    {...field}
-                  />
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="amount"
-              render={(msg) => <div className="Error">{msg}</div>}
-            />
-            <Field name="dist">
-              {({ field, form }) => (
-                <div className={field.value ? 'Field HasValue' : 'Field '}>
-                  <label>Destination Address</label>
-                  <input type="text" {...field} />
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="dist"
-              render={(msg) => <div className="Error">{msg}</div>}
-            />
-            <button type="submit" disabled={isSubmitting}>
-              Send
-            </button>
-          </Form>
-        )}
+        {({ isSubmitting }) =>
+          formSuccess ? (
+            <Form className="Form">
+              <Field name="amount">
+                {({ field, form }) => (
+                  <div className={field.value ? 'Field HasValue' : 'Field '}>
+                    <label>Amount</label>
+                    <input
+                      min="0"
+                      type="number"
+                      inputMode="numeric"
+                      step="any"
+                      {...field}
+                    />
+                  </div>
+                )}
+              </Field>
+              <ErrorMessage
+                name="amount"
+                render={(msg) => <div className="Error">{msg}</div>}
+              />
+              <Field name="dist">
+                {({ field, form }) => (
+                  <div className={field.value ? 'Field HasValue' : 'Field '}>
+                    <label>Destination Address</label>
+                    <input type="text" {...field} />
+                  </div>
+                )}
+              </Field>
+              <ErrorMessage
+                name="dist"
+                render={(msg) => <div className="Error">{msg}</div>}
+              />
+              <button type="submit" disabled={isSubmitting}>
+                Send
+              </button>
+            </Form>
+          ) : (
+            <h2>Eth Sent</h2>
+          )
+        }
       </Formik>
     </>
   );

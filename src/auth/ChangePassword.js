@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
@@ -7,9 +7,12 @@ import { Auth } from 'aws-amplify';
 import Loading from '../components/shared/Loading';
 import Web3Service from '../utils/Web3Service';
 import config from '../config';
+import { CurrentUserContext } from '../contexts/Store';
 
 const ChangePassword = () => {
   //component used for changing password
+  const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
+
   const [authError, setAuthError] = useState();
   const [authSuccess, setAuthSuccess] = useState(false);
 
@@ -79,6 +82,9 @@ const ChangePassword = () => {
               'custom:encrypted_pk2': JSON.stringify(store),
               'custom:device_address': deviceValue.device.address,
             });
+            const attributes = await Auth.currentUserInfo();
+            console.log('attributes', attributes);
+            setCurrentUser( { ...currentUser, ...{ attributes: attributes.attributes } })
             setSubmitting(false);
             setAuthSuccess(true);
           } catch (err) {

@@ -55,22 +55,35 @@ const SignIn = (props) => {
             const sdk = new createSdk(
               sdkEnv.setConfig('storageAdapter', localStorage),
             );
+            const network = config.SDK_ENV.toLowerCase();
+
             // account address is set to 0x0 on signup
             // update this value after sdk is initialized and created
-            // if account address exisit on aws aut connect account to sdk
+            // if account address exists on aws auth connect account to sdk
             if (user.attributes['custom:account_address'] !== '0x0') {
+              // if pk is in local storage then user has already connected but was timed out
+              if (
+                localStorage.getItem(`@archanova:${network}:device:private_key`)
+              ) {
+                await sdk.initialize();
+              } else {
+                try {
+                  const key = web3Service.decryptKeyStore(
+                    user.attributes['custom:encrypted_pk2'],
+                    values.password,
+                  );
+
+                  const options = {
+                    device: { privateKey: key.privateKey },
+                  };
+                  
+                  await sdk.initialize(options);
+                } catch (err) {
+                  console.log(err); // {"error":"account device not found"}
+                }
+              }
+
               try {
-                const key = web3Service.decryptKeyStore(
-                  user.attributes['custom:encrypted_pk2'],
-                  values.password,
-                );
-
-                const options = {
-                  device: { privateKey: key.privateKey },
-                };
-
-                await sdk.initialize(options);
-
                 sdk.connectAccount(user.attributes['custom:account_address']);
 
                 //currentUserInfo returns the correct attributes

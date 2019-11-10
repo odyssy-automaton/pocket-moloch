@@ -66,6 +66,7 @@ const Store = ({ children }) => {
         // so grab attributes from here
         const attributes = await Auth.currentUserInfo();
         const realuser = { ...user, ...{ attributes: attributes.attributes } };
+
         setCurrentUser(realuser);
 
         // attach sdk
