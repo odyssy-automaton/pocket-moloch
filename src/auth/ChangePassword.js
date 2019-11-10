@@ -8,9 +8,8 @@ import Loading from '../components/shared/Loading';
 import Web3Service from '../utils/Web3Service';
 import config from '../config';
 
-const ChangePassword = (props) => {
+const ChangePassword = () => {
   //component used for changing password
-  const { history } = props;
   const [authError, setAuthError] = useState();
   const [authSuccess, setAuthSuccess] = useState(false);
 

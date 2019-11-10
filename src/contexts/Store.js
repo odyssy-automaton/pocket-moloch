@@ -20,6 +20,7 @@ export const CurrentUserContext = createContext();
 export const CurrentWalletContext = createContext();
 // export const NameContext = createContext('MetaCartel DAO');
 export const LoaderContext = createContext(false);
+export const ModalContext = createContext();
 export const RefreshContext = createContext();
 
 // main store of global state
@@ -36,8 +37,11 @@ const Store = ({ children }) => {
     devices: null,
     _txList: [],
     addrByBelegateKey: null,
-    status: WalletStatuses.Unknown
+    status: WalletStatuses.Unknown,
   });
+
+  // modal state for open once
+  const [hasOpened, setHasOpened] = useState({});
 
   // const [name, setName] = useState('MetaCartel DAO');
   const [loading, setLoading] = useState(false);
@@ -131,7 +135,7 @@ const Store = ({ children }) => {
       let ethWei = 0;
       let eth = 0;
       let state = WalletStatuses.Unknown;
-      setLoading(true)
+      setLoading(true);
 
       // state.account will be undefined if not connected
       // should be loading durring this?
@@ -145,12 +149,12 @@ const Store = ({ children }) => {
         eth = web3Service.fromWei(ethWei);
         // state.account.state undefined if still connecting?
 
-        setLoading(false)
-        
+        setLoading(false);
+
         // check acount devices on sdk
         accountDevices = await sdk.getConnectedAccountDevices();
         // will be 'Created' or 'Delpoyed'
-        state = (sdk && sdk.state.account.state);
+        state = sdk && sdk.state.account.state;
         //console.log('when connected?', sdk && sdk.state.account.state);
         // set delay to 10 seconds after sdk balance is updated
         setDelay(10000);
@@ -165,7 +169,7 @@ const Store = ({ children }) => {
         // TODO: need a better way to check this
         if (numTries >= 5) {
           state = WalletStatuses.NotConnected;
-          setLoading(false)
+          setLoading(false);
 
           setDelay(10000);
         }
@@ -182,7 +186,7 @@ const Store = ({ children }) => {
       }
 
       const status = currentStatus(currentWallet, currentUser, state);
-      
+
       // set state
       setCurrentWallet({
         ...currentWallet,
@@ -202,19 +206,19 @@ const Store = ({ children }) => {
   }, delay);
 
   return (
-    // <NameContext.Provider value={[name, setName]}>
     <LoaderContext.Provider value={[loading, setLoading]}>
-      <RefreshContext.Provider value={[delay, setDelay]}>
-        <CurrentUserContext.Provider value={[currentUser, setCurrentUser]}>
-          <CurrentWalletContext.Provider
-            value={[currentWallet, setCurrentWallet]}
-          >
-            {children}
-          </CurrentWalletContext.Provider>
-        </CurrentUserContext.Provider>
-      </RefreshContext.Provider>
+      <ModalContext.Provider value={[hasOpened, setHasOpened]}>
+        <RefreshContext.Provider value={[delay, setDelay]}>
+          <CurrentUserContext.Provider value={[currentUser, setCurrentUser]}>
+            <CurrentWalletContext.Provider
+              value={[currentWallet, setCurrentWallet]}
+            >
+              {children}
+            </CurrentWalletContext.Provider>
+          </CurrentUserContext.Provider>
+        </RefreshContext.Provider>
+      </ModalContext.Provider>
     </LoaderContext.Provider>
-    // </NameContext.Provider>
   );
 };
 

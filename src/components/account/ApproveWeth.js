@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import { ethToWei } from '@netgum/utils'; // returns BN
 
 import WethService from '../../utils/WethService';
