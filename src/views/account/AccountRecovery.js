@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 
 import { LoaderContext, CurrentUserContext } from '../../contexts/Store';
 import Loading from '../../components/shared/Loading';
-import './AccountRecovery.scss';
 import Modal from '../../components/shared/Modal';
 import useModal from '../../components/shared/useModal';
 import useInterval from '../../utils/PollingUtil';
@@ -110,7 +109,7 @@ const AccountRecovery = ({ history }) => {
     // eslint-disable-next-line
   }, [currentUser]);
   return (
-    <div className="FlexContainer">
+    <div className="FlexCenter">
       {copied && (
         <div className="Flash">
           <p>Copied!</p>
