@@ -74,24 +74,9 @@ const UserBalance = (props) => {
       {currentWallet.state !== WalletStatuses.Deployed && (
         <div className="WalletOverlay FlexCenter">
           <div className="Contents FlexCenter">
-            <h2>Account almost ready</h2>
-            <p>
-              You still need to{' '}
-              <span
-                className={
-                  currentWallet.state !== WalletStatuses.Deployed &&
-                  currentWallet.eth > 0
-                    ? 'Strikethrough'
-                    : ''
-                }
-              >
-                (1) Send some Eth
-              </span>{' '}
-              (2) Deploy the wallet.
-            </p>
             {currentWallet.eth < 0.05 && <DepositFormInitial />}
-            {currentWallet.eth >= 0.05 && <Deploy />}
-            {!keystoreExists && <p>must upgrade</p>}
+            {currentWallet.eth >= 0.05 && <><h3><span role="img" aria-label="party popper">🎉</span> Congrats! <span role="img" aria-label="party popper">🎉</span></h3><h2>Your account is ready to deploy.</h2><Deploy /></>}
+            {!keystoreExists && <p>Contact Support in <a href="https://t.me/joinchat/IJqu9xeMfqWoLnO_kc03QA">Telegram</a></p>}
           </div>
         </div>
       )}
@@ -203,7 +188,7 @@ const UserBalance = (props) => {
           className={headerSwitch === 'Accounts' ? 'Tab SelectedElement' : ''}
           onClick={() => setHeaderSwitch('Accounts')}
         >
-          Accounts
+          Settings
         </button>
       </div>
       <div className="Contents">
@@ -218,7 +203,12 @@ const UserBalance = (props) => {
               <p className="Data">
                 {currentWallet.eth}
                 {currentWallet.eth < 0.01 && (
-                  <span className="Danger Note Gas">!</span>
+                  <button
+                  className="TinyButton"
+                  onClick={() => toggleActions('depositForm')}
+                >
+                  <span>!</span> Low Eth
+                </button>
                 )}
               </p>
             </div>
@@ -227,14 +217,12 @@ const UserBalance = (props) => {
               <p className="Data">
                 {currentWallet.weth}
                 {currentWallet.weth > currentWallet.allowance && (
-                  <span className="Danger Note Allowance">
-                    <button
-                      className="Button--Primary"
-                      onClick={() => toggleActions('allowanceForm')}
-                    >
-                      Unlock Token
-                    </button>
-                  </span>
+                  <button
+                    className="TinyButton"
+                    onClick={() => toggleActions('allowanceForm')}
+                  >
+                    <span>!</span> Unlock Token
+                  </button>
                 )}
               </p>
             </div>
@@ -246,7 +234,7 @@ const UserBalance = (props) => {
       </div>
       <div className="Wallet__Footer">
         <p className="Powered">
-          &nbsp;Powered by <a href="http://abridged.io">Abridged</a>
+          {/* &nbsp;Powered by <a href="http://abridged.io">Abridged</a>*/}
         </p>
       </div>
     </div>

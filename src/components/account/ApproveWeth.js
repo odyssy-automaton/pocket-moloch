@@ -24,7 +24,7 @@ const ApproveWeth = () => {
     <>
       {loading && <Loading />}
       <h2>Set Token Allowance</h2>
-      <p>This app would like to use your token for making proposals.</p>
+      <p>This token is used for submitting proposals in the DAO. You must approve the app to use your tokens.</p>
       <Formik
         initialValues={{
           amount: currentWallet.weth,
@@ -95,7 +95,7 @@ const ApproveWeth = () => {
       >
         {({ isSubmitting }) =>
           !formSuccess ? (
-            <Form className="Form">
+            <Form className="Form FlexCenter">
               <button type="submit" disabled={isSubmitting}>
                 Approve
               </button>

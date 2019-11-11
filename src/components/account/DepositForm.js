@@ -31,9 +31,9 @@ const DepositForm = () => {
           <p>Copied!</p>
         </div>
       )}
-      <h2>Send funds to your wallet address</h2>
+      <h2>Send funds to your account address</h2>
       <p>
-        You should deposit a minimum of 0.1 ETH. That will be enough for ongoing participation.
+        You need Eth in your account to run transactions.
       </p>
       <p>
         <svg

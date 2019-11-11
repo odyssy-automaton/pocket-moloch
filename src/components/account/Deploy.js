@@ -24,7 +24,6 @@ const Deploy = (props) => {
         currentWallet.nextState !== 'Deployed' &&
         !loading && (
           <button
-            className="Button--Primary"
             onClick={() => {
               const sdk = currentUser.sdk;
               const bcprocessor = new BcProcessorService();

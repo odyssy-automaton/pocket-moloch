@@ -77,7 +77,7 @@ const SignUp = ({ history }) => {
 
           return (
             <Form className="Form">
-              <h2 className="Pad">Create your account</h2>
+              <h2 className="Pad">New Account</h2>
               {authError && (
                 <div className="Form__auth-error">{authError.message}</div>
               )}
