@@ -7,7 +7,7 @@ import BcToast from './BcToast';
 import Brand from '../../assets/PokéMol__Logo.svg';
 import './TopNav.scss';
 import useModal from './useModal';
-import Modal from './Modal'
+import Modal from './Modal';
 
 const TopNav = (props) => {
   const [currentUser] = useContext(CurrentUserContext);
@@ -16,7 +16,9 @@ const TopNav = (props) => {
   const [isElementOpen, setElementOpen] = React.useState(false);
   const toggleElement = () => setElementOpen(!isElementOpen);
   const { isShowing, toggle } = useModal();
-  const {location: {pathname}}=props;
+  const {
+    location: { pathname },
+  } = props;
 
   return (
     <div className="TopNav">
@@ -25,17 +27,29 @@ const TopNav = (props) => {
         className={isElementOpen ? 'Backdrop__Open' : 'Backdrop'}
         onClick={toggleElement}
       />
-      {pathname === '/sign-in' ? <div className="Button Back"><Link to="/">{'<='}  Back</Link></div>: <>
-      {(pathname === '/sign-up' || pathname ==='/confirm') ? <div className="Button Back"><Link to="/">{'<='}  Back</Link></div>:
-      <>
-      {props.match.params.name === '/proposal/' ? (
-        <p>Back</p>
+      {pathname === '/sign-in' ? (
+        <div className="Button Back">
+          <Link to="/">{'<='} Back</Link>
+        </div>
       ) : (
-        <Link className="Brand" to="/">
-          <img src={Brand} alt="Pocket Moloch" />
-        </Link>
+        <>
+          {pathname === '/sign-up' || pathname === '/confirm' ? (
+            <div className="Button Back">
+              <Link to="/">{'<='} Back</Link>
+            </div>
+          ) : (
+            <>
+              {props.match.params.name === '/proposal/' ? (
+                <p>Back</p>
+              ) : (
+                <Link className="Brand" to="/">
+                  <img src={Brand} alt="Pocket Moloch" />
+                </Link>
+              )}
+            </>
+          )}
+        </>
       )}
-      </>}</>}
 
       {currentUser ? (
         <div className="Auth">
@@ -69,10 +83,17 @@ const TopNav = (props) => {
               isShowing={isShowing.signOutMsg}
               hide={() => toggle('signOutMsg')}
             >
-
               <h2>Confirm Sign Out?</h2>
               <div className="IconWarning">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                </svg>
               </div>
               <Link
                 className="AltOption"
