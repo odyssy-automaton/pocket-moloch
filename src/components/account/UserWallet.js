@@ -21,12 +21,6 @@ const UserWallet = () => {
   const { isShowing, toggle } = useModal();
 
   useEffect(() => {
-    const walletWarning = JSON.parse(localStorage.getItem('walletWarning'));
-    console.log('walletWarning', walletWarning);
-    // if (walletWarning) {
-    //   setLivesDangerously(walletWarning);
-    // }
-
     setLivesDangerously(JSON.parse(localStorage.getItem('walletWarning')));
   }, []);
 

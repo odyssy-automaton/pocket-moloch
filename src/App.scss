@@ -188,6 +188,17 @@ button,
   }
 }
 
+.LinkButton {
+  background-color: transparent;
+  color: $primary;
+  padding: 0px;
+  margin: 0px;
+  &:hover {
+    background-color: transparent;
+    color: $primary-hover;
+  }
+}
+
 button.Tab {
   background-color: transparent;
   font-size: 1em;
