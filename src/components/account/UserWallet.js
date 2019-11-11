@@ -5,10 +5,10 @@ import useModal from '../shared/useModal';
 import Modal from '../shared/Modal';
 import Loading from '../shared/Loading';
 import UserBalance from './UserBalances';
-import WithdrawWethForm from './WithdrawWethForm';
 import WithdrawEthForm from './WithdrawEthForm';
-import WrapEth from './WrapEth';
-import ApproveWeth from './ApproveWeth';
+import WithdrawForm from './WithdrawForm';
+// import WrapEth from './WrapEth';
+import ApproveAllowance from './ApproveAllowance';
 import DepositForm from './DepositForm';
 import StateModals from '../shared/StateModals';
 
@@ -43,23 +43,26 @@ const UserWallet = () => {
             <DepositForm className="FlexCenter" />
           </Modal>
 
-          <Modal isShowing={isShowing.wrapForm} hide={() => toggle('wrapForm')}>
+          {/* <Modal isShowing={isShowing.wrapForm} hide={() => toggle('wrapForm')}>
             <WrapEth />
-          </Modal>
+          </Modal> */}
 
           <Modal
             isShowing={isShowing.allowanceForm}
             hide={() => toggle('allowanceForm')}
           >
-            <ApproveWeth />
+            <ApproveAllowance />
           </Modal>
 
           <Modal isShowing={isShowing.sendEth} hide={() => toggle('sendEth')}>
             <WithdrawEthForm />
           </Modal>
 
-          <Modal isShowing={isShowing.sendWeth} hide={() => toggle('sendWeth')}>
-            <WithdrawWethForm />
+          <Modal
+            isShowing={isShowing.sendToken}
+            hide={() => toggle('sendToken')}
+          >
+            <WithdrawForm />
           </Modal>
         </div>
       )}

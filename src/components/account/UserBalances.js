@@ -24,7 +24,6 @@ const UserBalance = (props) => {
 
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
-  console.log('currentWallet', currentWallet);
   const [delay, setDelay] = useState(null);
   const [copied, setCopied] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -148,7 +147,7 @@ const UserBalance = (props) => {
               {currentWallet.state === WalletStatuses.Deployed && (
                 <button
                   className="Button--Secondary"
-                  onClick={() => toggleActions('sendWeth')}
+                  onClick={() => toggleActions('sendToken')}
                 >
                   Send {tokenSymbol}
                 </button>
@@ -215,8 +214,8 @@ const UserBalance = (props) => {
             <div className="Item">
               <p>{tokenSymbol}</p>
               <p className="Data">
-                {currentWallet.weth}
-                {currentWallet.weth > currentWallet.allowance && (
+                {currentWallet.tokenBalance}
+                {currentWallet.tokenBalance > currentWallet.allowance && (
                   <button
                     className="TinyButton"
                     onClick={() => toggleActions('allowanceForm')}

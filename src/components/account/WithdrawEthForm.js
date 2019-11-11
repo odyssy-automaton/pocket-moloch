@@ -1,6 +1,4 @@
 import React, { useState, useContext } from 'react';
-import Web3Service from '../../utils/Web3Service';
-import BcProcessorService from '../../utils/BcProcessorService';
 import { ethToWei } from '@netgum/utils'; // returns BN
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
@@ -9,6 +7,8 @@ import {
   LoaderContext,
   CurrentWalletContext,
 } from '../../contexts/Store';
+import Web3Service from '../../utils/Web3Service';
+import BcProcessorService from '../../utils/BcProcessorService';
 import Loading from '../shared/Loading';
 
 const WithdrawEthForm = () => {

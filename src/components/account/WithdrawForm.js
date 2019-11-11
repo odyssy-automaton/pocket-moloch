@@ -1,28 +1,33 @@
 import React, { useState, useContext } from 'react';
-import Web3Service from '../../utils/Web3Service';
-import WethService from '../../utils/WethService';
-import BcProcessorService from '../../utils/BcProcessorService';
-import { ethToWei } from '@netgum/utils'; // returns BN
+import { withApollo } from 'react-apollo';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ethToWei } from '@netgum/utils'; // returns BN
 
 import {
   CurrentUserContext,
   LoaderContext,
   CurrentWalletContext,
 } from '../../contexts/Store';
+import { GET_METADATA } from '../../utils/Queries';
+import Web3Service from '../../utils/Web3Service';
+import TokenService from '../../utils/TokenService';
+import BcProcessorService from '../../utils/BcProcessorService';
 import Loading from '../shared/Loading';
 
-const WithdrawWethForm = () => {
+const WithdrawForm = ({ client }) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading, setLoading] = useContext(LoaderContext);
   const [currentWallet] = useContext(CurrentWalletContext);
   const [formSuccess, setFormSuccess] = useState(false);
+  const { approvedToken, tokenSymbol } = client.cache.readQuery({
+    query: GET_METADATA,
+  });
 
   return (
     <>
       {loading && <Loading />}
 
-      <h2>Send wETH from your wallet</h2>
+      <h2>Send {tokenSymbol} from your wallet</h2>
       <Formik
         initialValues={{
           amount: '',
@@ -42,7 +47,7 @@ const WithdrawWethForm = () => {
         }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           const sdk = currentUser.sdk;
-          const wethService = new WethService();
+          const tokenService = new TokenService(approvedToken);
           const web3Service = new Web3Service();
           const bcprocessor = new BcProcessorService();
 
@@ -50,7 +55,7 @@ const WithdrawWethForm = () => {
 
           setLoading(true);
           try {
-            const data = await wethService.transfer(
+            const data = await tokenService.transfer(
               values.addr,
               values.dist,
               web3Service.toWei(values.amount),
@@ -58,7 +63,7 @@ const WithdrawWethForm = () => {
             );
 
             const estimated = await sdk.estimateAccountTransaction(
-              wethService.contractAddr,
+              tokenService.contractAddr,
               bnZed,
               data,
             );
@@ -140,4 +145,4 @@ const WithdrawWethForm = () => {
   );
 };
 
-export default WithdrawWethForm;
+export default withApollo(WithdrawForm);
