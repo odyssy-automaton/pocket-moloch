@@ -10,7 +10,7 @@ import {
 import config from '../config';
 
 import useInterval from '../utils/PollingUtil';
-import WethService from '../utils/WethService';
+import TokenService from '../utils/TokenService';
 import Web3Service from '../utils/Web3Service';
 import McDaoService from '../utils/McDaoService';
 import BcProcessorService from '../utils/BcProcessorService';
@@ -30,8 +30,8 @@ const Store = ({ children }) => {
   // stores user wallet balances and shares
   const [currentWallet, setCurrentWallet] = useState({
     eth: 0,
-    weth: 0,
-    allowamce: 0,
+    tokenBalance: 0,
+    allowance: 0,
     shares: 0,
     state: null,
     devices: null,
@@ -50,7 +50,6 @@ const Store = ({ children }) => {
   // track number of times to do a 1 second update
   const [numTries, setNumTries] = useState(0);
 
-  const wethService = new WethService();
   const web3Service = new Web3Service();
   const daoService = new McDaoService();
   const bcProcessorService = new BcProcessorService();
@@ -114,20 +113,24 @@ const Store = ({ children }) => {
       );
 
       // get weth balance and allowance of contract
-      const wethWei = await wethService.balanceOf(acctAddr);
-      const allowanceWei = await wethService.allowance(
+      // const wethWei = await tokenService.balanceOf(acctAddr);
+      const approvedToken = await daoService.approvedToken();
+      const tokenService = new TokenService(approvedToken);
+      const tokenBalanceWei = await tokenService.balanceOf(acctAddr);
+      const allowanceWei = await tokenService.allowance(
         acctAddr,
         daoService.contractAddr,
       );
+      // convert from wei to eth
+      const tokenBalance = web3Service.fromWei(tokenBalanceWei);
+      const allowance = web3Service.fromWei(allowanceWei);
 
       // get member shares of dao contract
       const member = await daoService.members(addrByBelegateKey);
       // shares will be 0 if not a member, could also be 0 if rage quit
       // TODO: check membersheip a different way
       const shares = parseInt(member.shares);
-      // convert from wei to eth
-      const weth = web3Service.fromWei(wethWei);
-      const allowance = web3Service.fromWei(allowanceWei);
+
       // use attached sdk
       const sdk = currentUser.sdk;
 
@@ -192,7 +195,9 @@ const Store = ({ children }) => {
       setCurrentWallet({
         ...currentWallet,
         ...{
-          weth,
+          // tokenBalance: +tokenBalance,
+          // allowance: +allowance,
+          tokenBalance,
           allowance,
           eth,
           state,

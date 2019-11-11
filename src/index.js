@@ -35,7 +35,7 @@ const client = new ApolloClient({
 
 const Index = () => (
   <ApolloProvider client={client}>
-    <Store>
+    <Store apolloClient={client}>
       <App client={client} />
     </Store>
   </ApolloProvider>
