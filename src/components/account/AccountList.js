@@ -63,7 +63,7 @@ const AccountList = () => {
   }, [currentUser]);
 
   return (
-    <div className="FlexCenter AccountList">
+    <div className="AccountList">
       <h5>Password</h5>
       <button className="" onClick={() => toggle('changePassword')}>
         Change Password
