@@ -17,75 +17,23 @@ const DepositFormInitial = () => {
     setCopied(false);
     setDelay(null);
   }, delay);
-  const addrStyle = {
-    marginTop: '20px',
-    border: '2px solid #efefef',
-    padding: '15px 25px',
-    borderRadius: '50px',
-  };
+
   return (
-    <React.Fragment>
+    <>
       {copied && (
         <div className="Flash">
           <p>Copied!</p>
         </div>
       )}
-      <h1><span role="img" aria-label="lightning bolt">⚡</span> Account almost ready <span role="img" aria-label="lightning bolt">⚡</span></h1>
-      <h2>Send it some ETH to continue.</h2>
+      <h3><span role="img" aria-label="lightning bolt">⚡</span> Account almost ready <span role="img" aria-label="lightning bolt">⚡</span></h3>
+      <h2>Step 1 of 2: Deposit</h2>
       <p>
-        You should deposit a minimum of 0.05 ETH. That should be enough to deploy the wallet, and leave you some for gas for ongoing participation.
-      </p>
-      <p>
-        <svg
-          className="EthLogo"
-          viewBox="0 0 256 417"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid"
-        >
-          <g>
-            <polygon
-              fill="#343434"
-              points="127.9611 0 125.1661 9.5 125.1661 285.168 127.9611 287.958 255.9231 212.32"
-            />
-            <polygon
-              fill="#8C8C8C"
-              points="127.962 0 0 212.32 127.962 287.959 127.962 154.158"
-            />
-            <polygon
-              fill="#3C3C3B"
-              points="127.9611 312.1866 126.3861 314.1066 126.3861 412.3056 127.9611 416.9066 255.9991 236.5866"
-            />
-            <polygon
-              fill="#8C8C8C"
-              points="127.962 416.9052 127.962 312.1852 0 236.5852"
-            />
-            <polygon
-              fill="#141414"
-              points="127.9611 287.9577 255.9211 212.3207 127.9611 154.1587"
-            />
-            <polygon
-              fill="#393939"
-              points="0.0009 212.3208 127.9609 287.9578 127.9609 154.1588"
-            />
-          </g>
-        </svg>
-      </p>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-      >
-        <path fill="none" d="M0 0h24v24H0V0z" />
-        <path
-          fill="#010101"
-          d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-        />
-      </svg>
-      <p className="Data" style={addrStyle}>
+        Send 0.05 ETH to your new account address. This will be enough to deploy your account and leave some for ongoing participation.
+      </p>        
+      <p className="Data AccountAddr">
+        <span className="Label">Account Address</span>
         {currentUser.attributes['custom:account_address']}
-      </p>{' '}
+      </p>
       <CopyToClipboard
         onCopy={onCopy}
         text={currentUser.attributes['custom:account_address']}
@@ -104,7 +52,7 @@ const DepositFormInitial = () => {
           </svg>
         </button>
       </CopyToClipboard>
-    </React.Fragment>
+    </>
   );
 };
 

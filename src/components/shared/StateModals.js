@@ -33,9 +33,6 @@ const StateModals = () => {
           case WalletStatuses.LowGasForDeploy:
             openOnce('depositFormInitial');
             break;
-          case WalletStatuses.LowGas:
-            openOnce('depositForm');
-            break;
           default:
             break;
         }
@@ -62,7 +59,8 @@ const StateModals = () => {
         isShowing={isShowing.connectedUndeployed}
         hide={() => toggle('connectedUndeployed')}
       >
-        <p>You are ready to deploy your account</p>
+        <h3><span role="img" aria-label="party popper">🎉</span> Congrats! <span role="img" aria-label="party popper">🎉</span></h3>
+        <h2>Your account is ready to deploy.</h2>
         <Deploy />
       </Modal>
     </>

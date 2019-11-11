@@ -61,70 +61,15 @@ const AccountList = () => {
   }, [currentUser]);
 
   return (
-    <div className="FlexContainer">
-      <button className="Button--Input Email Verified">
-        Export Paper Wallet &nbsp;
-        <small> required for lost password recovery</small>
-        <small> COMING SOON </small>
-        <svg
-          className="AddItem"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
-          <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
-        </svg>
-      </button>
-
+    <div className="FlexContainer AccountList">
+      <h5>Password</h5>
       <button
-        className="Button--Input Email Verified"
+        className=""
         onClick={() => toggle('changePassword')}
       >
-        Upgrade Wallet &nbsp;
-        <small> Change password </small>
-        <svg
-          className="AddItem"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
-          <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
-        </svg>
+        Change Password
       </button>
-
-      {accountDevices
-        .filter((item) => item.type !== 'Extension')
-        .map((item) => (
-          <button
-            key={item.device.address}
-            className={
-              isThisDeviceAdded ? 'Button--Input Verified' : 'Button--Input'
-            }
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M17,1H7A2,2,0,0,0,5,3V21a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V3A2,2,0,0,0,17,1Zm0,18H7V5H17Z" />
-            </svg>
-            {Object.keys(parsedNamedDevices).find(
-              (key) => parsedNamedDevices[key] === item.device.address,
-            ) || item.device.address}{' '}
-            type: {item.type} state {item.state}
-            <svg
-              className="AddItem"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
-              <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
-            </svg>
-            <DeployDevices />
-          </button>
-        ))}
+      <h5>Keys</h5>
       <button
         onClick={isThisDeviceAdded ? null : () => toggle('getreadQrCode')}
         className={
@@ -159,6 +104,53 @@ const AccountList = () => {
           </svg>
         )}
       </button>
+      {/* commented out until ready 
+      <button className="Button--Input Email Verified">
+        Export Paper Wallet &nbsp;
+        <small> required for lost password recovery</small>
+        <small> COMING SOON </small>
+        <svg
+          className="AddItem"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
+          <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+        </svg>
+      </button>
+      */}
+
+      {accountDevices
+        .filter((item) => item.type !== 'Extension')
+        .map((item) => (
+          <button
+            key={item.device.address}
+            className={
+              isThisDeviceAdded ? 'Button--Input Verified' : 'Button--Input'
+            }
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M17,1H7A2,2,0,0,0,5,3V21a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V3A2,2,0,0,0,17,1Zm0,18H7V5H17Z" />
+            </svg>
+            {Object.keys(parsedNamedDevices).find(
+              (key) => parsedNamedDevices[key] === item.device.address,
+            ) || item.device.address}{' '}
+            type: {item.type} state {item.state}
+            <svg
+              className="AddItem"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path fill="none" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />
+              <path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+            </svg>
+            <DeployDevices />
+          </button>
+        ))}
       <Modal
         isShowing={isShowing.changePassword}
         hide={() => toggle('changePassword')}

@@ -59,12 +59,12 @@ const TopNav = (props) => {
             >
               Account
             </Link>
-            <p
+            <Link
               className="Dropdown__Open--Item"
               onClick={() => toggle('signOutMsg')}
             >
               {'<='} Sign out
-            </p>
+            </Link>
             <Modal
               isShowing={isShowing.signOutMsg}
               hide={() => toggle('signOutMsg')}
