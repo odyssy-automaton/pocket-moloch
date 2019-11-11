@@ -112,15 +112,13 @@
     }
     .ActionsDropdown {
       color: $app-light;
+      position: relative;
       button {
         background-color: transparent;
         img {
           margin-left: 5px;
           vertical-align: middle;
         }
-      }
-      &:hover {
-        position: relative;
       }
     }
   }

@@ -33,9 +33,6 @@ const StateModals = () => {
           case WalletStatuses.LowGasForDeploy:
             openOnce('depositFormInitial');
             break;
-          case WalletStatuses.LowGas:
-            openOnce('depositForm');
-            break;
           default:
             break;
         }

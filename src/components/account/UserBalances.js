@@ -87,8 +87,8 @@ const UserBalance = (props) => {
               </span>{' '}
               (2) Deploy the wallet.
             </p>
-            {currentWallet.eth < 0.01 && <DepositFormInitial />}
-            {currentWallet.eth > 0.01 && <Deploy />}
+            {currentWallet.eth < 0.05 && <DepositFormInitial />}
+            {currentWallet.eth >= 0.05 && <Deploy />}
             {!keystoreExists && <p>must upgrade</p>}
           </div>
         </div>
@@ -215,7 +215,7 @@ const UserBalance = (props) => {
               <p>ETH</p>
               <p className="Data">
                 {currentWallet.eth}
-                {currentWallet.eth < 0.02 && (
+                {currentWallet.eth < 0.01 && (
                   <span className="Danger Note Gas">!</span>
                 )}
               </p>
