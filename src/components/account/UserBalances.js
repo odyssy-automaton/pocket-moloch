@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { Auth } from 'aws-amplify';
 
 import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
 import { WalletStatuses } from '../../utils/WalletStatus';
@@ -12,34 +11,39 @@ import UserTransactions from './UserTransactions';
 import AccountList from './AccountList';
 
 import './UserWallet.scss';
+import DepositFormInitial from './DepositFormInitial';
+import ChangePassword from '../../auth/ChangePassword';
+import { withApollo } from 'react-apollo';
+import { GET_METADATA } from '../../utils/Queries';
 
 const UserBalance = (props) => {
-  const { toggle } = props;
+  const { toggle, client } = props;
+  const { tokenSymbol } = client.cache.readQuery({
+    query: GET_METADATA,
+  });
+
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
+  console.log('currentWallet', currentWallet);
   const [delay, setDelay] = useState(null);
   const [copied, setCopied] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(false);
   const [headerSwitch, setHeaderSwitch] = useState('Balances');
   const [parsedNamedDevices, setParsedNamedDevices] = useState({});
+  const [keystoreExists, setKeystoreExists] = useState(false);
 
   useEffect(() => {
     (async () => {
       if (currentUser && currentUser.sdk) {
         try {
-          const user = await Auth.currentAuthenticatedUser();
-          const userAttributes = await Auth.userAttributes(user);
-          if (
-            userAttributes.find((item) => item.Name === 'custom:named_devices')
-          ) {
+          const userAttributes = currentUser.attributes;
+
+          if (userAttributes['custom:named_devices']) {
             setParsedNamedDevices(
-              JSON.parse(
-                userAttributes.find(
-                  (item) => item.Name === 'custom:named_devices',
-                ).Value,
-              ),
+              JSON.parse(userAttributes['custom:named_devices']),
             );
           }
+          setKeystoreExists(!!userAttributes['custom:encrypted_pk2']);
         } catch (error) {
           console.error(error);
         }
@@ -59,7 +63,6 @@ const UserBalance = (props) => {
   }, delay);
 
   const toggleActions = (modal) => {
-    console.log('clicking actions');
     if (modal) {
       toggle(modal);
     }
@@ -68,6 +71,38 @@ const UserBalance = (props) => {
 
   return (
     <div className="Wallet">
+      {currentWallet.state !== WalletStatuses.Deployed && (
+        <div className="WalletOverlay FlexCenter">
+          <div className="Contents FlexCenter">
+            <h2>Account almost ready</h2>
+            <p>
+              You still need to{' '}
+              <span
+                className={
+                  currentWallet.state !== WalletStatuses.Deployed &&
+                  currentWallet.eth > 0
+                    ? 'Strikethrough'
+                    : ''
+                }
+              >
+                (1) Send some Eth
+              </span>{' '}
+              (2) Deploy the wallet.
+            </p>
+            {currentWallet.eth < 0.01 && <DepositFormInitial />}
+            {currentWallet.eth > 0.01 && <Deploy />}
+            {!keystoreExists && <p>must upgrade</p>}
+          </div>
+        </div>
+      )}
+      {currentWallet.state === WalletStatuses.Deployed && !keystoreExists && (
+        <div className="WalletOverlay FlexCenter">
+          <div className="Contents FlexCenter">
+            <h2>Please upgrade your account.</h2>
+            {!keystoreExists && <ChangePassword />}
+          </div>
+        </div>
+      )}
       <div className="Header">
         <div className="WalletInfo">
           <p
@@ -76,7 +111,7 @@ const UserBalance = (props) => {
               (currentWallet.state !== 'Deployed' ? 'Disconnected' : '')
             }
           >
-            {currentWallet.state || 'Checking Status'}
+            {currentWallet.state || 'Connecting'}
           </p>
           <CopyToClipboard
             onCopy={onCopy}
@@ -130,7 +165,7 @@ const UserBalance = (props) => {
                   className="Button--Secondary"
                   onClick={() => toggleActions('sendWeth')}
                 >
-                  Send wETH
+                  Send {tokenSymbol}
                 </button>
               )}
               {currentWallet.state === WalletStatuses.Deployed && (
@@ -188,9 +223,10 @@ const UserBalance = (props) => {
               </p>
             </div>
             <div className="Item">
-              <p>wETH</p>
-              <p className="Data">{currentWallet.weth}
-              {currentWallet.weth > currentWallet.allowance && (
+              <p>{tokenSymbol}</p>
+              <p className="Data">
+                {currentWallet.weth}
+                {currentWallet.weth > currentWallet.allowance && (
                   <span className="Danger Note Allowance">
                     <button
                       className="Button--Primary"
@@ -199,7 +235,8 @@ const UserBalance = (props) => {
                       Unlock Token
                     </button>
                   </span>
-                )}</p>
+                )}
+              </p>
             </div>
           </div>
         )}
@@ -216,4 +253,4 @@ const UserBalance = (props) => {
   );
 };
 
-export default UserBalance;
+export default withApollo(UserBalance);

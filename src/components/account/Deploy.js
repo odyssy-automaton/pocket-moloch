@@ -10,7 +10,6 @@ import Loading from '../shared/Loading';
 import { CurrentUserContext, CurrentWalletContext } from '../../contexts/Store';
 
 const Deploy = (props) => {
-  const { history } = props;
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
   const [loading, setloading] = useState(false);
@@ -46,7 +45,7 @@ const Deploy = (props) => {
                   sdk
                     .deployAccount(estimated)
                     .then((data) => {
-                      console.log('deployed', data);
+                      // console.log('deployed', data);
                       setloading(true);
                       bcprocessor.setTx(
                         data,
@@ -64,9 +63,7 @@ const Deploy = (props) => {
           </button>
         )}
       {currentWallet.state === 'Deployed' && (
-        <button onClick={() => history.push('/account')}>
-          Yay Deployed, continue to your account.
-        </button>
+        <h2>Successfully Deployed</h2>
       )}
     </>
   );

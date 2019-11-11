@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React, { useState, useContext } from 'react';
+import { Formik, Form } from 'formik';
 import { ethToWei } from '@netgum/utils'; // returns BN
 
 import WethService from '../../utils/WethService';
@@ -13,22 +13,18 @@ import {
   CurrentWalletContext,
   LoaderContext,
 } from '../../contexts/Store';
-import useModal from '../shared/useModal';
 
 const ApproveWeth = () => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading, setLoading] = useContext(LoaderContext);
   const [currentWallet] = useContext(CurrentWalletContext);
-
-  const { toggle } = useModal();
+  const [formSuccess, setFormSuccess] = useState(false);
 
   return (
     <>
       {loading && <Loading />}
       <h2>Set Token Allowance</h2>
-      <p>
-        This app would like to use your token for making proposals.
-      </p>
+      <p>This app would like to use your token for making proposals.</p>
       <Formik
         initialValues={{
           amount: currentWallet.weth,
@@ -94,16 +90,20 @@ const ApproveWeth = () => {
           resetForm();
           setLoading(false);
           setSubmitting(false);
-          toggle('allowanceForm');
+          setFormSuccess(true);
         }}
       >
-        {({ isSubmitting }) => (
-          <Form className="Form">
-            <button type="submit" disabled={isSubmitting}>
-              Approve
-            </button>
-          </Form>
-        )}
+        {({ isSubmitting }) =>
+          !formSuccess ? (
+            <Form className="Form">
+              <button type="submit" disabled={isSubmitting}>
+                Approve
+              </button>
+            </Form>
+          ) : (
+            <h2>Approval Sent</h2>
+          )
+        }
       </Formik>
     </>
   );

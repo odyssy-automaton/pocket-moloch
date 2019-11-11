@@ -30,7 +30,7 @@ const DepositFormInitial = () => {
           <p>Copied!</p>
         </div>
       )}
-      <h1>⚡ Account almost ready ⚡</h1>
+      <h1><span role="img" aria-label="lightning bolt">⚡</span> Account almost ready <span role="img" aria-label="lightning bolt">⚡</span></h1>
       <h2>Send it some ETH to continue.</h2>
       <p>
         You should deposit a minimum of 0.05 ETH. That should be enough to deploy the wallet, and leave you some for gas for ongoing participation.

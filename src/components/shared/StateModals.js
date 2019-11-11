@@ -12,33 +12,30 @@ import { WalletStatuses } from '../../utils/WalletStatus';
 import Deploy from '../account/Deploy';
 import DepositForm from '../account/DepositForm';
 
-const StateModals = (props) => {
+const StateModals = () => {
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
 
   // Toggle functions
-  const { isShowing, toggle, open } = useModal();
-  const { location } = props;
+  const { isShowing, toggle, openOnce } = useModal();
 
   useEffect(() => {
     if (!currentUser) {
-      console.log('no user', currentUser);
       return () => false;
     } else {
       (async () => {
-        console.log('currentWallet.status check', currentWallet.status);
         const status = currentWallet.status;
 
         switch (status) {
           case WalletStatuses.UnDeployed:
-            open('connectedUndeployed');
+            openOnce('connectedUndeployed');
             break;
           case WalletStatuses.LowGasForDeploy:
-            open('depositFormInitial');
+            openOnce('depositFormInitial');
             break;
           case WalletStatuses.LowGas:
-              open('depositForm');
-              break;
+            openOnce('depositForm');
+            break;
           default:
             break;
         }

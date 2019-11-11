@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Auth } from 'aws-amplify';
 
