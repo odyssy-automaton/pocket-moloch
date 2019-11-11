@@ -101,7 +101,13 @@ const ChangePassword = () => {
 
           return !authSuccess ? (
             <Form className="Form">
-              <h2>Change your password</h2>
+              <h2>Update your password</h2>
+              <button className="RiskyBiz Short">
+                <span role="alert" aria-label="skull and crossbones">
+                  ☠
+                </span>
+                Write down your password! It cannot be recovered.
+              </button>
               {authError && (
                 <div className="Form__auth-error">{authError.message}</div>
               )}

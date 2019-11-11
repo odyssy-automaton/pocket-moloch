@@ -61,7 +61,7 @@ const AccountList = () => {
   }, [currentUser]);
 
   return (
-    <div className="FlexContainer AccountList">
+    <div className="FlexCenter AccountList">
       <h5>Password</h5>
       <button
         className=""
