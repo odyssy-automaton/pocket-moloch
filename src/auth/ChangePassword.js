@@ -101,7 +101,7 @@ const ChangePassword = () => {
 
           return !authSuccess ? (
             <Form className="Form">
-              <h2 className="Pad">Change your password</h2>
+              <h2>Change your password</h2>
               {authError && (
                 <div className="Form__auth-error">{authError.message}</div>
               )}
