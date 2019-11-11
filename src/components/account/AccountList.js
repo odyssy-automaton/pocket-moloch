@@ -3,7 +3,7 @@ import { Auth } from 'aws-amplify';
 
 import { CurrentUserContext } from '../../contexts/Store';
 import useModal from '../../components/shared/useModal';
-import DeployDevices from '../../components/account/DeployDevices';
+// import DeployDevices from '../../components/account/DeployDevices';
 
 import './AccountList.scss';
 import Modal from '../shared/Modal';
@@ -13,9 +13,11 @@ const AccountList = () => {
   const [currentUser] = useContext(CurrentUserContext);
   const [isThisDeviceAdded, setIsThisDeviceAdded] = useState(true);
   const [, setWaitingSdk] = useState(true);
-  const [accountDevices, setAccountDevices] = useState([]);
+  // const [accountDevices, setAccountDevices] = useState([]);
+  const [, setAccountDevices] = useState([]);
   const { isShowing, toggle } = useModal();
-  const [parsedNamedDevices, setParsedNamedDevices] = useState({});
+  // const [parsedNamedDevices, setParsedNamedDevices] = useState({});
+  const [, setParsedNamedDevices] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -63,10 +65,7 @@ const AccountList = () => {
   return (
     <div className="FlexContainer AccountList">
       <h5>Password</h5>
-      <button
-        className=""
-        onClick={() => toggle('changePassword')}
-      >
+      <button className="" onClick={() => toggle('changePassword')}>
         Change Password
       </button>
       <h5>Keys</h5>
@@ -79,7 +78,7 @@ const AccountList = () => {
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M17,1H7A2,2,0,0,0,5,3V21a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V3A2,2,0,0,0,17,1Zm0,18H7V5H17Z" />
         </svg>
-        {isThisDeviceAdded ? 'This device' : 'Add this device'}
+        {isThisDeviceAdded ? 'PP Keystore' : 'Add this device'}
         {isThisDeviceAdded ? (
           <svg
             className="AddItem"
@@ -122,7 +121,7 @@ const AccountList = () => {
       </button>
       */}
 
-      {accountDevices
+      {/* {accountDevices
         .filter((item) => item.type !== 'Extension')
         .map((item) => (
           <button
@@ -150,7 +149,7 @@ const AccountList = () => {
             </svg>
             <DeployDevices />
           </button>
-        ))}
+        ))} */}
       <Modal
         isShowing={isShowing.changePassword}
         hide={() => toggle('changePassword')}
