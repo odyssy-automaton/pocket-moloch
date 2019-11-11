@@ -13,11 +13,18 @@ import AccountList from './AccountList';
 import './UserWallet.scss';
 import DepositFormInitial from './DepositFormInitial';
 import ChangePassword from '../../auth/ChangePassword';
+import { withApollo } from 'react-apollo';
+import { GET_METADATA } from '../../utils/Queries';
 
 const UserBalance = (props) => {
-  const { toggle } = props;
+  const { toggle, client } = props;
+  const { tokenSymbol } = client.cache.readQuery({
+    query: GET_METADATA,
+  });
+
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
+  console.log('currentWallet', currentWallet);
   const [delay, setDelay] = useState(null);
   const [copied, setCopied] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -30,17 +37,13 @@ const UserBalance = (props) => {
       if (currentUser && currentUser.sdk) {
         try {
           const userAttributes = currentUser.attributes;
-          
-          if (
-            userAttributes['custom:named_devices']
-          ) {
+
+          if (userAttributes['custom:named_devices']) {
             setParsedNamedDevices(
-              JSON.parse(
-                userAttributes['custom:named_devices']
-                )
-              )
+              JSON.parse(userAttributes['custom:named_devices']),
+            );
           }
-          setKeystoreExists(!!(userAttributes['custom:encrypted_pk2']))
+          setKeystoreExists(!!userAttributes['custom:encrypted_pk2']);
         } catch (error) {
           console.error(error);
         }
@@ -60,7 +63,6 @@ const UserBalance = (props) => {
   }, delay);
 
   const toggleActions = (modal) => {
-    console.log('clicking actions');
     if (modal) {
       toggle(modal);
     }
@@ -97,7 +99,7 @@ const UserBalance = (props) => {
         <div className="WalletOverlay FlexCenter">
           <div className="Contents FlexCenter">
             <h2>Please upgrade your account.</h2>
-            {!keystoreExists && <ChangePassword/>}
+            {!keystoreExists && <ChangePassword />}
           </div>
         </div>
       )}
@@ -163,7 +165,7 @@ const UserBalance = (props) => {
                   className="Button--Secondary"
                   onClick={() => toggleActions('sendWeth')}
                 >
-                  Send wETH
+                  Send {tokenSymbol}
                 </button>
               )}
               {currentWallet.state === WalletStatuses.Deployed && (
@@ -221,7 +223,7 @@ const UserBalance = (props) => {
               </p>
             </div>
             <div className="Item">
-              <p>wETH</p>
+              <p>{tokenSymbol}</p>
               <p className="Data">
                 {currentWallet.weth}
                 {currentWallet.weth > currentWallet.allowance && (
@@ -251,4 +253,4 @@ const UserBalance = (props) => {
   );
 };
 
-export default UserBalance;
+export default withApollo(UserBalance);

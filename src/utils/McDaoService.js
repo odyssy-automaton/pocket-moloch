@@ -102,6 +102,15 @@ export default class McDaoService {
     return guildBank;
   }
 
+  async approvedToken() {
+    if (!this.contract) {
+      await this.initContract();
+    }
+
+    let tokenAddress = await this.contract.methods.approvedToken().call();
+    return tokenAddress;
+  }
+
   async members(account) {
     if (!this.contract) {
       await this.initContract();
