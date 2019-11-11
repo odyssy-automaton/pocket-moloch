@@ -459,6 +459,13 @@ textarea {
   font-weight: 500;
   background-color: $danger;
   &:hover { background-color: $danger-hover; }
+  &.Short {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    svg, span { margin: 5px auto; }
+  }
   @media (max-width: $phone) {
     display: flex;
     flex-direction: column;
