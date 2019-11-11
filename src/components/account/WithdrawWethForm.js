@@ -95,7 +95,7 @@ const WithdrawWethForm = () => {
         }}
       >
         {({ isSubmitting }) =>
-          formSuccess ? (
+          !formSuccess ? (
             <Form className="Form">
               <Field name="dist">
                 {({ field, form }) => (

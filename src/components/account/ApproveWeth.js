@@ -94,7 +94,7 @@ const ApproveWeth = () => {
         }}
       >
         {({ isSubmitting }) =>
-          formSuccess ? (
+          !formSuccess ? (
             <Form className="Form">
               <button type="submit" disabled={isSubmitting}>
                 Approve

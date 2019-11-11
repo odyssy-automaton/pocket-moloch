@@ -85,7 +85,7 @@ const WithdrawEthForm = () => {
         }}
       >
         {({ isSubmitting }) =>
-          formSuccess ? (
+          !formSuccess ? (
             <Form className="Form">
               <Field name="amount">
                 {({ field, form }) => (
