@@ -337,7 +337,7 @@ button.Tab {
   justify-content: center;
   align-items: flex-start;
   padding: $base-padding;
-  width: calc(100% - ($base-padding * 2));
+  width: calc(100% - 30px);
   overflow-x: hidden;
   // hidden to make loading work properly on small screen.
 }

@@ -64,8 +64,10 @@ const UserBalance = (props) => {
   const toggleActions = (modal) => {
     if (modal) {
       toggle(modal);
+      setActionsOpen(false);
+    } else {
+      setActionsOpen(!actionsOpen);
     }
-    setActionsOpen(!actionsOpen);
   };
 
   return (
@@ -74,8 +76,29 @@ const UserBalance = (props) => {
         <div className="WalletOverlay FlexCenter">
           <div className="Contents FlexCenter">
             {currentWallet.eth < 0.05 && <DepositFormInitial />}
-            {currentWallet.eth >= 0.05 && <><h3><span role="img" aria-label="party popper">🎉</span> Congrats! <span role="img" aria-label="party popper">🎉</span></h3><h2>Your account is ready to deploy.</h2><Deploy /></>}
-            {!keystoreExists && <p>Contact Support in <a href="https://t.me/joinchat/IJqu9xeMfqWoLnO_kc03QA">Telegram</a></p>}
+            {currentWallet.eth >= 0.05 && (
+              <>
+                <h3>
+                  <span role="img" aria-label="party popper">
+                    🎉
+                  </span>{' '}
+                  Congrats!{' '}
+                  <span role="img" aria-label="party popper">
+                    🎉
+                  </span>
+                </h3>
+                <h2>Your account is ready to deploy.</h2>
+                <Deploy />
+              </>
+            )}
+            {!keystoreExists && (
+              <p>
+                Contact Support in{' '}
+                <a href="https://t.me/joinchat/IJqu9xeMfqWoLnO_kc03QA">
+                  Telegram
+                </a>
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -203,11 +226,11 @@ const UserBalance = (props) => {
                 {currentWallet.eth}
                 {currentWallet.eth < 0.01 && (
                   <button
-                  className="TinyButton"
-                  onClick={() => toggleActions('depositForm')}
-                >
-                  <span>!</span> Low Eth
-                </button>
+                    className="TinyButton"
+                    onClick={() => toggleActions('depositForm')}
+                  >
+                    <span>!</span> Low Eth
+                  </button>
                 )}
               </p>
             </div>
