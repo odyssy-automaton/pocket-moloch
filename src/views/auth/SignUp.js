@@ -78,6 +78,12 @@ const SignUp = ({ history }) => {
           return (
             <Form className="Form">
               <h2 className="Pad">New Account</h2>
+              <button className="RiskyBiz Short">
+                <span role="alert" aria-label="skull and crossbones">
+                  ☠
+                </span>
+                Write down your password! It cannot be recovered.
+              </button>
               {authError && (
                 <div className="Form__auth-error">{authError.message}</div>
               )}
