@@ -6,6 +6,7 @@ const minDeployEth = 0.05; // first device and extention
 export const WalletStatuses = {
   Unknown: 'Unknown',
   Connected: 'Connected',
+  Created: 'Created',
   NotConnected: 'Not Connected',
   Connecting: 'Connecting',
   UnDeployedNeedsDevices: 'Not Deployed Needs Devices',
