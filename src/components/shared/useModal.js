@@ -13,6 +13,7 @@ const useModal = () => {
     newDeviceDetectedModal: false,
     getQrCode: false,
     changePassword: false,
+    daohaus: false,
   });
 
   function toggle(modalName) {

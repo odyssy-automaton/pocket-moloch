@@ -178,16 +178,12 @@ const UserBalance = (props) => {
                 </button>
               )}
               {currentWallet.state === WalletStatuses.Deployed && (
-                <div
-                  onClick={() =>
-                    window.open(
-                      `https://daohaus.club/dao/${process.env.REACT_APP_CONTRACT_ADDRESS}`,
-                      '_blank',
-                    )
-                  }
+                <button
+                className="Button--Secondary"
+                onClick={() => toggleActions('daohaus')}
                 >
-                  Update delegate
-                </div>
+                  Manage on DAOHaus
+                </button>
               )}
             </div>
           ) : null}

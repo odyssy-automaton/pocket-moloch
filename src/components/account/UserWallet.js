@@ -89,6 +89,22 @@ const UserWallet = () => {
           >
             <WithdrawForm />
           </Modal>
+
+          <Modal isShowing={isShowing.daohaus} hide={() => toggle('daohaus')}>
+            <h3>Manage Shares</h3>
+            <p>
+              If you made your initial pledge on DAOHaus you you can ragequit
+              shares and update your delegate key there.
+            </p>
+            <a
+              className="Button"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://daohaus.club/"
+            >
+              Continue to DAOHaus
+            </a>
+          </Modal>
         </div>
       )}
     </>

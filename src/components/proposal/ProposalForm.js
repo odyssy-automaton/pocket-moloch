@@ -33,7 +33,7 @@ const ProposalForm = (props) => {
       {loading && <Loading />}
 
       <div>
-        {+currentWallet.weth >= +proposalDeposit &&
+        {+currentWallet.tokenBalance >= +proposalDeposit &&
         +currentWallet.allowance >= +proposalDeposit ? (
           <Formik
             initialValues={{
