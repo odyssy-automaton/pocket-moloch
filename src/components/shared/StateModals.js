@@ -12,7 +12,9 @@ import { WalletStatuses } from '../../utils/WalletStatus';
 import Deploy from '../account/Deploy';
 import DepositForm from '../account/DepositForm';
 
-const StateModals = () => {
+const StateModals = (props) => {
+  const { location } = props;
+  
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
 
@@ -28,10 +30,14 @@ const StateModals = () => {
 
         switch (status) {
           case WalletStatuses.UnDeployed:
-            openOnce('connectedUndeployed');
+            if(location.pathname !== '/account') {
+              openOnce('connectedUndeployed');
+            }
             break;
           case WalletStatuses.LowGasForDeploy:
-            openOnce('depositFormInitial');
+            if(location.pathname !== '/account') {
+              openOnce('depositFormInitial');
+            }
             break;
           default:
             break;

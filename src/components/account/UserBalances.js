@@ -72,36 +72,39 @@ const UserBalance = (props) => {
 
   return (
     <div className="Wallet">
-      {currentWallet.state !== WalletStatuses.Deployed && (
-        <div className="WalletOverlay FlexCenter">
-          <div className="Contents FlexCenter">
-            {currentWallet.eth < 0.05 && <DepositFormInitial />}
-            {currentWallet.eth >= 0.05 && (
-              <>
-                <h3>
-                  <span role="img" aria-label="party popper">
-                    🎉
-                  </span>{' '}
-                  Congrats!{' '}
-                  <span role="img" aria-label="party popper">
-                    🎉
-                  </span>
-                </h3>
-                <h2>Your account is ready to deploy.</h2>
-                <Deploy />
-              </>
-            )}
-            {!keystoreExists && (
-              <p>
-                Contact Support in{' '}
-                <a href="https://t.me/joinchat/IJqu9xeMfqWoLnO_kc03QA">
-                  Telegram
-                </a>
-              </p>
-            )}
+      {/* <p>{currentWallet.state}</p>
+      <p>{WalletStatuses.Deployed}</p> */}
+      {currentWallet.state !== WalletStatuses.Connecting &&
+        currentWallet.state !== WalletStatuses.Deployed && (
+          <div className="WalletOverlay FlexCenter">
+            <div className="Contents FlexCenter">
+              {currentWallet.eth < 0.05 && <DepositFormInitial />}
+              {currentWallet.eth >= 0.05 && (
+                <>
+                  <h3>
+                    <span role="img" aria-label="party popper">
+                      🎉
+                    </span>{' '}
+                    Congrats!{' '}
+                    <span role="img" aria-label="party popper">
+                      🎉
+                    </span>
+                  </h3>
+                  <h2>Your account is ready to deploy.</h2>
+                  <Deploy />
+                </>
+              )}
+              {!keystoreExists && (
+                <p>
+                  Contact Support in{' '}
+                  <a href="https://t.me/joinchat/IJqu9xeMfqWoLnO_kc03QA">
+                    Telegram
+                  </a>
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
       {currentWallet.state === WalletStatuses.Deployed && !keystoreExists && (
         <div className="WalletOverlay FlexCenter">
           <div className="Contents FlexCenter">
@@ -158,7 +161,6 @@ const UserBalance = (props) => {
               >
                 Deposit
               </button>
-              {currentWallet.state !== WalletStatuses.Deployed && <Deploy />}
               {currentWallet.state === WalletStatuses.Deployed && (
                 <button
                   className="Button--Secondary"

@@ -159,6 +159,8 @@ const Store = ({ children }) => {
         accountDevices = await sdk.getConnectedAccountDevices();
         // will be 'Created' or 'Delpoyed'
         state = sdk && sdk.state.account.state;
+        // console.log('state', state);
+        
         //console.log('when connected?', sdk && sdk.state.account.state);
         // set delay to 10 seconds after sdk balance is updated
         setDelay(10000);

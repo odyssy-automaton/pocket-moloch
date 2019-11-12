@@ -80,7 +80,7 @@ const UpgradeKeystore = () => {
 
           return !authSuccess ? (
             <Form className="Form">
-              <h2>Update your password</h2>
+              <h2>Upgrade your wallet</h2>
               <button className="RiskyBiz Short">
                 <span role="alert" aria-label="skull and crossbones">
                   ☠
@@ -94,7 +94,7 @@ const UpgradeKeystore = () => {
               <Field name="oldPassword">
                 {({ field, form }) => (
                   <div className={field.value ? 'Field HasValue' : 'Field '}>
-                    <label>Old Password</label>
+                    <label>Enter password</label>
                     <input type="password" {...field} />
                   </div>
                 )}
