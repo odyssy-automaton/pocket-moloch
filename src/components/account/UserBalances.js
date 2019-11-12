@@ -28,7 +28,6 @@ const UserBalance = (props) => {
   const [copied, setCopied] = useState(false);
   const [actionsOpen, setActionsOpen] = useState(false);
   const [headerSwitch, setHeaderSwitch] = useState('Balances');
-  const [parsedNamedDevices, setParsedNamedDevices] = useState({});
   const [keystoreExists, setKeystoreExists] = useState(true);
 
   useEffect(() => {
@@ -37,11 +36,6 @@ const UserBalance = (props) => {
         try {
           const userAttributes = currentUser.attributes;
 
-          if (userAttributes['custom:named_devices']) {
-            setParsedNamedDevices(
-              JSON.parse(userAttributes['custom:named_devices']),
-            );
-          }
           setKeystoreExists(!!userAttributes['custom:encrypted_ks']);
         } catch (error) {
           console.error(error);
@@ -249,8 +243,7 @@ const UserBalance = (props) => {
           </div>
         )}
         {headerSwitch === 'Transactions' && <UserTransactions />}
-        {headerSwitch === 'Accounts' &&
-          !!Object.keys(parsedNamedDevices).length && <AccountList />}
+        {headerSwitch === 'Accounts' && <AccountList />}
       </div>
       <div className="Wallet__Footer">
         <p className="Powered">
