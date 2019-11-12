@@ -29,7 +29,7 @@ const UserBalance = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
   const [headerSwitch, setHeaderSwitch] = useState('Balances');
   const [parsedNamedDevices, setParsedNamedDevices] = useState({});
-  const [keystoreExists, setKeystoreExists] = useState(false);
+  const [keystoreExists, setKeystoreExists] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -75,7 +75,7 @@ const UserBalance = (props) => {
       {/* <p>{currentWallet.state}</p>
       <p>{WalletStatuses.Deployed}</p> */}
       {currentWallet.state !== WalletStatuses.Connecting &&
-        currentWallet.state !== WalletStatuses.Deployed && (
+        currentWallet.state === WalletStatuses.Created && (
           <div className="WalletOverlay FlexCenter">
             <div className="Contents FlexCenter">
               {currentWallet.eth < 0.05 && <DepositFormInitial />}
@@ -226,7 +226,7 @@ const UserBalance = (props) => {
               <p>ETH</p>
               <p className="Data">
                 {currentWallet.eth}
-                {currentWallet.eth < 0.01 && (
+                {currentWallet.state !== WalletStatuses.Connecting && currentWallet.eth < 0.01 && (
                   <button
                     className="TinyButton"
                     onClick={() => toggle('depositForm')}
