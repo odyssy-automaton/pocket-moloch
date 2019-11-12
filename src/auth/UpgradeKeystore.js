@@ -107,7 +107,7 @@ const UpgradeKeystore = () => {
                 type="submit"
                 className={
                   Object.keys(errors).length < 1 &&
-                  Object.keys(touched).length > 1
+                  Object.keys(touched).length >= 1
                     ? ''
                     : 'Disabled'
                 }
