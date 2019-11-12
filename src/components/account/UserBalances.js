@@ -12,9 +12,9 @@ import AccountList from './AccountList';
 
 import './UserWallet.scss';
 import DepositFormInitial from './DepositFormInitial';
-import ChangePassword from '../../auth/ChangePassword';
 import { withApollo } from 'react-apollo';
 import { GET_METADATA } from '../../utils/Queries';
+import UpgradeKeystore from '../../auth/UpgradeKeystore';
 
 const UserBalance = (props) => {
   const { toggle, client } = props;
@@ -42,7 +42,7 @@ const UserBalance = (props) => {
               JSON.parse(userAttributes['custom:named_devices']),
             );
           }
-          setKeystoreExists(!!userAttributes['custom:encrypted_pk2']);
+          setKeystoreExists(!!userAttributes['custom:encrypted_ks']);
         } catch (error) {
           console.error(error);
         }
@@ -72,41 +72,44 @@ const UserBalance = (props) => {
 
   return (
     <div className="Wallet">
-      {currentWallet.state !== WalletStatuses.Deployed && (
-        <div className="WalletOverlay FlexCenter">
-          <div className="Contents FlexCenter">
-            {currentWallet.eth < 0.05 && <DepositFormInitial />}
-            {currentWallet.eth >= 0.05 && (
-              <>
-                <h3>
-                  <span role="img" aria-label="party popper">
-                    🎉
-                  </span>{' '}
-                  Congrats!{' '}
-                  <span role="img" aria-label="party popper">
-                    🎉
-                  </span>
-                </h3>
-                <h2>Your account is ready to deploy.</h2>
-                <Deploy />
-              </>
-            )}
-            {!keystoreExists && (
-              <p>
-                Contact Support in{' '}
-                <a href="https://t.me/joinchat/IJqu9xeMfqWoLnO_kc03QA">
-                  Telegram
-                </a>
-              </p>
-            )}
+      {/* <p>{currentWallet.state}</p>
+      <p>{WalletStatuses.Deployed}</p> */}
+      {currentWallet.state !== WalletStatuses.Connecting &&
+        currentWallet.state !== WalletStatuses.Deployed && (
+          <div className="WalletOverlay FlexCenter">
+            <div className="Contents FlexCenter">
+              {currentWallet.eth < 0.05 && <DepositFormInitial />}
+              {currentWallet.eth >= 0.05 && (
+                <>
+                  <h3>
+                    <span role="img" aria-label="party popper">
+                      🎉
+                    </span>{' '}
+                    Congrats!{' '}
+                    <span role="img" aria-label="party popper">
+                      🎉
+                    </span>
+                  </h3>
+                  <h2>Your account is ready to deploy.</h2>
+                  <Deploy />
+                </>
+              )}
+              {!keystoreExists && (
+                <p>
+                  Contact Support in{' '}
+                  <a href="https://t.me/joinchat/IJqu9xeMfqWoLnO_kc03QA">
+                    Telegram
+                  </a>
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
       {currentWallet.state === WalletStatuses.Deployed && !keystoreExists && (
         <div className="WalletOverlay FlexCenter">
           <div className="Contents FlexCenter">
             <h2>Please upgrade your account.</h2>
-            {!keystoreExists && <ChangePassword />}
+            {!keystoreExists && <UpgradeKeystore />}
           </div>
         </div>
       )}
@@ -158,7 +161,6 @@ const UserBalance = (props) => {
               >
                 Deposit
               </button>
-              {currentWallet.state !== WalletStatuses.Deployed && <Deploy />}
               {currentWallet.state === WalletStatuses.Deployed && (
                 <button
                   className="Button--Secondary"
@@ -227,7 +229,7 @@ const UserBalance = (props) => {
                 {currentWallet.eth < 0.01 && (
                   <button
                     className="TinyButton"
-                    onClick={() => toggleActions('depositForm')}
+                    onClick={() => toggle('depositForm')}
                   >
                     <span>!</span> Low Eth
                   </button>
@@ -241,7 +243,7 @@ const UserBalance = (props) => {
                 {currentWallet.tokenBalance > currentWallet.allowance && (
                   <button
                     className="TinyButton"
-                    onClick={() => toggleActions('allowanceForm')}
+                    onClick={() => toggle('allowanceForm')}
                   >
                     <span>!</span> Unlock Token
                   </button>

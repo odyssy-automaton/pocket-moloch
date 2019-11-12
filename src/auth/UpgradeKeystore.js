@@ -9,7 +9,7 @@ import Web3Service from '../utils/Web3Service';
 import config from '../config';
 import { CurrentUserContext } from '../contexts/Store';
 
-const ChangePassword = () => {
+const UpgradeKeystore = () => {
   //component used for changing password
   const [currentUser, setCurrentUser] = useContext(CurrentUserContext);
 
@@ -21,33 +21,12 @@ const ChangePassword = () => {
       <Formik
         initialValues={{
           oldPassword: '',
-          newPassword: '',
-          newPasswordConfirm: '',
         }}
         validate={(values) => {
           let errors = {};
-          const regexPasswordValidation = new RegExp(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.,])\\S*$',
-          );
 
           if (!values.oldPassword) {
             errors.oldPassword = 'Required';
-          }
-          if (values.newPassword.length < 8) {
-            errors.newPassword = 'Password must be at least 8 characters long';
-          }
-          if (!regexPasswordValidation.test(values.newPassword)) {
-            errors.newPassword =
-              'Password must contain an uppercase letter, a lowercase letter, a number and a special character';
-          }
-          if (!values.newPassword) {
-            errors.newPassword = 'Required';
-          }
-          if (!values.newPasswordConfirm) {
-            errors.newPasswordConfirm = 'Required';
-          }
-          if (values.newPassword !== values.newPasswordConfirm) {
-            errors.newPasswordConfirm = 'New Passwords do not match';
           }
 
           return errors;
@@ -61,7 +40,7 @@ const ChangePassword = () => {
             await Auth.changePassword(
               user,
               values.oldPassword,
-              values.newPassword,
+              values.oldPassword,
             );
 
             // create keystore
@@ -76,7 +55,7 @@ const ChangePassword = () => {
 
             const store = await web3Service.getKeyStore(
               '0x' + keyValue.data,
-              values.newPassword,
+              values.oldPassword,
             );
             await Auth.updateUserAttributes(user, {
               'custom:encrypted_ks': JSON.stringify(store),
@@ -101,7 +80,7 @@ const ChangePassword = () => {
 
           return !authSuccess ? (
             <Form className="Form">
-              <h2>Update your password</h2>
+              <h2>Upgrade your wallet</h2>
               <button className="RiskyBiz Short">
                 <span role="alert" aria-label="skull and crossbones">
                   ☠
@@ -115,37 +94,13 @@ const ChangePassword = () => {
               <Field name="oldPassword">
                 {({ field, form }) => (
                   <div className={field.value ? 'Field HasValue' : 'Field '}>
-                    <label>Old Password</label>
+                    <label>Enter password</label>
                     <input type="password" {...field} />
                   </div>
                 )}
               </Field>
               <ErrorMessage
                 name="oldPassword"
-                render={(msg) => <div className="Error">{msg}</div>}
-              />
-              <Field name="newPassword">
-                {({ field, form }) => (
-                  <div className={field.value ? 'Field HasValue' : 'Field '}>
-                    <label>New password</label>
-                    <input type="password" {...field} />
-                  </div>
-                )}
-              </Field>
-              <ErrorMessage
-                name="newPassword"
-                render={(msg) => <div className="Error">{msg}</div>}
-              />
-              <Field name="newPasswordConfirm">
-                {({ field, form }) => (
-                  <div className={field.value ? 'Field HasValue' : 'Field '}>
-                    <label>New password Confirm</label>
-                    <input type="password" {...field} />
-                  </div>
-                )}
-              </Field>
-              <ErrorMessage
-                name="newPasswordConfirm"
                 render={(msg) => <div className="Error">{msg}</div>}
               />
               <button
@@ -162,7 +117,7 @@ const ChangePassword = () => {
               </button>
             </Form>
           ) : (
-            <h2>Password Changed Successfully.</h2>
+            <h2>Upgraded Successfully.</h2>
           );
         }}
       </Formik>
@@ -170,4 +125,4 @@ const ChangePassword = () => {
   );
 };
 
-export default withRouter(ChangePassword);
+export default withRouter(UpgradeKeystore);
