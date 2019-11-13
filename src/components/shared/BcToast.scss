@@ -6,13 +6,13 @@
     width: 100%;
     height: 90px;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
+    right: 0px;
     z-index: 1;
     &__Button {
         top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        right: 124px;
+        transform: translateY(-50%);
         position: absolute;       
         background-color: transparent;
         svg {
@@ -29,6 +29,9 @@
     }
     .Dropdown__Open {
         width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
     }
 
 }
@@ -42,6 +45,8 @@
     left: 0;
     width: calc(100% + 30px);
     z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
     .Item {
         display: flex;
         align-content: center;
@@ -85,10 +90,29 @@
         border-radius: 50%;
         background-color: $secondary;
         transition: all .15s linear;
+        &:hover { 
+            background-color: $secondary-hover; 
+        }
+        &.WarningIcon {
+            background-color: $danger;
+            position: relative;
+            &:after {
+                content: "!";
+                font-family: $base-font;
+                font-size: .85em;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-weight: 900;
+            }
+            &:hover { 
+                background-color: $danger-hover; 
+            }
+        }
     }
-    &:hover &__Inner { 
-        background-color: $secondary-hover; 
-    }
+    
 }
 
 .Dropdown__Footer {

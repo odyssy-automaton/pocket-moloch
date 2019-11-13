@@ -1,7 +1,6 @@
-
 # Pocket Moloch aka Pokémol
-Bare bones, mobile-first set up for Moloch frontend with Abridged Wallet SDK by Odyssy
 
+Bare bones, mobile-first set up for Moloch frontend with Abridged Wallet SDK by Odyssy
 
 ## Development
 
@@ -79,6 +78,8 @@ All are type: string, min-length: 1, max-length: 256 and mutable
 - device_address
 - account_address
 - ens_name
+- encrypted_pk
+- named_devices (max length 2000)
 
 #### 3. Update your .env file with the contract addresses, infura enpoint, subgraph endpoint(s) new AWS resource information. You can find all of the AWS resrouce information in the AWS console in the respective areas.
 

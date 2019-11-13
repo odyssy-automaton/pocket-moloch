@@ -1,35 +1,37 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+import { CurrentUserContext, LoaderContext } from '../../contexts/Store';
 import useModal from '../shared/useModal';
 import Modal from '../shared/Modal';
-import CopyToClipboard from 'react-copy-to-clipboard';
-import ConnectAccount from './ConnectAccount';
-
-import {
-  CurrentUserContext,
-  LoaderContext,
-  CurrentWalletContext,
-} from '../../contexts/Store';
-
 import Loading from '../shared/Loading';
-import './UserWallet.scss';
 import UserBalance from './UserBalances';
-import UserTransactions from './UserTransactions';
-import WithdrawWethForm from './WithdrawWethForm';
 import WithdrawEthForm from './WithdrawEthForm';
-import Deploy from './Deploy';
-import WrapEth from './WrapEth';
-import ApproveWeth from './ApproveWeth';
-import RageQuit from './RageQuit';
+import WithdrawForm from './WithdrawForm';
+// import WrapEth from './WrapEth';
+import ApproveAllowance from './ApproveAllowance';
 import DepositForm from './DepositForm';
-
-import DeployDevices from './DeployDevices';
 import StateModals from '../shared/StateModals';
-const UserWallet = ({ history }) => {
+
+import './UserWallet.scss';
+
+const UserWallet = () => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading] = useContext(LoaderContext);
-  const [currentWallet] = useContext(CurrentWalletContext);
+  const [livesDangerously, setLivesDangerously] = useState(false);
   const { isShowing, toggle } = useModal();
+
+  useEffect(() => {
+    setLivesDangerously(JSON.parse(localStorage.getItem('walletWarning')));
+  }, []);
+
+  const handleToggle = (modal) => {
+    toggle(modal);
+  };
+
+  const acceptWarning = () => {
+    setLivesDangerously(true);
+    localStorage.setItem('walletWarning', JSON.stringify(true));
+  };
 
   return (
     <>
@@ -37,110 +39,74 @@ const UserWallet = ({ history }) => {
       {currentUser && currentUser.sdk && (
         <div className="UserWallet">
           <StateModals />
-          <UserBalance />
-          <div className="Actions Pad">
-            <h3>Actions</h3>
-            <button
-              className="Button--Primary"
-              onClick={() => toggle('depositForm')}
-            >
-              Deposit
+
+          {!livesDangerously ? (
+            <button className="RiskyBiz" onClick={() => acceptWarning()}>
+              <span role="alert" aria-label="skull and crossbones">
+                ☠
+              </span>
+              This app is experimental and should not hold large amounts of
+              crypto. Use at your own risk.
               <svg
-                className="IconRight"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
               >
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                <path d="M0 0h24v24H0z" fill="none" />
               </svg>
             </button>
-            <Modal
-              isShowing={isShowing.depositForm}
-              hide={() => toggle('depositForm')}
+          ) : null}
+
+          <UserBalance toggle={handleToggle} />
+
+          <Modal
+            isShowing={isShowing.depositForm}
+            hide={() => toggle('depositForm')}
+          >
+            <DepositForm className="FlexCenter" />
+          </Modal>
+
+          {/* <Modal isShowing={isShowing.wrapForm} hide={() => toggle('wrapForm')}>
+            <WrapEth />
+          </Modal> */}
+
+          <Modal
+            isShowing={isShowing.allowanceForm}
+            hide={() => toggle('allowanceForm')}
+          >
+            <ApproveAllowance />
+          </Modal>
+
+          <Modal isShowing={isShowing.sendEth} hide={() => toggle('sendEth')}>
+            <WithdrawEthForm />
+          </Modal>
+
+          <Modal
+            isShowing={isShowing.sendToken}
+            hide={() => toggle('sendToken')}
+          >
+            <WithdrawForm />
+          </Modal>
+
+          <Modal isShowing={isShowing.daohaus} hide={() => toggle('daohaus')}>
+            <h3>Manage Shares</h3>
+            <p>
+              If you made your initial pledge on DAOHaus you you can ragequit
+              shares and update your delegate key there.
+            </p>
+            <a
+              className="Button"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://daohaus.club/"
             >
-              <DepositForm className="FlexCenter" />
-            </Modal>
-
-            <Deploy />
-
-            <DeployDevices />
-
-            <ConnectAccount />
-
-            {currentWallet.state === 'Deployed' && (
-              <button onClick={() => toggle('wrapForm')}>Wrap ETH</button>
-            )}
-
-            <Modal
-              isShowing={isShowing.wrapForm}
-              hide={() => toggle('wrapForm')}
-            >
-              <WrapEth />
-            </Modal>
-            {currentWallet.state === 'Deployed' && (
-              <button onClick={() => toggle('allowanceForm')}>
-                Approve wETH
-              </button>
-            )}
-            <Modal
-              isShowing={isShowing.allowanceForm}
-              hide={() => toggle('allowanceForm')}
-            >
-              <ApproveWeth />
-            </Modal>
-
-            {currentWallet.state === 'Deployed' && (
-              <button
-                className="Button--Primary"
-                onClick={() => toggle('sendEth')}
-              >
-                Send ETH
-              </button>
-            )}
-            <Modal isShowing={isShowing.sendEth} hide={() => toggle('sendEth')}>
-              <WithdrawEthForm />
-            </Modal>
-
-            {currentWallet.state === 'Deployed' && (
-              <button
-                className="Button--Primary"
-                onClick={() => toggle('sendWeth')}
-              >
-                Send wETH
-              </button>
-            )}
-            <Modal
-              isShowing={isShowing.sendWeth}
-              hide={() => toggle('sendWeth')}
-            >
-              <WithdrawWethForm />
-            </Modal>
-
-            {currentWallet.state === 'Deployed' && (
-              <button
-                className="Button--Tertiary"
-                onClick={() => toggle('rageForm')}
-              >
-                Rage Quit (╯°□°）╯︵ ┻━┻
-              </button>
-            )}
-            <Modal
-              isShowing={isShowing.rageForm}
-              hide={() => toggle('rageForm')}
-            >
-              <RageQuit />
-            </Modal>
-            {/*
-            <Link className="AltOption" to="/advanced">
-              Advanced
-            </Link>
-            */}
-          </div>
+              Continue to DAOHaus
+            </a>
+          </Modal>
         </div>
       )}
-      <UserTransactions />
     </>
   );
 };

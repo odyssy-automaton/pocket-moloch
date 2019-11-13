@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import Web3Service from '../../utils/Web3Service';
 import { GetMetaData } from '../../utils/MemberService';
+import ValueDisplay from '../shared/ValueDisplay';
+
 import './MemberDetail.scss';
 
 const web3Service = new Web3Service();
@@ -11,7 +13,6 @@ const MemberDetail = ({ member }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      
       let metaData = await GetMetaData(member.delegateKey);
       setS3Data(metaData);
     };
@@ -30,7 +31,9 @@ const MemberDetail = ({ member }) => {
         </div>
         <div className="Tribute">
           <h5>Tribute</h5>
-          <h2 className="Data">Ξ {web3Service.fromWei(member.tokenTribute)}</h2>
+          <h2 className="Data">
+            <ValueDisplay value={web3Service.fromWei(member.tokenTribute)} />
+          </h2>
         </div>
       </div>
       <h5>Delegate Key</h5>

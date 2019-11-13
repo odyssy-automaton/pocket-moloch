@@ -18,7 +18,12 @@ import {
 } from '../../contexts/Store';
 import Loading from '../shared/Loading';
 
-const ProposalForm = ({ history }) => {
+import { GET_METADATA } from '../../utils/Queries';
+import { withApollo } from 'react-apollo';
+
+const ProposalForm = (props) => {
+  const { history, client } = props;
+  const { proposalDeposit } = client.cache.readQuery({ query: GET_METADATA });
   const [loading, setLoading] = useContext(LoaderContext);
   const [currentUser] = useContext(CurrentUserContext);
   const [currentWallet] = useContext(CurrentWalletContext);
@@ -28,7 +33,8 @@ const ProposalForm = ({ history }) => {
       {loading && <Loading />}
 
       <div>
-        {currentWallet.eth > 0.005 && currentWallet.weth > 0 ? (
+        {+currentWallet.tokenBalance >= +proposalDeposit &&
+        +currentWallet.allowance >= +proposalDeposit ? (
           <Formik
             initialValues={{
               title: '',
@@ -115,6 +121,7 @@ const ProposalForm = ({ history }) => {
           >
             {({ isSubmitting }) => (
               <Form className="Form">
+                <h3>Proposal deposit: {proposalDeposit} token</h3>
                 <Field name="title">
                   {({ field, form }) => (
                     <div
@@ -229,7 +236,8 @@ const ProposalForm = ({ history }) => {
             <p className="Pad">Your ETH is empty or dangerously low.</p>
             <p className="Pad">
               If you are going to submit a proposal you need some ETH for gas
-              and wETH for deposit. Go to your Account to top them off.
+              and approved token for deposit ({proposalDeposit}). Go to your
+              Account to top them off.
             </p>
             <p>
               <Link to="/account">
@@ -253,4 +261,4 @@ const ProposalForm = ({ history }) => {
   );
 };
 
-export default withRouter(ProposalForm);
+export default withRouter(withApollo(ProposalForm));

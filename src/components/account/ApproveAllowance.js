@@ -1,50 +1,52 @@
-import React, { useContext  } from 'react';
-import Web3Service from '../../utils/Web3Service';
-import DaiService from '../../utils/DaiService';
-import BcProcessorService from '../../utils/BcProcessorService';
+import React, { useState, useContext } from 'react';
+import { withApollo } from 'react-apollo';
+import { Formik, Form } from 'formik';
 import { ethToWei } from '@netgum/utils'; // returns BN
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+
+import { GET_METADATA } from '../../utils/Queries';
+import TokenService from '../../utils/TokenService';
+import Web3Service from '../../utils/Web3Service';
+import BcProcessorService from '../../utils/BcProcessorService';
+import McDaoService from '../../utils/McDaoService';
+import Loading from '../shared/Loading';
 
 import {
   CurrentUserContext,
-  LoaderContext,
   CurrentWalletContext,
+  LoaderContext,
 } from '../../contexts/Store';
-import useModal from '../shared/useModal';
-import Loading from '../shared/Loading';
 
-const WithdrawDaiForm = () => {
+const ApproveAllowance = ({ client }) => {
   const [currentUser] = useContext(CurrentUserContext);
   const [loading, setLoading] = useContext(LoaderContext);
   const [currentWallet] = useContext(CurrentWalletContext);
-
-  const { toggle } = useModal();
+  const [formSuccess, setFormSuccess] = useState(false);
+  const { approvedToken } = client.cache.readQuery({
+    query: GET_METADATA,
+  });
 
   return (
     <>
       {loading && <Loading />}
-
-      <h2>Withdraw Dai from your wallet address</h2>
+      <h2>Set Token Allowance</h2>
+      <p>This token is used for submitting proposals in the DAO. You must approve the app to use your tokens.</p>
       <Formik
         initialValues={{
-          amount: '',
+          amount: currentWallet.tokenBalance,
           addr: currentUser.attributes['custom:account_address'],
-          dist: '',
         }}
         validate={(values) => {
           let errors = {};
           if (!values.amount) {
             errors.amount = 'Required';
           }
-          if (!values.dist) {
-            errors.dist = 'Required';
-          }
 
           return errors;
         }}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           const sdk = currentUser.sdk;
-          const daiService = new DaiService();
+          const tokenService = new TokenService(approvedToken);
+          const daoService = new McDaoService();
           const web3Service = new Web3Service();
           const bcprocessor = new BcProcessorService();
 
@@ -52,20 +54,19 @@ const WithdrawDaiForm = () => {
 
           setLoading(true);
           try {
-            const data = await daiService.transfer(
+            const data = await tokenService.approve(
               values.addr,
-              values.dist,
+              daoService.contractAddr,
               web3Service.toWei(values.amount),
               true,
             );
 
             const estimated = await sdk.estimateAccountTransaction(
-              daiService.contractAddr,
+              tokenService.contractAddr,
               bnZed,
               data,
             );
 
-            console.log(estimated);
             if (ethToWei(currentWallet.eth).lt(estimated.totalCost)) {
               alert(
                 `you need more gas, at least: ${web3Service.fromWei(
@@ -82,7 +83,7 @@ const WithdrawDaiForm = () => {
             bcprocessor.setTx(
               hash,
               currentUser.attributes['custom:account_address'],
-              `Withdraw dai: ${values.amount}`,
+              `Update Token Allowance to ${values.amount}`,
               true,
             );
           } catch (err) {
@@ -93,49 +94,23 @@ const WithdrawDaiForm = () => {
           resetForm();
           setLoading(false);
           setSubmitting(false);
-          toggle('daiWithdrawForm');
+          setFormSuccess(true);
         }}
       >
-        {({ isSubmitting }) => (
-          <Form className="Form">
-            <Field name="dist">
-              {({ field, form }) => (
-                <div className={field.value ? 'Field HasValue' : 'Field '}>
-                  <label>Destination</label>
-                  <input type="text" {...field} />
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="dist"
-              render={(msg) => <div className="Error">{msg}</div>}
-            />
-            <Field name="amount">
-              {({ field, form }) => (
-                <div className={field.value ? 'Field HasValue' : 'Field '}>
-                  <label>Amount</label>
-                  <input
-                    min="0"
-                    type="number"
-                    inputMode="numeric"
-                    step="any"
-                    {...field}
-                  />
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="amount"
-              render={(msg) => <div className="Error">{msg}</div>}
-            />
-            <button type="submit" disabled={isSubmitting}>
-              Withdraw
-            </button>
-          </Form>
-        )}
+        {({ isSubmitting }) =>
+          !formSuccess ? (
+            <Form className="Form FlexCenter">
+              <button type="submit" disabled={isSubmitting}>
+                Approve
+              </button>
+            </Form>
+          ) : (
+            <h2>Approval Sent</h2>
+          )
+        }
       </Formik>
     </>
   );
 };
 
-export default WithdrawDaiForm;
+export default withApollo(ApproveAllowance);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { Auth } from 'aws-amplify';
@@ -11,12 +11,18 @@ const SignUp = ({ history }) => {
 
   return (
     <div>
-      <h2 className="Pad">Create your account</h2>
       <Formik
-        initialValues={{ username: '', email: '', password: '', passwordConfirm: '', }}
+        initialValues={{
+          username: '',
+          email: '',
+          password: '',
+          passwordConfirm: '',
+        }}
         validate={(values) => {
           let errors = {};
-          const regexPasswordValidation= new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.,])\\S*$')
+          const regexPasswordValidation = new RegExp(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.,])\\S*$',
+          );
           if (!values.username) {
             errors.username = 'Required';
           }
@@ -26,11 +32,12 @@ const SignUp = ({ history }) => {
           if (!values.password) {
             errors.password = 'Required';
           }
-          if (values.password.length<8) {
+          if (values.password.length < 8) {
             errors.password = 'Password must be at least 8 characters long';
           }
           if (!regexPasswordValidation.test(values.password)) {
-            errors.password = 'Password must contain an uppercase letter, a lowercase letter, a number and a special character'
+            errors.password =
+              'Password must contain an uppercase letter, a lowercase letter, a number and a special character';
           }
           if (!values.passwordConfirm) {
             errors.passwordConfirm = 'Required';
@@ -53,9 +60,9 @@ const SignUp = ({ history }) => {
               },
             });
             history.push({
-  pathname: '/confirm',
-  state: { userName: values.username }
-});
+              pathname: '/confirm',
+              state: { userName: values.username },
+            });
           } catch (err) {
             console.log('error signing up: ', err);
             setSubmitting(false);
@@ -70,8 +77,16 @@ const SignUp = ({ history }) => {
 
           return (
             <Form className="Form">
-              {authError &&
-                <div className="Form__auth-error">{authError.message}</div>}
+              <h2 className="Pad">New Account</h2>
+              <button className="RiskyBiz Short">
+                <span role="alert" aria-label="skull and crossbones">
+                  ☠
+                </span>
+                Write down your password! It cannot be recovered.
+              </button>
+              {authError && (
+                <div className="Form__auth-error">{authError.message}</div>
+              )}
               <Field name="username">
                 {({ field, form }) => (
                   <div className={field.value ? 'Field HasValue' : 'Field '}>
@@ -120,7 +135,16 @@ const SignUp = ({ history }) => {
                 name="passwordConfirm"
                 render={(msg) => <div className="Error">{msg}</div>}
               />
-              <button type="submit" className={(Object.keys(errors).length<1 && Object.keys(touched).length>2)?"":"Disabled"} disabled={isSubmitting}>
+              <button
+                type="submit"
+                className={
+                  Object.keys(errors).length < 1 &&
+                  Object.keys(touched).length > 2
+                    ? ''
+                    : 'Disabled'
+                }
+                disabled={isSubmitting}
+              >
                 Submit
               </button>
             </Form>

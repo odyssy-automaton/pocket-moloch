@@ -10,14 +10,14 @@
     top: 50%;
     transform: translate(0, -50%);
     z-index: 1;
-    img { height: 60px; }
+    img { height: 48px; }
   }
   .Auth {
     position: absolute;
     right: 0px;
     top: 15px;
     border: 2px solid $base-font-color;
-    border-radius: 15px;
+    border-radius: 16px;
     padding: 5px 15px;
     background-color: $app-light;
     transition: all .15s linear;

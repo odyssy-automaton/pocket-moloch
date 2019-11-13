@@ -11,6 +11,10 @@ export default class Web3Service {
     return this.web3.eth.accounts.encrypt(privateKey, password);
   }
 
+  decryptKeyStore(keystore, password){
+    return this.web3.eth.accounts.decrypt(keystore, password);
+  }
+
   async latestBlock(){
     return await this.web3.eth.getBlock("latest");
   }
