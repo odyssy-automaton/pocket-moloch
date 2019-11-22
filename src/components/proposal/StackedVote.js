@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react';
 import McDaoService from '../../utils/McDaoService';
 import './StackedVote.scss';
 
-const StackedVote = ({id, baseColor, noColor, yesColor, currentYesVote, currentNoVote}) => {
-
+const StackedVote = ({
+  id,
+  baseColor,
+  noColor,
+  yesColor,
+  currentYesVote,
+  currentNoVote,
+}) => {
   const [noVoteShares, setNoVoteShares] = useState(0);
   const [yesVoteShares, setYesVoteShares] = useState(0);
   const [percentageSharesYes, setPercentageSharesYes] = useState(0);
   const [percentageSharesNo, setPercentageSharesNo] = useState(0);
 
-  if(currentYesVote === undefined){
+  if (currentYesVote === undefined) {
     currentYesVote = 0;
   }
-  if(currentNoVote === undefined){
+  if (currentNoVote === undefined) {
     currentNoVote = 0;
   }
 
@@ -30,30 +36,25 @@ const StackedVote = ({id, baseColor, noColor, yesColor, currentYesVote, currentN
       setYesVoteShares(yesVoteShares);
       setPercentageSharesYes(percentageSharesYes);
       setPercentageSharesNo(percentageSharesNo);
-
-    }
-    currentProposal ()
-  }, [id, currentYesVote, currentNoVote])
+    };
+    currentProposal();
+  }, [id, currentYesVote, currentNoVote]);
 
   // const noVotes = {
   //   textAlign: 'center',
   // };
   const noBar = {
-    width: percentageSharesNo + '%'
+    width: percentageSharesNo + '%',
   };
   const yesBar = {
-    width: percentageSharesYes + '%'
+    width: percentageSharesYes + '%',
   };
 
   return (
     <div className="FullBar">
       <div className="Labels">
-        <span className="YesLabel">
-          {yesVoteShares}
-        </span>
-        <span className="NoLabel">
-          {noVoteShares}
-        </span>
+        <span className="YesLabel">{yesVoteShares}</span>
+        <span className="NoLabel">{noVoteShares}</span>
       </div>
       <div className="BaseBar" />
       <div className="NoBar" style={noBar} />

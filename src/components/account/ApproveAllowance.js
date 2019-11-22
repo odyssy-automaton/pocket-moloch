@@ -29,14 +29,17 @@ const ApproveAllowance = ({ client }) => {
     <>
       {loading && <Loading />}
       <h2>Set Token Allowance</h2>
-      <p>This token is used for submitting proposals in the DAO. You must approve the app to use your tokens.</p>
+      <p>
+        This token is used for submitting proposals in the DAO. You must approve
+        the app to use your tokens.
+      </p>
       <Formik
         initialValues={{
           amount: currentWallet.tokenBalance,
           addr: currentUser.attributes['custom:account_address'],
         }}
         validate={(values) => {
-          let errors = {};
+          const errors = {};
           if (!values.amount) {
             errors.amount = 'Required';
           }

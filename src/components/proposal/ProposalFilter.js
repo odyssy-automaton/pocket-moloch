@@ -5,32 +5,29 @@ import { groupByStatus } from '../../utils/ProposalHelper';
 
 import './ProposalFilter.scss';
 
-const ProposalFilter = ({ proposals, filter, history}) => {
+const ProposalFilter = ({ proposals, filter, history }) => {
   const [groupedProposals, setGroupedProposals] = useState();
   const [filteredProposals, setFilteredProposals] = useState([]);
-  
+
   const handleSelect = (list, listName) => {
     setFilteredProposals(list);
-    history.push(`/proposals/${listName}`)
+    history.push(`/proposals/${listName}`);
   };
 
   useEffect(() => {
-    if(proposals){
+    if (proposals) {
       const groupedProps = groupByStatus(proposals);
-    
-      if(filter in groupedProps){
+
+      if (filter in groupedProps) {
         setGroupedProposals(groupByStatus(proposals));
         setFilteredProposals(groupedProps[filter]);
       } else {
-        if(groupedProps.VotingPeriod.length > 0) {
+        if (groupedProps.VotingPeriod.length > 0) {
           history.push(`/proposals/VotingPeriod`);
         } else {
           history.push(`/proposals/Completed`);
-          
         }
-        
       }
-      
     }
   }, [proposals, filter, history]);
 

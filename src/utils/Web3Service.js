@@ -7,16 +7,16 @@ export default class Web3Service {
     this.web3 = new Web3(new Web3.providers.HttpProvider(config.INFURA_URI));
   }
 
-  getKeyStore(privateKey, password){
+  getKeyStore(privateKey, password) {
     return this.web3.eth.accounts.encrypt(privateKey, password);
   }
 
-  decryptKeyStore(keystore, password){
+  decryptKeyStore(keystore, password) {
     return this.web3.eth.accounts.decrypt(keystore, password);
   }
 
-  async latestBlock(){
-    return await this.web3.eth.getBlock("latest");
+  async latestBlock() {
+    return await this.web3.eth.getBlock('latest');
   }
 
   fromWei(amount) {

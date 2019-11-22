@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import './App.scss';
 import Routes from './Routes';
 import Header from './components/header/Header';
 import Loading from './components/shared/Loading';
 import McDaoService from './utils/McDaoService';
-// import WethService from './utils/WethService';
 import Web3Service from './utils/Web3Service';
 import TokenService from './utils/TokenService';
 
+import './App.scss';
+
 const mcDao = new McDaoService();
-// const weth = new WethService();
 const web3 = new Web3Service();
 
 const App = ({ client }) => {

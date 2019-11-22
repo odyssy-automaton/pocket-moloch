@@ -27,3 +27,4 @@ yarn-error.log*
 ops.md
 
 .env
+.vscode
