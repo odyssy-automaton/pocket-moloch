@@ -78,20 +78,16 @@ All are type: string, min-length: 1, max-length: 256 and mutable
 - device_address
 - account_address
 - ens_name
-- encrypted_pk
+- encrypted_ks (max length 2000)
 - named_devices (max length 2000)
 
 #### 3. Update your .env file with the contract addresses, infura enpoint, subgraph endpoint(s) new AWS resource information. You can find all of the AWS resrouce information in the AWS console in the respective areas.
 
 ```
+REACT_APP_SDK_ENV=
 REACT_APP_GRAPH_NODE_URI=
 REACT_APP_INFURA_URI=
 REACT_APP_CONTRACT_ADDRESS=
-REACT_APP_WETH_CONTRACT_ADDRESS=
-REACT_APP_DAI_CONTRACT_ADDRESS=
-REACT_APP_QR_HOST_URL=
-REACT_APP_SDK_ENV=
-
 REACT_APP_S3_REGION=
 REACT_APP_S3_BUCKET=
 REACT_APP_COGNITO_REGION=
