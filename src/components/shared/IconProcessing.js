@@ -3,11 +3,11 @@ import React from 'react';
 const IconProcessing = () => {
   return (
     <svg
-    width="44"
-    height="44"
-    viewBox="0 0 44 44"
-    xmlns="http://www.w3.org/2000/svg"
-    stroke="rgba(203,46,206,1)"
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      xmlns="http://www.w3.org/2000/svg"
+      stroke="rgba(203,46,206,1)"
     >
       <g fill="none" fillRule="evenodd" strokeWidth="2">
         <circle cx="22" cy="22" r="1">
@@ -56,7 +56,7 @@ const IconProcessing = () => {
         </circle>
       </g>
     </svg>
-);
-}
+  );
+};
 
 export default IconProcessing;

@@ -6,6 +6,7 @@ class ProposalNew extends Component {
   state = {
     user: null,
   };
+
   async componentDidMount() {
     const user = await Auth.currentAuthenticatedUser();
 

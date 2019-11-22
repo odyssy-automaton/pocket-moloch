@@ -9,8 +9,6 @@ import Loading from '../../components/shared/Loading';
 import StateModals from '../../components/shared/StateModals';
 
 const Members = () => {
-  // const members = getUserList();
-
   return (
     <div className="View">
       <StateModals />

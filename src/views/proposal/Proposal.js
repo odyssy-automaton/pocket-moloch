@@ -12,8 +12,11 @@ import McDaoService from '../../utils/McDaoService';
 import Web3Service from '../../utils/Web3Service';
 import BcProcessorService from '../../utils/BcProcessorService';
 
-import { LoaderContext, CurrentWalletContext } from '../../contexts/Store';
-import { CurrentUserContext } from '../../contexts/Store';
+import {
+  LoaderContext,
+  CurrentWalletContext,
+  CurrentUserContext,
+} from '../../contexts/Store';
 
 const Proposal = (props) => {
   const id = props.match.params.id;
